@@ -26,3 +26,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.pg-not-found {
+  padding-right: 30px;
+  padding-left: 30px;
+  text-align: center;
+}
+
+.pg-not-found a {
+  margin-right: auto;
+  margin-left: auto;
+}

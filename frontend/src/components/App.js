@@ -1,19 +1,28 @@
-import React, { Component } from 'react';
-import '../css/App.css';
+import React, { Component } from 'react'
+import '../css/App.css'
+import { Switch, Route } from 'react-router-dom'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import ListMessages from './ListMessages'
+import PageNotFound from './PageNotFound'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+class ReadableApp extends Component {
+    render() {
+        return (
+            <MuiThemeProvider className="App">
+				<Switch>
+                    <Route exact path="/" render={ () => (
+                        <h1>Home Page</h1>
+                    )}/>
+
+                    <Route path="/category" render={ () => (
+                        <ListMessages />
+                    )}/>
+
+                    <Route component={PageNotFound}/>
+                </Switch>
+            </MuiThemeProvider>
+        )
+    }
 }
 
-export default App;
+export default ReadableApp
