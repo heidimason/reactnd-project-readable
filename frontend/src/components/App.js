@@ -5,7 +5,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import ReadableBar from './appBar'
-import ListPosts from './post'
+import ListPosts from './posts'
 import PageNotFound from './PageNotFound'
 
 class ReadableApp extends Component {
