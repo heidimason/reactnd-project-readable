@@ -1,24 +1,29 @@
 import React, { Component } from 'react'
 import '../css/App.css'
 import { Switch, Route } from 'react-router-dom'
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import ListMessages from './ListMessages'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import ReadableBar from './appBar'
+import ListPosts from './post'
 import PageNotFound from './PageNotFound'
 
 class ReadableApp extends Component {
     render() {
         return (
-            <MuiThemeProvider className="App">
+            <MuiThemeProvider
+                muiTheme={getMuiTheme(darkBaseTheme)}
+                className="App">
 				<Switch>
                     <Route exact path="/" render={ () => (
-                        <h1>Home Page</h1>
+                        <ReadableBar />
                     )}/>
 
                     <Route path="/category" render={ () => (
-                        <ListMessages />
+                        <ListPosts />
                     )}/>
 
-                    <Route component={PageNotFound}/>
+                    <Route component={PageNotFound} />
                 </Switch>
             </MuiThemeProvider>
         )
