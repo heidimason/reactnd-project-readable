@@ -1,5 +1,4 @@
 import React from 'react'
-import MobileTearSheet from '../lib/MobileTearSheet'
 import {List, ListItem} from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
@@ -30,7 +29,6 @@ const rightIconMenu = (
 
 const ListPosts = () => (
   <div>
-    <MobileTearSheet>
       <List>
         <Subheader>Today</Subheader>
         <ListItem
@@ -48,7 +46,6 @@ const ListPosts = () => (
         />
         <Divider inset={true} />
       </List>
-    </MobileTearSheet>
   </div>
 );
 
