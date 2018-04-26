@@ -1,0 +1,22 @@
+.vote-score {
+	margin-right: 15px;
+}
+
+.icon-mood {
+	fill: #555 !important;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+.icon-mood:hover,
+.icon-mood:focus {
+	fill: #888 !important;
+}
+
+.icon-mood-good {
+	margin-right: 15px;
+}
+
+.icon-mood-bad {
+	margin-right: 45px;
+}

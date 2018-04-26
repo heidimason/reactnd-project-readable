@@ -15,7 +15,7 @@ function ListTabs (props) {
   const { categories } = props
 
   return (
-    <Tabs style={{width: "75%"}}>
+    <Tabs style={{width: '75%'}}>
       {categories.map( (category, index) => (
         <Tab label={category.name} key={index}>
           <div>

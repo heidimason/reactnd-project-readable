@@ -1,13 +1,23 @@
 import React from 'react'
 import {List, ListItem} from 'material-ui/List'
+import IconMoodGood from 'material-ui/svg-icons/social/mood'
+import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors'
+import {white, grey400, darkBlack } from 'material-ui/styles/colors'
 import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
+import '../../css/Posts.css'
+
+const styles = {
+  list: {
+    backgroundColor: white,
+    borderRadius: 4
+  }
+}
 
 const iconButtonElement = (
   <IconButton
@@ -17,29 +27,39 @@ const iconButtonElement = (
   >
     <MoreVertIcon color={grey400} />
   </IconButton>
-);
+)
 
 const rightIconMenu = (
   <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem>Reply</MenuItem>
-    <MenuItem>Forward</MenuItem>
-    <MenuItem>Delete</MenuItem>
+    <MenuItem style={{color: darkBlack}}>Reply</MenuItem>
+    <MenuItem style={{color: darkBlack}}>Edit</MenuItem>
+    <MenuItem style={{color: darkBlack}}>Delete</MenuItem>
   </IconMenu>
-);
+)
+
+const vote = (
+  <div style={{width: '25%'}}>
+    <span className="vote-score">+10043</span>
+    <IconMoodGood className="icon-mood icon-mood-good" />
+    <IconMoodBad className="icon-mood icon-mood-bad" />
+  </div>
+)
 
 const ListPosts = () => (
   <div>
-      <List>
-        <Subheader>Today</Subheader>
+      <List style={styles.list}>
+        <Subheader style={{color: darkBlack}}>Today</Subheader>
         <ListItem
-          disabled={true}
+          disabled={false}
           leftAvatar={<Avatar>B</Avatar>}
           rightIconButton={rightIconMenu}
+          rightIcon={vote}
+          style={{color: darkBlack}}
           primaryText="Brendan Lim"
           secondaryText={
             <p>
               <span style={{color: darkBlack}}>Brunch this weekend?</span><br />
-              I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
+              347 comments
             </p>
           }
           secondaryTextLines={2}
@@ -47,6 +67,6 @@ const ListPosts = () => (
         <Divider inset={true} />
       </List>
   </div>
-);
+)
 
-export default ListPosts;
+export default ListPosts
