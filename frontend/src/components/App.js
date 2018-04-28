@@ -4,13 +4,13 @@ import { Switch, Route } from 'react-router-dom'
 import * as ReadableAPI from '../utils/ReadableAPI'
 import {
     blueGrey900, blueGrey700,
-    cyanA200,
+    cyanA400,
     grey100
 } from 'material-ui/styles/colors'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import ReadableBar from './appBar'
-import ListPosts from './posts'
+import ReadableBar from './AppBar'
+import ListPosts from './Posts'
 import PageNotFound from './PageNotFound'
 
 // This replaces the textColor value on the palette
@@ -21,7 +21,7 @@ const customMuiTheme = getMuiTheme({
     primary1Color: blueGrey900,
     primary2Color: blueGrey700,
     // primary3Color: grey400,
-    accent1Color: cyanA200,
+    accent1Color: cyanA400,
     // accent2Color: grey100,
     // accent3Color: grey500,
     textColor: grey100,

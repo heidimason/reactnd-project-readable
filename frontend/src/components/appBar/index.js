@@ -2,7 +2,7 @@ import React from 'react'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import ActionHome from 'material-ui/svg-icons/action/home'
-import ListCategories from '../categories'
+import ListCategories from '../Categories'
 
 function ReadableBar (props) {
     const { categories } = props

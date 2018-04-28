@@ -5,7 +5,7 @@ import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar';
-import {white, grey400, darkBlack } from 'material-ui/styles/colors'
+import {white, grey400, darkBlack, fullBlack} from 'material-ui/styles/colors'
 import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconMenu from 'material-ui/IconMenu'
@@ -31,9 +31,9 @@ const iconButtonElement = (
 
 const rightIconMenu = (
   <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem style={{color: darkBlack}}>Reply</MenuItem>
-    <MenuItem style={{color: darkBlack}}>Edit</MenuItem>
-    <MenuItem style={{color: darkBlack}}>Delete</MenuItem>
+    <MenuItem style={{color: fullBlack}}>Reply</MenuItem>
+    <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
+    <MenuItem style={{color: fullBlack}}>Delete</MenuItem>
   </IconMenu>
 )
 
@@ -41,14 +41,15 @@ const vote = (
   <div style={{width: '25%'}}>
     <span className="vote-score">+10043</span>
     <IconMoodGood className="icon-mood icon-mood-good" />
-    <IconMoodBad className="icon-mood icon-mood-bad" />
+    <IconMoodBad className="icon-mood" />
   </div>
 )
 
 const ListPosts = () => (
   <div>
       <List style={styles.list}>
-        <Subheader style={{color: darkBlack}}>Today</Subheader>
+        <Subheader style={{color: fullBlack}}>Today</Subheader>
+
         <ListItem
           disabled={false}
           leftAvatar={<Avatar>B</Avatar>}
@@ -58,7 +59,7 @@ const ListPosts = () => (
           primaryText="Brendan Lim"
           secondaryText={
             <p>
-              <span style={{color: darkBlack}}>Brunch this weekend?</span><br />
+              <span style={{color: fullBlack}}>Brunch this weekend?</span><br />
               347 comments
             </p>
           }
