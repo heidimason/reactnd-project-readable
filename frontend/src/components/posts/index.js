@@ -56,10 +56,10 @@ const ListPosts = () => (
           rightIconButton={rightIconMenu}
           rightIcon={vote}
           style={{color: darkBlack}}
-          primaryText="Brendan Lim"
+          primaryText="Heidi M."
           secondaryText={
             <p>
-              <span style={{color: fullBlack}}>Brunch this weekend?</span><br />
+              <span style={{color: fullBlack}}>This project is hard!</span><br />
               347 comments
             </p>
           }
