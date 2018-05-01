@@ -10,7 +10,6 @@ import {
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import ReadableBar from './AppBar'
-import ListPosts from './Posts'
 import PageNotFound from './PageNotFound'
 
 // This replaces the textColor value on the palette
@@ -65,14 +64,10 @@ class ReadableApp extends Component {
                         />
                     )}/>
 
-                    <Route path="/categories" render={ () => (
+                    <Route path="/:categories" render={ () => (
                         <ReadableBar
                             categories={categories}
                         />
-                    )}/>
-
-                    <Route path="/category" render={ () => (
-                        <ListPosts />
                     )}/>
 
                     <Route component={PageNotFound} />
