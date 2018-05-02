@@ -4,6 +4,8 @@ import SortBy from '../SelectField/sort'
 import ListPosts from '../Posts'
 import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
+import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
+import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 // import serializeForm from 'form-serialize'
 
@@ -14,7 +16,7 @@ const styles = {
     marginBottom: 25,
     fontWeight: 400,
     textTransform: 'capitalize'
-  },
+  }
 }
 
 class ListTabs extends Component {
@@ -56,12 +58,15 @@ class ListTabs extends Component {
         label="Cancel"
         primary={true}
         onClick={this.handleClose}
+        style={{marginRight: 15}}
       />,
       <FlatButton
         label="Submit"
         primary={true}
         keyboardFocused={true}
         onClick={this.handleClose}
+        backgroundColor={cyanA400}
+        hoverColor={cyanA400}
       />
     ]
 
@@ -90,8 +95,31 @@ class ListTabs extends Component {
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
-          autoScrollBodyContent={true}>
+          autoScrollBodyContent={true}
+          titleStyle={{color: fullBlack}}>
+          <TextField
+            floatingLabelText="Title"
+            floatingLabelStyle={{color: grey500}}
+            inputStyle={{color: fullBlack}}
+          />
 
+          <TextField
+            hintText="Your Name"
+            floatingLabelText="Author"
+            floatingLabelStyle={{color: grey500}}
+            inputStyle={{color: fullBlack}}
+            style={{marginLeft: 15}}
+          />
+
+          <TextField
+            floatingLabelText="Message"
+            floatingLabelStyle={{color: grey500}}
+            textareaStyle={{color: fullBlack}}
+            multiLine={true}
+            rows={2}
+            rowsMax={4}
+            fullWidth={true}
+          />
         </ScrollableDialog>
       </div>
     )

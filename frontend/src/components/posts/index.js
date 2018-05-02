@@ -32,7 +32,6 @@ const iconButtonElement = (
 
 const rightIconMenu = (
   <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem style={{color: fullBlack}}>Reply</MenuItem>
     <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
     <MenuItem style={{color: fullBlack}}>Delete</MenuItem>
   </IconMenu>
