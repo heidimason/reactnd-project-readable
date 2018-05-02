@@ -1,11 +1,12 @@
 import React from 'react'
-import {List, ListItem} from 'material-ui/List'
+import { List, ListItem } from 'material-ui/List'
 import IconMoodGood from 'material-ui/svg-icons/social/mood'
 import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar';
-import {white, grey400, darkBlack, fullBlack} from 'material-ui/styles/colors'
+import { white, grey400, darkBlack, fullBlack } from 'material-ui/styles/colors'
+import { getWeekday, getTime } from '../../utils/helpers'
 import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconMenu from 'material-ui/IconMenu'
@@ -48,7 +49,10 @@ const vote = (
 const ListPosts = () => (
   <div>
       <List style={styles.list}>
-        <Subheader style={{color: fullBlack}}>Today</Subheader>
+        <Subheader
+          style={{color: fullBlack}}>
+          { getWeekday() } at { getTime() }
+        </Subheader>
 
         <ListItem
           disabled={false}
