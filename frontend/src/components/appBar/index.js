@@ -5,7 +5,7 @@ import ActionHome from 'material-ui/svg-icons/action/home'
 import ListCategories from '../Categories'
 
 function ReadableBar (props) {
-    const { categories } = props
+    const { categories, posts } = props
 
     return (
         <AppBar
@@ -18,6 +18,7 @@ function ReadableBar (props) {
             children={
             	<ListCategories
                     categories={categories}
+                    posts={posts}
                 />
             }
         />

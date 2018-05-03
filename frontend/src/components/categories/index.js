@@ -21,8 +21,7 @@ const styles = {
 
 class ListTabs extends Component {
   state = {
-    open: false,
-    posts: []
+    open: false
   }
 
   handleOpen = () => {
@@ -51,7 +50,7 @@ class ListTabs extends Component {
   // }
 
   render() {
-    const { categories } = this.props
+    const { categories, posts } = this.props
 
     const actions = [
       <FlatButton
@@ -79,7 +78,7 @@ class ListTabs extends Component {
                 <SortBy />
                 <h2 style={styles.headline}>{category.name}</h2>
 
-                <ListPosts />
+                <ListPosts posts={posts} />
               </div>
             </Tab>
           ))}

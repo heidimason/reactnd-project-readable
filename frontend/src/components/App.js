@@ -34,7 +34,8 @@ const customMuiTheme = getMuiTheme({
 
 class ReadableApp extends Component {
     state = {
-        categories: []
+        categories: [],
+        posts: []
     }
 
     // Get all categories and populate categories array
@@ -46,13 +47,23 @@ class ReadableApp extends Component {
         )
     }
 
-    // Get all categories immediately after component is inserted into DOM
+    // Get all posts and populate posts array
+    getAllPosts() {
+        ReadableAPI.fetchPosts().then( posts =>
+            this.setState({ posts })
+        ).catch( () =>
+            alert('Error getting posts!')
+        )
+    }
+
+    // Get all categories and posts immediately after component is inserted into DOM
     componentDidMount() {
         this.getAllCategories()
+        this.getAllPosts()
     }
 
     render() {
-        const { categories } = this.state
+        const { categories, posts } = this.state
 
         return (
             <MuiThemeProvider
@@ -61,12 +72,21 @@ class ReadableApp extends Component {
                     <Route exact path="/" render={ () => (
                         <ReadableBar
                             categories={categories}
+                            posts={posts}
                         />
                     )}/>
 
                     <Route path="/:categories" render={ () => (
                         <ReadableBar
                             categories={categories}
+                            posts={posts}
+                        />
+                    )}/>
+
+                    <Route path="/:posts" render={ () => (
+                        <ReadableBar
+                            categories={categories}
+                            posts={posts}
                         />
                     )}/>
 

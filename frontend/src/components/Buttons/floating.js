@@ -3,16 +3,15 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 
 function AddPostBtn (props) {
-  const { onClick } = props
+ 	const { onClick } = props
 
-  return (
-    <div onClick={onClick}>
-      <FloatingActionButton
-        className="btn-primary btn-add-post">
-        <ContentAdd />
-      </FloatingActionButton>
-    </div>
-  )
+  	return (
+		<FloatingActionButton
+	    	className="btn-primary btn-add-post"
+	    	onClick={onClick}>
+	    	<ContentAdd />
+	  	</FloatingActionButton>
+  	)
 }
 
 export default AddPostBtn
