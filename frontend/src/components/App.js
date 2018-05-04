@@ -62,6 +62,14 @@ class ReadableApp extends Component {
         this.getAllPosts()
     }
 
+    removePost = (post) => {
+        this.setState((state) => ({
+            posts: state.posts.filter((p) => p.id !== post.id)
+        }))
+
+        ReadableAPI.remove(post)
+    }
+
     render() {
         const { categories, posts } = this.state
 
@@ -73,6 +81,7 @@ class ReadableApp extends Component {
                         <ReadableBar
                             categories={categories}
                             posts={posts}
+                            onDeletePost={this.removePost}
                         />
                     )}/>
 
@@ -80,6 +89,7 @@ class ReadableApp extends Component {
                         <ReadableBar
                             categories={categories}
                             posts={posts}
+                            onDeletePost={this.removePost}
                         />
                     )}/>
 
@@ -87,6 +97,7 @@ class ReadableApp extends Component {
                         <ReadableBar
                             categories={categories}
                             posts={posts}
+                            onDeletePost={this.removePost}
                         />
                     )}/>
 

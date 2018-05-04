@@ -29,16 +29,6 @@ const iconButtonElement = (
   </IconButton>
 )
 
-// const rightIconMenu = (
-//   <IconMenu iconButtonElement={iconButtonElement}>
-//     <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
-//     <MenuItem
-//       style={{color: fullBlack}}
-//       onClick={() => onDeletePost(post)}>Delete
-//     </MenuItem>
-//   </IconMenu>
-// )
-
 class ListPosts extends Component {
   render() {
     const { showingPosts, onDeletePost } = this.props,
