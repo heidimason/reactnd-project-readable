@@ -29,16 +29,19 @@ const iconButtonElement = (
   </IconButton>
 )
 
-const rightIconMenu = (
-  <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
-    <MenuItem style={{color: fullBlack}}>Delete</MenuItem>
-  </IconMenu>
-)
+// const rightIconMenu = (
+//   <IconMenu iconButtonElement={iconButtonElement}>
+//     <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
+//     <MenuItem
+//       style={{color: fullBlack}}
+//       onClick={() => onDeletePost(post)}>Delete
+//     </MenuItem>
+//   </IconMenu>
+// )
 
 class ListPosts extends Component {
   render() {
-    const { posts } = this.props,
+    const { showingPosts, onDeletePost } = this.props,
 
             options = {
               weekday: 'short',
@@ -52,7 +55,7 @@ class ListPosts extends Component {
 
     return (
       <List style={styles.list}>
-        {posts.map( (post, index) => (
+        {showingPosts.map( (post, index) => (
           <div key={index}>
             <Subheader
               style={{color: fullBlack}}>
@@ -62,7 +65,15 @@ class ListPosts extends Component {
             <ListItem
               disabled={false}
               leftAvatar={<Avatar>{ post.author.charAt(0) }</Avatar>}
-              rightIconButton={rightIconMenu}
+              rightIconButton={
+                <IconMenu iconButtonElement={iconButtonElement}>
+                  <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
+                  <MenuItem
+                    style={{color: fullBlack}}
+                    onClick={() => onDeletePost(post)}>Delete
+                  </MenuItem>
+                </IconMenu>
+              }
               rightIcon={
                 <div style={{width: '25%'}}>
                   <span className="vote-score">{post.voteScore}</span>
