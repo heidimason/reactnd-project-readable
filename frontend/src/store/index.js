@@ -1,5 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux'
-import combinedReducers from '../components/Categories/reducer'
+import { combineReducers } from 'redux'
+import CategoriesReducer from '../components/Categories/reducer'
+import PostsReducer from '../components/Posts/reducer'
 import thunk from 'redux-thunk'
 
 const logger = store => next => action => {
@@ -13,8 +15,13 @@ const logger = store => next => action => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
+const rootReducer = combineReducers({
+	categories: CategoriesReducer,
+	posts: PostsReducer
+})
+
 const store = createStore(
-	combinedReducers,
+	rootReducer,
 	composeEnhancers(
 		applyMiddleware(thunk, logger)
 	)

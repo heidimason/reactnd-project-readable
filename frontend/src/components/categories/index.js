@@ -52,22 +52,22 @@ class ListTabs extends Component {
   render() {
     const { categories } = this.props,
 
-                actions = [
-                  <FlatButton
-                    label="Cancel"
-                    primary={true}
-                    onClick={this.closeModal}
-                    style={{marginRight: 15}}
-                  />,
-                  <FlatButton
-                    label="Submit"
-                    primary={true}
-                    keyboardFocused={true}
-                    onClick={this.closeModal}
-                    backgroundColor={cyanA400}
-                    hoverColor={cyanA400}
-                  />
-                ]
+            actions = [
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.closeModal}
+                style={{marginRight: 15}}
+              />,
+              <FlatButton
+                label="Submit"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.closeModal}
+                backgroundColor={cyanA400}
+                hoverColor={cyanA400}
+              />
+            ]
 
     // posts.sort(sortBy('timestamp')) // Default
 

@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
+import '../../css/Posts.css'
+import { connect } from 'react-redux'
+import { getPosts } from './actions'
+import { white, grey400, darkBlack, fullBlack } from 'material-ui/styles/colors'
 import { List, ListItem } from 'material-ui/List'
+import Subheader from 'material-ui/Subheader'
+import Avatar from 'material-ui/Avatar'
+import IconMenu from 'material-ui/IconMenu'
+import IconButton from 'material-ui/IconButton'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import MenuItem from 'material-ui/MenuItem'
 import IconMoodGood from 'material-ui/svg-icons/social/mood'
 import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
 import Divider from 'material-ui/Divider'
-import Subheader from 'material-ui/Subheader'
-import { white, grey400, darkBlack, fullBlack } from 'material-ui/styles/colors'
-import Avatar from 'material-ui/Avatar'
-import IconButton from 'material-ui/IconButton'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
-import '../../css/Posts.css'
 
 const styles = {
   list: {
@@ -30,8 +32,13 @@ const iconButtonElement = (
 )
 
 class ListPosts extends Component {
+  // Get all posts immediately after component is inserted into DOM
+  componentDidMount() {
+    this.props.getAll();
+  }
+
   render() {
-    const { showingPosts, onDeletePost } = this.props,
+    const { posts } = this.props,
 
             options = {
               weekday: 'short',
@@ -45,7 +52,7 @@ class ListPosts extends Component {
 
     return (
       <List style={styles.list}>
-        {showingPosts.map( (post, index) => (
+        {posts.map( (post, index) => (
           <div key={index}>
             <Subheader
               style={{color: fullBlack}}>
@@ -60,7 +67,7 @@ class ListPosts extends Component {
                   <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
                   <MenuItem
                     style={{color: fullBlack}}
-                    onClick={() => onDeletePost(post)}>Delete
+                    onClick={() => console.log('Delete post!')}>Delete
                   </MenuItem>
                 </IconMenu>
               }
@@ -90,4 +97,16 @@ class ListPosts extends Component {
   }
 }
 
-export default ListPosts
+const mapStateToProps = state => {
+  return {
+    posts: state.posts
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAll: () => dispatch( getPosts() )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListPosts)

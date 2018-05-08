@@ -32,15 +32,6 @@ const customMuiTheme = getMuiTheme({
 })
 
 class ReadableApp extends Component {
-    // // Get all posts and populate posts array
-    // getAllPosts() {
-    //     ReadableAPI.fetchPosts().then( posts =>
-    //         this.setState({ posts })
-    //     ).catch( () =>
-    //         alert('Error getting posts!')
-    //     )
-    // }
-
     // removePost = (post) => {
     //     this.setState((state) => ({
     //         posts: state.posts.filter((p) => p.id !== post.id)

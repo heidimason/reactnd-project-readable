@@ -16,10 +16,9 @@ export const fetchCategories = () =>
     	.then(res => res.json())
     	.then(data => data.categories)
 
-// export const fetchPosts = () =>
-// 	fetch(`${api}/posts`, { headers })
-    	// .then(res => res.json())
-      	// .then(data => data.posts)
+export const fetchPosts = () =>
+	fetch(`${api}/posts`, { headers })
+    	.then(res => res.json())
 
 // export const removePost = (post) =>
 // 	fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
