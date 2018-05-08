@@ -16,12 +16,22 @@ export const fetchCategories = () =>
     	.then(res => res.json())
     	.then(data => data.categories)
 
-export const fetchPosts = () =>
-	fetch(`${api}/posts`, { headers })
-    	.then(res => res.json())
+// export const fetchPosts = () =>
+// 	fetch(`${api}/posts`, { headers })
+    	// .then(res => res.json())
+      	// .then(data => data.posts)
 
-export const remove = (post) =>
-	fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
-    	.then(res => res.json())
-    	.then(data => data.post)
+// export const removePost = (post) =>
+// 	fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
+//     	.then(res => res.json())
+//     	.then(data => data.post)
 
+// export const createPost = (body) =>
+// 	fetch(`${api}/posts`, {
+//     	method: 'POST',
+//     	headers: {
+//       		...headers,
+//       		'Content-Type': 'application/json'
+//     	},
+//     	body: JSON.stringify(body)
+//   	}).then(res => res.json())

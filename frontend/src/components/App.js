@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import '../css/App.css'
-import { Switch, Route } from 'react-router-dom'
-import * as ReadableAPI from '../utils/ReadableAPI'
 import {
     blueGrey900, blueGrey700,
     cyanA400,
@@ -9,6 +7,7 @@ import {
 } from 'material-ui/styles/colors'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import { Switch, Route } from 'react-router-dom'
 import ReadableBar from './AppBar'
 import PageNotFound from './PageNotFound'
 
@@ -33,74 +32,31 @@ const customMuiTheme = getMuiTheme({
 })
 
 class ReadableApp extends Component {
-    state = {
-        categories: [],
-        posts: []
-    }
+    // // Get all posts and populate posts array
+    // getAllPosts() {
+    //     ReadableAPI.fetchPosts().then( posts =>
+    //         this.setState({ posts })
+    //     ).catch( () =>
+    //         alert('Error getting posts!')
+    //     )
+    // }
 
-    // Get all categories and populate categories array
-    getAllCategories() {
-        ReadableAPI.fetchCategories().then( categories =>
-            this.setState({ categories })
-        ).catch( () =>
-            alert('Error getting categories!')
-        )
-    }
+    // removePost = (post) => {
+    //     this.setState((state) => ({
+    //         posts: state.posts.filter((p) => p.id !== post.id)
+    //     }))
 
-    // Get all posts and populate posts array
-    getAllPosts() {
-        ReadableAPI.fetchPosts().then( posts =>
-            this.setState({ posts })
-        ).catch( () =>
-            alert('Error getting posts!')
-        )
-    }
-
-    // Get all categories and posts immediately after component is inserted into DOM
-    componentDidMount() {
-        this.getAllCategories()
-        this.getAllPosts()
-    }
-
-    removePost = (post) => {
-        this.setState((state) => ({
-            posts: state.posts.filter((p) => p.id !== post.id)
-        }))
-
-        ReadableAPI.remove(post)
-    }
+    //     ReadableAPI.remove(post)
+    // }
 
     render() {
-        const { categories, posts } = this.state
-
         return (
             <MuiThemeProvider
                 muiTheme={customMuiTheme}>
 				<Switch>
-                    <Route exact path="/" render={ () => (
-                        <ReadableBar
-                            categories={categories}
-                            posts={posts}
-                            onDeletePost={this.removePost}
-                        />
-                    )}/>
-
-                    <Route path="/:categories" render={ () => (
-                        <ReadableBar
-                            categories={categories}
-                            posts={posts}
-                            onDeletePost={this.removePost}
-                        />
-                    )}/>
-
-                    <Route path="/:posts" render={ () => (
-                        <ReadableBar
-                            categories={categories}
-                            posts={posts}
-                            onDeletePost={this.removePost}
-                        />
-                    )}/>
-
+                    <Route path="/" exact component={ReadableBar} />
+                    <Route path="/:categories" component={ReadableBar} />
+                    <Route path="/:posts" component={ReadableBar} />
                     <Route component={PageNotFound} />
                 </Switch>
             </MuiThemeProvider>

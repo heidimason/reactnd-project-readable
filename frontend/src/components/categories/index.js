@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { getCategories } from './actions'
+import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import SortBy from '../SelectField/sort'
 import ListPosts from '../Posts'
 // import sortBy from 'sort-by'
 import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
-import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
-import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
+import TextField from 'material-ui/TextField'
 // import serializeForm from 'form-serialize'
 
 const styles = {
@@ -21,6 +23,11 @@ const styles = {
 }
 
 class ListTabs extends Component {
+  // Get all categories immediately after component is inserted into DOM
+  componentDidMount() {
+    this.props.getAll();
+  }
+
   state = {
     modalOpen: false
   }
@@ -43,24 +50,24 @@ class ListTabs extends Component {
   // }
 
   render() {
-    const { categories, posts, onDeletePost } = this.props,
+    const { categories } = this.props,
 
-                        actions = [
-                          <FlatButton
-                            label="Cancel"
-                            primary={true}
-                            onClick={this.closeModal}
-                            style={{marginRight: 15}}
-                          />,
-                          <FlatButton
-                            label="Submit"
-                            primary={true}
-                            keyboardFocused={true}
-                            onClick={this.closeModal}
-                            backgroundColor={cyanA400}
-                            hoverColor={cyanA400}
-                          />
-                        ]
+                actions = [
+                  <FlatButton
+                    label="Cancel"
+                    primary={true}
+                    onClick={this.closeModal}
+                    style={{marginRight: 15}}
+                  />,
+                  <FlatButton
+                    label="Submit"
+                    primary={true}
+                    keyboardFocused={true}
+                    onClick={this.closeModal}
+                    backgroundColor={cyanA400}
+                    hoverColor={cyanA400}
+                  />
+                ]
 
     // posts.sort(sortBy('timestamp')) // Default
 
@@ -68,15 +75,14 @@ class ListTabs extends Component {
       <div style={{width: '75%'}}>
         <Tabs>
           {categories.map( (category, index) => (
-            <Tab label={category.name} key={index}>
+            <Tab
+              label={category.name}
+              key={index}>
               <div>
                 <SortBy />
                 <h2 style={styles.headline}>{category.name}</h2>
 
-                <ListPosts
-                  showingPosts={posts.filter( post => category.name === post.category )}
-                  onDeletePost={onDeletePost}
-                />
+                <ListPosts />
               </div>
             </Tab>
           ))}
@@ -128,4 +134,16 @@ class ListTabs extends Component {
   }
 }
 
-export default ListTabs
+const mapStateToProps = state => {
+  return {
+    categories: state.categories
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAll: () => dispatch( getCategories() )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListTabs)
