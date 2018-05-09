@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import '../../css/Posts.css'
-import { connect } from 'react-redux'
-import { getPosts } from './actions'
 import { white, grey400, darkBlack, fullBlack } from 'material-ui/styles/colors'
 import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -13,6 +11,8 @@ import MenuItem from 'material-ui/MenuItem'
 import IconMoodGood from 'material-ui/svg-icons/social/mood'
 import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
 import Divider from 'material-ui/Divider'
+// import { connect } from 'react-redux'
+// import { getPosts } from './actions'
 
 const styles = {
   list: {
@@ -32,13 +32,13 @@ const iconButtonElement = (
 )
 
 class ListPosts extends Component {
-  // Get all posts immediately after component is inserted into DOM
-  componentDidMount() {
-    this.props.getAll();
-  }
+  // // Get all posts immediately after component is inserted into DOM
+  // componentDidMount() {
+  //   this.props.getAll()
+  // }
 
   render() {
-    const { posts } = this.props,
+    const { showingPosts } = this.props,
 
             options = {
               weekday: 'short',
@@ -52,7 +52,7 @@ class ListPosts extends Component {
 
     return (
       <List style={styles.list}>
-        {posts.map( (post, index) => (
+        {showingPosts.map( (post, index) => (
           <div key={index}>
             <Subheader
               style={{color: fullBlack}}>
@@ -97,16 +97,17 @@ class ListPosts extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    posts: state.posts
-  }
-}
+// const mapStateToProps = state => {
+//   return {
+//     posts: state.posts
+//   }
+// }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getAll: () => dispatch( getPosts() )
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getAll: () => dispatch( getPosts() )
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListPosts)
+// export default connect(mapStateToProps, mapDispatchToProps)(ListPosts)
+export default ListPosts

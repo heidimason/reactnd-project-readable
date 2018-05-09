@@ -12,6 +12,7 @@ import TextField from 'material-ui/TextField'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCategories } from './actions'
+import { getPosts } from '../Posts/actions'
 
 const styles = {
   headline: {
@@ -23,10 +24,11 @@ const styles = {
   }
 }
 
-class ListTabs extends Component {
+class ListCategories extends Component {
   // Get all categories immediately after component is inserted into DOM
   componentDidMount() {
-    this.props.getAll()
+    this.props.getAllCategories()
+    this.props.getAllPosts()
   }
 
   state = {
@@ -51,29 +53,29 @@ class ListTabs extends Component {
   // }
 
   render() {
-    const { categories, history } = this.props,
+    const { categories, history, posts } = this.props,
 
-                          actions = [
-                            <Link to="/">
-                              <FlatButton
-                                label="Cancel"
-                                primary={true}
-                                onClick={this.closeModal}
-                                style={{marginRight: 15}}
-                              />
-                            </Link>,
+            actions = [
+              <Link to="/">
+                <FlatButton
+                  label="Cancel"
+                  primary={true}
+                  onClick={this.closeModal}
+                  style={{marginRight: 15}}
+                />
+              </Link>,
 
-                            <Link to="/">
-                              <FlatButton
-                                label="Submit"
-                                primary={true}
-                                keyboardFocused={true}
-                                onClick={this.closeModal}
-                                backgroundColor={cyanA400}
-                                hoverColor={cyanA400}
-                              />
-                            </Link>
-                          ]
+              <Link to="/">
+                <FlatButton
+                  label="Submit"
+                  primary={true}
+                  keyboardFocused={true}
+                  onClick={this.closeModal}
+                  backgroundColor={cyanA400}
+                  hoverColor={cyanA400}
+                />
+              </Link>
+            ]
 
     // posts.sort(sortBy('timestamp')) // Default
 
@@ -81,6 +83,7 @@ class ListTabs extends Component {
       <div style={{width: '75%'}}>
         <Tabs>
           {categories.map( (category, index) => (
+            /* TODO: Fix active tab with browser back button */
             <Tab
               label={category.name}
               key={index}
@@ -92,7 +95,13 @@ class ListTabs extends Component {
                 <SortBy />
                 <h2 style={styles.headline}>{category.name}</h2>
 
-                <ListPosts />
+                { /* TODO: Show all posts at '/' and do not show post padding when there is no post! */ }
+                {category.path === 'all' &&
+                  <ListPosts showingPosts={posts}/>
+                }
+                {category.path !== 'all' &&
+                  <ListPosts showingPosts={posts.filter( post => post.category === category.name )}/>
+                }
               </div>
             </Tab>
           ))}
@@ -148,14 +157,16 @@ class ListTabs extends Component {
 
 const mapStateToProps = state => {
   return {
-    categories: state.categories
+    categories: state.categories,
+    posts: state.posts
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAll: () => dispatch( getCategories() )
+    getAllCategories: () => dispatch( getCategories() ),
+    getAllPosts: () => dispatch( getPosts() )
   }
 }
 
-export default withRouter( connect(mapStateToProps, mapDispatchToProps)(ListTabs) )
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(ListCategories) )
