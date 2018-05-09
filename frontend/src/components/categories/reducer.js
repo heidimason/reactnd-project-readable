@@ -1,6 +1,6 @@
 import { GET_CATEGORIES } from './actions'
 
-export default function categories(state = [], action) {
+function categories(state = [], action) {
 	switch (action.type) {
     	case GET_CATEGORIES:
       		return action.categories
@@ -8,3 +8,5 @@ export default function categories(state = [], action) {
       		return state
   	}
 }
+
+export default categories

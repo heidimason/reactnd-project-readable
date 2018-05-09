@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { getCategories } from './actions'
 import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import SortBy from '../SelectField/sort'
@@ -11,6 +9,9 @@ import ScrollableDialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 // import serializeForm from 'form-serialize'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getCategories } from './actions'
 
 const styles = {
   headline: {
@@ -25,7 +26,7 @@ const styles = {
 class ListTabs extends Component {
   // Get all categories immediately after component is inserted into DOM
   componentDidMount() {
-    this.props.getAll();
+    this.props.getAll()
   }
 
   state = {
@@ -50,24 +51,29 @@ class ListTabs extends Component {
   // }
 
   render() {
-    const { categories } = this.props,
+    const { categories, history } = this.props,
 
-            actions = [
-              <FlatButton
-                label="Cancel"
-                primary={true}
-                onClick={this.closeModal}
-                style={{marginRight: 15}}
-              />,
-              <FlatButton
-                label="Submit"
-                primary={true}
-                keyboardFocused={true}
-                onClick={this.closeModal}
-                backgroundColor={cyanA400}
-                hoverColor={cyanA400}
-              />
-            ]
+                          actions = [
+                            <Link to="/">
+                              <FlatButton
+                                label="Cancel"
+                                primary={true}
+                                onClick={this.closeModal}
+                                style={{marginRight: 15}}
+                              />
+                            </Link>,
+
+                            <Link to="/">
+                              <FlatButton
+                                label="Submit"
+                                primary={true}
+                                keyboardFocused={true}
+                                onClick={this.closeModal}
+                                backgroundColor={cyanA400}
+                                hoverColor={cyanA400}
+                              />
+                            </Link>
+                          ]
 
     // posts.sort(sortBy('timestamp')) // Default
 
@@ -77,7 +83,11 @@ class ListTabs extends Component {
           {categories.map( (category, index) => (
             <Tab
               label={category.name}
-              key={index}>
+              key={index}
+              data-route={category.path}
+              onActive={ path => {
+                history.push('/' + category.path)
+              }}>
               <div>
                 <SortBy />
                 <h2 style={styles.headline}>{category.name}</h2>
@@ -88,9 +98,11 @@ class ListTabs extends Component {
           ))}
         </Tabs>
 
-        <AddPostBtn
-          onClick={this.openModal}
-        />
+        <Link to="new-post">
+          <AddPostBtn
+            onClick={this.openModal}
+          />
+        </Link>
 
         <ScrollableDialog
           title="Create Post"
@@ -146,4 +158,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListTabs)
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(ListTabs) )

@@ -1,5 +1,6 @@
 import React from 'react'
 import AppBar from 'material-ui/AppBar'
+import { Link } from 'react-router-dom'
 import IconButton from 'material-ui/IconButton'
 import ActionHome from 'material-ui/svg-icons/action/home'
 import ListCategories from '../Categories'
@@ -9,13 +10,14 @@ function ReadableBar (props) {
         <AppBar
             title="Readable"
             iconElementLeft={
-            	<IconButton>
-            		<ActionHome />
-            	</IconButton>
+                <Link to="/">
+                	<IconButton>
+                		<ActionHome />
+                	</IconButton>
+                </Link>
             }
             children={
-            	<ListCategories
-                />
+            	<ListCategories />
             }
         />
     )

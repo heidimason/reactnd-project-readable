@@ -7,21 +7,18 @@ export const GET_POSTS = 'GET_POSTS'
 // export const UPVOTE_POST = 'UPVOTE_POST'
 // export const DOWNVOTE_POST = 'DOWNVOTE_POST'
 
-export const getPostsAction = posts => {
-	return {
-		type: GET_POSTS,
-		posts
-	}
-}
-
-// Get all posts and populate posts array
-export const getPosts = posts => {
-	return dispatch =>
-    	fetchPosts().then( res =>
-    		dispatch( getPostsAction(res) ) )
-    	.catch( () =>
-            alert('Error getting posts!')
-        )
+export const getPosts = () => {
+    return dispatch => {
+    	fetchPosts().then( posts =>
+    		dispatch({
+    			type: GET_POSTS,
+    			posts
+    		})
+      	)
+      	.catch( () =>
+        	alert('Error getting posts!')
+    	)
+  	}
 }
 
 // export const addPost = (id, timestamp, title, body, author, category, deleted) => ({

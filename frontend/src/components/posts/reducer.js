@@ -1,6 +1,6 @@
 import { GET_POSTS } from './actions'
 
-export default function posts(state = [], action) {
+function posts(state = [], action) {
   switch (action.type) {
       case GET_POSTS:
           return action.posts
@@ -9,3 +9,4 @@ export default function posts(state = [], action) {
     }
 }
 
+export default posts

@@ -46,8 +46,11 @@ class ReadableApp extends Component {
                 muiTheme={customMuiTheme}>
 				<Switch>
                     <Route path="/" exact component={ReadableBar} />
-                    <Route path="/:categories" component={ReadableBar} />
-                    <Route path="/:posts" component={ReadableBar} />
+                    <Route path="/all" exact component={ReadableBar} />
+                    <Route path="/react" exact component={ReadableBar} />
+                    <Route path="/redux" exact component={ReadableBar} />
+                    <Route path="/udacity" exact component={ReadableBar} />
+                    <Route path="/new-post" exact component={ReadableBar} />
                     <Route component={PageNotFound} />
                 </Switch>
             </MuiThemeProvider>
