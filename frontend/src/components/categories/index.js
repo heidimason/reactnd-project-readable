@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import orderBy from 'sort-by'
-import { cyanA400, white, grey500, fullBlack } from 'material-ui/styles/colors'
+import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
+import OrderBy from '../SelectField/sort'
 import ListPosts from '../Posts'
 import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
@@ -26,21 +24,14 @@ const styles = {
 }
 
 class ListCategories extends Component {
-  // Get all categories immediately after component is inserted into DOM
+  // Get all categories and posts immediately after component is inserted into DOM
   componentDidMount() {
     this.props.getAllCategories()
     this.props.getAllPosts()
   }
 
   state = {
-    orderValue: 'timestamp',
     modalOpen: false
-  }
-
-  orderPosts = (event, index, orderValue) => {
-    this.setState({orderValue})
-
-    this.props.getAllPosts()
   }
 
   openModal = () => {
@@ -85,8 +76,6 @@ class ListCategories extends Component {
               </Link>
             ]
 
-    posts.sort(orderBy(this.state.orderValue))
-
     return (
       <div style={{width: '75%'}}>
         <Tabs>
@@ -100,18 +89,7 @@ class ListCategories extends Component {
                 history.push('/' + category.path)
               }}>
               <div>
-                <div style={{float: 'right'}}>
-                  <SelectField
-                    floatingLabelText="Order By"
-                    value={this.state.orderValue}
-                    onChange={this.orderPosts}
-                    autoWidth={true}
-                    floatingLabelStyle={{color: white}}
-                    menuItemStyle={{color: fullBlack}}>
-                    <MenuItem value="voteScore" primaryText="Vote Score" />
-                    <MenuItem value="timestamp" primaryText="Timestamp" />
-                  </SelectField>
-                </div>
+                <OrderBy />
 
                 <h2 style={styles.headline}>{category.name}</h2>
 

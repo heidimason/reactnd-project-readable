@@ -1,35 +1,59 @@
 import React, {Component} from 'react'
-import SelectField from 'material-ui/SelectField'
+import sortBy from 'sort-by'
 import {white, fullBlack} from 'material-ui/styles/colors'
+import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import { connect } from 'react-redux'
+import { getPosts } from '../Posts/actions'
 
 /**
  * `SelectField` is implemented as a controlled component,
  * with the current selection set through the `value` property.
  * The `SelectField` can be disabled with the `disabled` property.
  */
-export default class SelectFieldAutoWidth extends Component {
-  state = {
-    value: 1,
-  }
+class OrderBy extends Component {
+  	state = {
+    	orderValue: 'timestamp'
+  	}
 
-  handleChange = (event, index, value) => this.setState({value})
+  	orderPosts = (event, index, orderValue) => {
+    	this.setState({orderValue})
 
-  render() {
-    return (
-      <div style={{float: 'right'}}>
-        <SelectField
-          floatingLabelText="Sort By"
-          value={this.state.value}
-          onChange={this.handleChange}
-          autoWidth={true}
-          floatingLabelStyle={{color: white}}
-          menuItemStyle={{color: fullBlack}}
-        >
-          <MenuItem value={1} primaryText="Vote Score" />
-          <MenuItem value={2} primaryText="Timestamp" />
-        </SelectField>
-      </div>
-    )
-  }
+    	this.props.getAllPosts()
+  	}
+
+  	render() {
+    	const { posts } = this.props
+
+		posts.sort(sortBy(this.state.orderValue))
+
+    	return (
+      		<div style={{float: 'right'}}>
+        		<SelectField
+            		floatingLabelText="Order By"
+            		value={this.state.orderValue}
+            		onChange={this.orderPosts}
+            		autoWidth={true}
+            		floatingLabelStyle={{color: white}}
+            		menuItemStyle={{color: fullBlack}}>
+            		<MenuItem value="voteScore" primaryText="Vote Score" />
+            		<MenuItem value="timestamp" primaryText="Timestamp" />
+          		</SelectField>
+      		</div>
+    	)
+  	}
 }
+
+const mapStateToProps = state => {
+  	return {
+    	posts: state.posts
+  	}
+}
+
+const mapDispatchToProps = dispatch => {
+  	return {
+    	getAllPosts: () => dispatch( getPosts() )
+  	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderBy)
