@@ -13,7 +13,7 @@ import { getPosts } from '../Posts/actions'
  */
 class OrderBy extends Component {
   	state = {
-    	orderValue: 'timestamp'
+    	orderValue: '-timestamp'
   	}
 
   	orderPosts = (event, index, orderValue) => {
@@ -36,8 +36,10 @@ class OrderBy extends Component {
             		autoWidth={true}
             		floatingLabelStyle={{color: white}}
             		menuItemStyle={{color: fullBlack}}>
-            		<MenuItem value="voteScore" primaryText="Vote Score" />
-            		<MenuItem value="timestamp" primaryText="Timestamp" />
+                    <MenuItem value="-timestamp" primaryText="Timestamp (most recent)" />
+                    <MenuItem value="timestamp" primaryText="Timestamp (least recent)" />
+            		<MenuItem value="-voteScore" primaryText="Vote Score (highest)" />
+                    <MenuItem value="voteScore" primaryText="Vote Score (lowest)" />
           		</SelectField>
       		</div>
     	)
