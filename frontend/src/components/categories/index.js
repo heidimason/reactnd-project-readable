@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
+import orderBy from 'sort-by'
+import { cyanA400, white, grey500, fullBlack } from 'material-ui/styles/colors'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import SortBy from '../SelectField/sort'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 import ListPosts from '../Posts'
-// import sortBy from 'sort-by'
 import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
@@ -32,7 +33,14 @@ class ListCategories extends Component {
   }
 
   state = {
+    orderValue: 'timestamp',
     modalOpen: false
+  }
+
+  orderPosts = (event, index, orderValue) => {
+    this.setState({orderValue})
+
+    this.props.getAllPosts()
   }
 
   openModal = () => {
@@ -77,7 +85,7 @@ class ListCategories extends Component {
               </Link>
             ]
 
-    // posts.sort(sortBy('timestamp')) // Default
+    posts.sort(orderBy(this.state.orderValue))
 
     return (
       <div style={{width: '75%'}}>
@@ -92,7 +100,19 @@ class ListCategories extends Component {
                 history.push('/' + category.path)
               }}>
               <div>
-                <SortBy />
+                <div style={{float: 'right'}}>
+                  <SelectField
+                    floatingLabelText="Order By"
+                    value={this.state.orderValue}
+                    onChange={this.orderPosts}
+                    autoWidth={true}
+                    floatingLabelStyle={{color: white}}
+                    menuItemStyle={{color: fullBlack}}>
+                    <MenuItem value="voteScore" primaryText="Vote Score" />
+                    <MenuItem value="timestamp" primaryText="Timestamp" />
+                  </SelectField>
+                </div>
+
                 <h2 style={styles.headline}>{category.name}</h2>
 
                 { /* TODO: Show all posts at '/' and do not show post padding when there is no post! */ }
