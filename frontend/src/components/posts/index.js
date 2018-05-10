@@ -12,6 +12,8 @@ import IconMoodGood from 'material-ui/svg-icons/social/mood'
 import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
 import Divider from 'material-ui/Divider'
 import { connect } from 'react-redux'
+import { upvotePost } from './actions'
+import { downvotePost } from './actions'
 import { removePost } from './actions'
 
 const styles = {
@@ -33,7 +35,7 @@ const iconButtonElement = (
 
 class ListPosts extends Component {
   render() {
-    const { showingPosts, remove } = this.props,
+    const { showingPosts, upvote, downvote, remove } = this.props,
 
             options = {
               weekday: 'short',
@@ -69,8 +71,14 @@ class ListPosts extends Component {
               rightIcon={
                 <div style={{width: '25%'}}>
                   <span className="vote-score">{post.voteScore}</span>
-                  <IconMoodGood className="icon-mood icon-mood-good" />
-                  <IconMoodBad className="icon-mood" />
+                  <IconMoodGood
+                    className="icon-mood icon-mood-good"
+                    onClick={e => upvote(post)}
+                    />
+                  <IconMoodBad
+                    className="icon-mood"
+                    onClick={e => downvote(post)}
+                  />
                 </div>
               }
               style={{color: darkBlack}}
@@ -94,6 +102,8 @@ class ListPosts extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    upvote: post => dispatch( upvotePost(post) ),
+    downvote: post => dispatch( downvotePost(post) ),
     remove: post => dispatch( removePost(post) )
   }
 }

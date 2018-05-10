@@ -13,16 +13,36 @@ const headers = {
 
 export const fetchCategories = () =>
 	fetch(`${api}/categories`, { headers })
-    	.then(res => res.json())
-    	.then(data => data.categories)
+    .then(res => res.json())
+    .then(data => data.categories)
 
 export const fetchPosts = () =>
 	fetch(`${api}/posts`, { headers })
-    	.then(res => res.json())
+    .then(res => res.json())
+
+export const putUpvote = post =>
+	fetch(`${api}/posts/${post.id}`, {
+  	method: 'PUT',
+  	headers: {
+    		...headers,
+    		'Content-Type': 'application/json'
+  	}
+	}).then(res => res.json())
+
+export const putDownvote = post =>
+	fetch(`${api}/posts/${post.id}`, {
+  	method: 'PUT',
+  	headers: {
+    		...headers,
+    		'Content-Type': 'application/json'
+  	}
+	}).then(res => res.json())
 
 export const deletePost = post =>
-	fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
-    	.then(res => res.json())
+	fetch(`${api}/posts/${post.id}`, {
+    method: 'DELETE',
+    headers
+  }).then(res => res.json())
 
 // export const createPost = (body) =>
 // 	fetch(`${api}/posts`, {
