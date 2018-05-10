@@ -11,8 +11,8 @@ import MenuItem from 'material-ui/MenuItem'
 import IconMoodGood from 'material-ui/svg-icons/social/mood'
 import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
 import Divider from 'material-ui/Divider'
-// import { connect } from 'react-redux'
-// import { getPosts } from './actions'
+import { connect } from 'react-redux'
+import { removePost } from './actions'
 
 const styles = {
   list: {
@@ -32,13 +32,8 @@ const iconButtonElement = (
 )
 
 class ListPosts extends Component {
-  // // Get all posts immediately after component is inserted into DOM
-  // componentDidMount() {
-  //   this.props.getAll()
-  // }
-
   render() {
-    const { showingPosts } = this.props,
+    const { showingPosts, remove } = this.props,
 
             options = {
               weekday: 'short',
@@ -67,7 +62,7 @@ class ListPosts extends Component {
                   <MenuItem style={{color: fullBlack}}>Edit</MenuItem>
                   <MenuItem
                     style={{color: fullBlack}}
-                    onClick={() => console.log('Delete post!')}>Delete
+                    onClick={e => remove(post)}>Delete
                   </MenuItem>
                 </IconMenu>
               }
@@ -97,17 +92,10 @@ class ListPosts extends Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     posts: state.posts
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    remove: post => dispatch( removePost(post) )
+  }
+}
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getAll: () => dispatch( getPosts() )
-//   }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(ListPosts)
-export default ListPosts
+export default connect(null, mapDispatchToProps)(ListPosts)

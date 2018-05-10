@@ -20,10 +20,9 @@ export const fetchPosts = () =>
 	fetch(`${api}/posts`, { headers })
     	.then(res => res.json())
 
-// export const removePost = (post) =>
-// 	fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
-//     	.then(res => res.json())
-//     	.then(data => data.post)
+export const deletePost = post =>
+	fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
+    	.then(res => res.json())
 
 // export const createPost = (body) =>
 // 	fetch(`${api}/posts`, {
