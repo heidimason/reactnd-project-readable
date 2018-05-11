@@ -33,7 +33,6 @@ class OrderBy extends Component {
             		floatingLabelText="Order By"
             		value={this.state.orderValue}
             		onChange={this.orderPosts}
-            		autoWidth={true}
             		floatingLabelStyle={{color: white}}
             		menuItemStyle={{color: fullBlack}}>
                     <MenuItem value="-timestamp" primaryText="Timestamp (most recent)" />

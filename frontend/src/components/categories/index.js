@@ -5,8 +5,10 @@ import OrderBy from '../SelectField/sort'
 import ListPosts from '../Posts'
 import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
-import FlatButton from 'material-ui/FlatButton'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
+import FlatButton from 'material-ui/FlatButton'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCategories } from './actions'
@@ -22,6 +24,11 @@ const styles = {
     marginBottom: 25,
     fontWeight: 400,
     textTransform: 'capitalize'
+  },
+  selectCategory: {
+    position: 'absolute',
+    top: 0,
+    right: 24
   }
 }
 
@@ -44,9 +51,27 @@ class ListCategories extends Component {
     this.setState({modalOpen: false})
   }
 
-  handleChange = e => {
+  // changeCategory = (e, index, value) => {
+  //   this.setState({
+  //     category: e.target.value
+  //   })
+  // }
+
+  changeTitle = e => {
     this.setState({
-      value: e.target.value,
+      title: e.target.value
+    })
+  }
+
+  changeAuthor = e => {
+    this.setState({
+      author: e.target.value
+    })
+  }
+
+  changeBody = e => {
+    this.setState({
+      body: e.target.value
     })
   }
 
@@ -59,7 +84,10 @@ class ListCategories extends Component {
     const post = Object.assign(values, {
       id: uuid(),
       timestamp: Date.now(),
-      title: this.state.value
+      title: this.state.title,
+      body: this.state.body,
+      author: this.state.author,
+      // category: this.state.category
     })
 
     // Dispatch action
@@ -138,12 +166,24 @@ class ListCategories extends Component {
           autoScrollBodyContent={true}
           titleStyle={{color: fullBlack}}>
           <form>
+            <SelectField
+              floatingLabelText="Category"
+              value={this.state.category}
+              onChange={this.changeCategory}
+              autoWidth={true}
+              menuItemStyle={{color: fullBlack}}
+              style={styles.selectCategory}>
+              <MenuItem value="react" primaryText="React" />
+              <MenuItem value="redux" primaryText="Redux" />
+              <MenuItem value="udacity" primaryText="Udacity" />
+            </SelectField>
+
             <TextField
               floatingLabelText="Title"
               floatingLabelStyle={{color: grey500}}
               inputStyle={{color: fullBlack}}
               value={this.state.title}
-              onChange={this.handleChange}
+              onChange={this.changeTitle}
             />
 
             <TextField
@@ -152,6 +192,8 @@ class ListCategories extends Component {
               floatingLabelStyle={{color: grey500}}
               inputStyle={{color: fullBlack}}
               style={{marginLeft: 15}}
+              value={this.state.author}
+              onChange={this.changeAuthor}
             />
 
             <TextField
@@ -162,6 +204,8 @@ class ListCategories extends Component {
               rows={2}
               rowsMax={4}
               fullWidth={true}
+              value={this.state.body}
+              onChange={this.changeBody}
             />
           </form>
         </ScrollableDialog>
