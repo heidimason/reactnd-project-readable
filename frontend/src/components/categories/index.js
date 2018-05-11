@@ -40,7 +40,11 @@ class ListCategories extends Component {
   }
 
   state = {
-    modalOpen: false
+    modalOpen: false,
+    // category: '',
+    title: '',
+    author: '',
+    body: ''
   }
 
   openModal = () => {
@@ -134,17 +138,17 @@ class ListCategories extends Component {
               onActive={ path => {
                 history.push('/' + category.path)
               }}>
-              <div>
+              <div style={{height: '85vh', overflowY: 'auto'}}>
                 <OrderBy />
 
                 <h2 style={styles.headline}>{category.name}</h2>
 
                 { /* TODO: Show all posts at '/' and do not show post padding when there is no post! */ }
                 {category.path === 'all' &&
-                  <ListPosts showingPosts={posts}/>
+                  <ListPosts showingPosts={posts} />
                 }
                 {category.path !== 'all' &&
-                  <ListPosts showingPosts={posts.filter( post => post.category === category.name )}/>
+                  <ListPosts showingPosts={posts.filter( post => post.category === category.name )} />
                 }
               </div>
             </Tab>

@@ -1,3 +1,4 @@
+/* Buttons */
 .btn-primary button {
 	background-color: rgb(0, 188, 212) !important; /* cyanA400 */
 }
@@ -6,4 +7,17 @@
 	position: absolute;
     right: 15px;
     bottom: 15px;
+}
+
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    background-color: rgb(38, 50, 56);
+    width: 0.8rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 0.3rem solid transparent;
 }
