@@ -20,6 +20,16 @@ export const fetchPosts = () =>
 	fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
+export const createPost = data =>
+  fetch(`${api}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+
 export const putUpvote = post =>
 	fetch(`${api}/posts/${post.id}`, {
   	method: 'PUT',
@@ -44,12 +54,3 @@ export const deletePost = post =>
     headers
   }).then(res => res.json())
 
-// export const createPost = (body) =>
-// 	fetch(`${api}/posts`, {
-//     	method: 'POST',
-//     	headers: {
-//       		...headers,
-//       		'Content-Type': 'application/json'
-//     	},
-//     	body: JSON.stringify(body)
-//   	}).then(res => res.json())

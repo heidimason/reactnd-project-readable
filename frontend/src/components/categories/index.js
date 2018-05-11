@@ -7,11 +7,13 @@ import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
-// import serializeForm from 'form-serialize'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCategories } from './actions'
 import { getPosts } from '../Posts/actions'
+import { addPost } from '../Posts/actions'
+import serializeForm from 'form-serialize'
+import uuid from 'uuid'
 
 const styles = {
   headline: {
@@ -42,14 +44,30 @@ class ListCategories extends Component {
     this.setState({modalOpen: false})
   }
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   const values = serializeForm(e.target, { hash: true })
-  //   console.log(values)
+  handleChange = e => {
+    this.setState({
+      value: e.target.value,
+    })
+  }
 
-  //   if (this.props.onCreatePost)
-  //     this.props.onCreatePost(values)
-  // }
+  submitPost = e => {
+    e.preventDefault()
+
+    const values = serializeForm(e.target, { hash: true })
+    console.log(values)
+
+    const post = Object.assign(values, {
+      id: uuid(),
+      timestamp: Date.now(),
+      title: this.state.value
+    })
+
+    // Dispatch action
+    this.props.add(post)
+
+    // Close modal upon submitting form
+    this.closeModal()
+  }
 
   render() {
     const { categories, history, posts } = this.props,
@@ -69,7 +87,7 @@ class ListCategories extends Component {
                   label="Submit"
                   primary={true}
                   keyboardFocused={true}
-                  onClick={this.closeModal}
+                  onClick={this.submitPost}
                   backgroundColor={cyanA400}
                   hoverColor={cyanA400}
                 />
@@ -119,12 +137,13 @@ class ListCategories extends Component {
           onRequestClose={this.closeModal}
           autoScrollBodyContent={true}
           titleStyle={{color: fullBlack}}>
-          <form onSubmit={this.handleSubmit}>
+          <form>
             <TextField
               floatingLabelText="Title"
               floatingLabelStyle={{color: grey500}}
               inputStyle={{color: fullBlack}}
-              name="title"
+              value={this.state.title}
+              onChange={this.handleChange}
             />
 
             <TextField
@@ -133,7 +152,6 @@ class ListCategories extends Component {
               floatingLabelStyle={{color: grey500}}
               inputStyle={{color: fullBlack}}
               style={{marginLeft: 15}}
-              name="author"
             />
 
             <TextField
@@ -144,7 +162,6 @@ class ListCategories extends Component {
               rows={2}
               rowsMax={4}
               fullWidth={true}
-              name="body"
             />
           </form>
         </ScrollableDialog>
@@ -163,7 +180,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllCategories: () => dispatch( getCategories() ),
-    getAllPosts: () => dispatch( getPosts() )
+    getAllPosts: () => dispatch( getPosts() ),
+    add: post => dispatch ( addPost(post) )
   }
 }
 

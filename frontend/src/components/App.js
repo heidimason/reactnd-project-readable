@@ -32,14 +32,6 @@ const customMuiTheme = getMuiTheme({
 })
 
 class ReadableApp extends Component {
-    // removePost = (post) => {
-    //     this.setState((state) => ({
-    //         posts: state.posts.filter((p) => p.id !== post.id)
-    //     }))
-
-    //     ReadableAPI.remove(post)
-    // }
-
     render() {
         return (
             <MuiThemeProvider

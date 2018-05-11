@@ -58,7 +58,7 @@ class ListPosts extends Component {
 
             <ListItem
               disabled={false}
-              leftAvatar={<Avatar>{ post.author.charAt(0) }</Avatar>}
+              leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
               rightIconButton={
                 <IconMenu iconButtonElement={iconButtonElement}>
                   <MenuItem style={{color: fullBlack}}>Edit</MenuItem>

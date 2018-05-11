@@ -1,4 +1,5 @@
 import { GET_POSTS } from './actions'
+import { ADD_POST } from './actions'
 import { UPVOTE_POST } from './actions'
 import { DOWNVOTE_POST } from './actions'
 import { REMOVE_POST } from './actions'
@@ -6,7 +7,12 @@ import { REMOVE_POST } from './actions'
 function posts(state = [], action) {
     switch (action.type) {
         case GET_POSTS:
-    	   return action.posts
+            return action.posts
+        case ADD_POST:
+            return [
+                ...state,
+                action.data
+            ]
         case UPVOTE_POST:
             return state.map(post => {
                 if (post.id === action.post.id) {
