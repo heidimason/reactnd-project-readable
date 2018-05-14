@@ -30,22 +30,28 @@ export const createPost = data =>
     body: JSON.stringify(data)
   }).then(res => res.json())
 
-export const putUpvote = post =>
+export const postUpvote = post =>
 	fetch(`${api}/posts/${post.id}`, {
-  	method: 'PUT',
+  	method: 'POST',
   	headers: {
     		...headers,
     		'Content-Type': 'application/json'
-  	}
+  	},
+    body: JSON.stringify({
+      option: 'upVote'
+    })
 	}).then(res => res.json())
 
-export const putDownvote = post =>
+export const postDownvote = post =>
 	fetch(`${api}/posts/${post.id}`, {
-  	method: 'PUT',
+  	method: 'POST',
   	headers: {
     		...headers,
     		'Content-Type': 'application/json'
-  	}
+  	},
+    body: JSON.stringify({
+      option: 'downVote'
+    })
 	}).then(res => res.json())
 
 export const deletePost = post =>

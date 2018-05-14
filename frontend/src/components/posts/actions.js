@@ -1,7 +1,7 @@
 import { fetchPosts } from '../../utils/ReadableAPI'
 import { createPost } from '../../utils/ReadableAPI'
-import { putUpvote } from '../../utils/ReadableAPI'
-import { putDownvote } from '../../utils/ReadableAPI'
+import { postUpvote } from '../../utils/ReadableAPI'
+import { postDownvote } from '../../utils/ReadableAPI'
 import { deletePost } from '../../utils/ReadableAPI'
 
 export const GET_POSTS = 'GET_POSTS'
@@ -43,7 +43,7 @@ export const addPost = post => {
 
 export const upvotePost = id => {
   return dispatch => {
-    putUpvote(id)
+    postUpvote(id)
       .then( post =>
         dispatch({
           type: UPVOTE_POST,
@@ -58,7 +58,7 @@ export const upvotePost = id => {
 
 export const downvotePost = id => {
   return dispatch => {
-    putDownvote(id)
+    postDownvote(id)
       .then( post =>
         dispatch({
           type: DOWNVOTE_POST,
