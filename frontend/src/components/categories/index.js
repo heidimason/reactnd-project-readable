@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
+import { cyanA400, white, grey500, fullBlack } from 'material-ui/styles/colors'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import OrderBy from '../SelectField/sort'
 import ListPosts from '../Posts'
@@ -41,7 +41,7 @@ class ListCategories extends Component {
 
   state = {
     modalOpen: false,
-    // category: '',
+    category: '',
     title: '',
     author: '',
     body: ''
@@ -55,28 +55,20 @@ class ListCategories extends Component {
     this.setState({modalOpen: false})
   }
 
-  // changeCategory = (e, index, value) => {
-  //   this.setState({
-  //     category: e.target.value
-  //   })
-  // }
+  changeCategory = (event, index, category) => {
+    this.setState({category})
+  }
 
   changeTitle = e => {
-    this.setState({
-      title: e.target.value
-    })
+    this.setState({title: e.target.value})
   }
 
   changeAuthor = e => {
-    this.setState({
-      author: e.target.value
-    })
+    this.setState({author: e.target.value})
   }
 
   changeBody = e => {
-    this.setState({
-      body: e.target.value
-    })
+    this.setState({body: e.target.value})
   }
 
   submitPost = e => {
@@ -88,10 +80,10 @@ class ListCategories extends Component {
     const post = Object.assign(values, {
       id: uuid(),
       timestamp: Date.now(),
+      category: this.state.category,
       title: this.state.title,
       body: this.state.body,
-      author: this.state.author,
-      // category: this.state.category
+      author: this.state.author
     })
 
     // Dispatch action
@@ -168,13 +160,14 @@ class ListCategories extends Component {
           open={this.state.modalOpen}
           onRequestClose={this.closeModal}
           autoScrollBodyContent={true}
-          titleStyle={{color: fullBlack}}>
+          titleStyle={{backgroundColor: cyanA400}}>
           <form>
             <SelectField
               floatingLabelText="Category"
               value={this.state.category}
               onChange={this.changeCategory}
               autoWidth={true}
+              floatingLabelStyle={{color: white}}
               menuItemStyle={{color: fullBlack}}
               style={styles.selectCategory}>
               <MenuItem value="react" primaryText="React" />
