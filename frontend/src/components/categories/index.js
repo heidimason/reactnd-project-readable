@@ -24,11 +24,6 @@ const styles = {
     marginBottom: 25,
     fontWeight: 400,
     textTransform: 'capitalize'
-  },
-  selectCategory: {
-    position: 'absolute',
-    top: 0,
-    right: 24
   }
 }
 
@@ -75,15 +70,14 @@ class ListCategories extends Component {
     e.preventDefault()
 
     const values = serializeForm(e.target, { hash: true })
-    console.log(values)
 
     const post = Object.assign(values, {
       id: uuid(),
       timestamp: Date.now(),
-      category: this.state.category,
       title: this.state.title,
       body: this.state.body,
-      author: this.state.author
+      author: this.state.author,
+      category: this.state.category
     })
 
     // Dispatch action
@@ -160,16 +154,15 @@ class ListCategories extends Component {
           open={this.state.modalOpen}
           onRequestClose={this.closeModal}
           autoScrollBodyContent={true}
-          titleStyle={{backgroundColor: cyanA400}}>
+          titleStyle={{color: fullBlack}}>
           <form>
             <SelectField
               floatingLabelText="Category"
               value={this.state.category}
               onChange={this.changeCategory}
               autoWidth={true}
-              floatingLabelStyle={{color: white}}
               menuItemStyle={{color: fullBlack}}
-              style={styles.selectCategory}>
+              className="select-category">
               <MenuItem value="react" primaryText="React" />
               <MenuItem value="redux" primaryText="Redux" />
               <MenuItem value="udacity" primaryText="Udacity" />

@@ -21,3 +21,15 @@
     background-color: rgba(255, 255, 255, 0.7);
     border: 0.3rem solid transparent;
 }
+
+
+/* Create/Edit Post */
+.select-category {
+	position: absolute !important;
+	top: 0;
+	right: 24px;
+}
+
+.select-category div div div { /* i.e. React/Redux/Udacity */
+	color: black !important;
+}
