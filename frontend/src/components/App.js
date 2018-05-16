@@ -38,11 +38,11 @@ class ReadableApp extends Component {
                 muiTheme={customMuiTheme}>
 				<Switch>
                     <Route path="/" exact component={ReadableBar} />
-                    <Route path="/all" exact component={ReadableBar} />
-                    <Route path="/react" exact component={ReadableBar} />
-                    <Route path="/redux" exact component={ReadableBar} />
-                    <Route path="/udacity" exact component={ReadableBar} />
+                    <Route path="/:category" exact component={ReadableBar} />
+                    <Route path="/:category/:post_id" exact component={ReadableBar} />
                     <Route path="/new-post" exact component={ReadableBar} />
+                    <Route path="/edit-post" exact component={ReadableBar} />
+                    { /* TODO: Make this route work when random URL is manually typed into address bar! */ }
                     <Route component={PageNotFound} />
                 </Switch>
             </MuiThemeProvider>

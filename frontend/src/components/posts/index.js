@@ -19,7 +19,7 @@ import ScrollableDialog from 'material-ui/Dialog'
 import SelectField from 'material-ui/SelectField'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { editPost, upvotePost, downvotePost, removePost } from './actions'
 import serializeForm from 'form-serialize'
@@ -77,7 +77,7 @@ class ListPosts extends Component {
   }
 
   render() {
-    const { showingPosts, upvote, downvote, remove } = this.props,
+    const { showingPosts, history, upvote, downvote, remove } = this.props,
 
             options = {
               weekday: 'short',
@@ -128,6 +128,8 @@ class ListPosts extends Component {
                   <IconMenu iconButtonElement={iconButtonElement}>
                     <MenuItem style={{color: fullBlack}}
                       onClick={ () => {
+                        history.push('/edit-post')
+
                         this.setState({
                           modalOpen: true,
                           id: post.id,
@@ -141,6 +143,12 @@ class ListPosts extends Component {
                     <MenuItem
                       style={{color: fullBlack}}
                       onClick={e => remove(post)}>Delete
+                    </MenuItem>
+                    <MenuItem
+                      style={{color: fullBlack}}
+                      onClick={ () => {
+                        history.push(`/${post.category}/${post.id}`)
+                      }}>Details
                     </MenuItem>
                   </IconMenu>
                 }
@@ -242,5 +250,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ListPosts)
+export default withRouter( connect(null, mapDispatchToProps)(ListPosts) )
 

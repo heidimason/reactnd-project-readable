@@ -120,8 +120,8 @@ class ListCategories extends Component {
               label={category.name}
               key={index}
               data-route={category.path}
-              onActive={ path => {
-                history.push('/' + category.path)
+              onActive={ () => {
+                history.push(`/${category.path}`)
               }}>
               <div style={{height: '85vh', overflowY: 'auto'}}>
                 <OrderBy />
