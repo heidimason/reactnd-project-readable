@@ -173,6 +173,7 @@ class ListCategories extends Component {
               inputStyle={{color: fullBlack}}
               value={this.state.title}
               onChange={this.changeTitle}
+              className="title-input"
             />
 
             <TextField

@@ -202,6 +202,7 @@ class ListPosts extends Component {
                   inputStyle={{color: fullBlack}}
                   value={this.state.title}
                   onChange={this.changeTitle}
+                  className="title-input"
                 />
 
                 { /* TODO: Fix value when there is more than one post per category */ }
