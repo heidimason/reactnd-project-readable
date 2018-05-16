@@ -43,13 +43,7 @@ const iconButtonElement = (
 
 class ListPosts extends Component {
   state = {
-    modalOpen: false,
-    title: '',
-    body: ''
-  }
-
-  openModal = () => {
-    this.setState({modalOpen: true})
+    modalOpen: false
   }
 
   closeModal = () => {
@@ -70,7 +64,7 @@ class ListPosts extends Component {
     const values = serializeForm(e.target, { hash: true })
 
     const post = Object.assign(values, {
-      timestamp: Date.now(),
+      id: this.state.id,
       title: this.state.title,
       body: this.state.body
     })
@@ -133,7 +127,16 @@ class ListPosts extends Component {
                 rightIconButton={
                   <IconMenu iconButtonElement={iconButtonElement}>
                     <MenuItem style={{color: fullBlack}}
-                      onClick={this.openModal}>Edit</MenuItem>
+                      onClick={ () => {
+                        this.setState({
+                          modalOpen: true,
+                          id: post.id,
+                          title: post.title,
+                          body: post.body,
+                          author: post.author,
+                          category: post.category
+                        })
+                      }}>Edit</MenuItem>
                     { /* TODO: Add confirmation dialog */ }
                     <MenuItem
                       style={{color: fullBlack}}
@@ -181,10 +184,9 @@ class ListPosts extends Component {
               titleStyle={{color: fullBlack}}
               key={index}>
               <form>
-                { /* TODO: Fix value when there is more than one post per category */ }
                 <SelectField
                   floatingLabelText="Category"
-                  value={post.category}
+                  value={this.state.category}
                   autoWidth={true}
                   menuItemStyle={{color: fullBlack}}
                   className="select-category"
@@ -207,7 +209,7 @@ class ListPosts extends Component {
                   floatingLabelText="Author"
                   inputStyle={{color: fullBlack}}
                   style={{marginLeft: 15}}
-                  value={post.author}
+                  value={this.state.author}
                   disabled={true}
                 />
 
