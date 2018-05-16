@@ -1,8 +1,10 @@
-import { GET_POSTS } from './actions'
-import { ADD_POST } from './actions'
-import { UPVOTE_POST } from './actions'
-import { DOWNVOTE_POST } from './actions'
-import { REMOVE_POST } from './actions'
+import { GET_POSTS,
+    ADD_POST,
+    EDIT_POST,
+    UPVOTE_POST,
+    DOWNVOTE_POST,
+    REMOVE_POST
+} from './actions'
 
 function posts(state = [], action) {
     switch (action.type) {
@@ -11,25 +13,32 @@ function posts(state = [], action) {
         case ADD_POST:
             return [
                 ...state,
-                action.data
+                action.post
             ]
+        case EDIT_POST:
+            return state.map(post => {
+                if (post.id === action.post.id) {
+                  post = action.post
+                }
+
+                return post
+              })
+            // return [state.filter(post => post.id !== action.data.id), action.data]
         case UPVOTE_POST:
             return state.map(post => {
                 if (post.id === action.post.id) {
                     post.voteScore++
-                    return post
-                } else {
-                    return post
                 }
+
+                return post
             })
         case DOWNVOTE_POST:
             return state.map(post => {
                 if (post.id === action.post.id) {
                     post.voteScore--
-                    return post
-                } else {
-                    return post
                 }
+
+                return post
             })
         case REMOVE_POST:
   		    return state.filter(post => post.id !== action.post.id)

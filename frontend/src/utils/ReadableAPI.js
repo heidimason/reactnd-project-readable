@@ -20,6 +20,10 @@ export const fetchPosts = () =>
 	fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
+// export const createPost = post =>
+//   fetch(`${api}/posts/${post.id}`, { headers })
+//     .then(res => res.json())
+
 export const createPost = data =>
   fetch(`${api}/posts`, {
     method: 'POST',
@@ -30,8 +34,21 @@ export const createPost = data =>
     body: JSON.stringify(data)
   }).then(res => res.json())
 
-export const postUpvote = post =>
-	fetch(`${api}/posts/${post.id}`, {
+export const revisePost = data =>
+  fetch(`${api}/posts/${data.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: data.title,
+      body: data.body
+    })
+  }).then(res => res.json())
+
+export const postUpvote = data =>
+	fetch(`${api}/posts/${data.id}`, {
   	method: 'POST',
   	headers: {
     		...headers,
@@ -42,8 +59,8 @@ export const postUpvote = post =>
     })
 	}).then(res => res.json())
 
-export const postDownvote = post =>
-	fetch(`${api}/posts/${post.id}`, {
+export const postDownvote = data =>
+	fetch(`${api}/posts/${data.id}`, {
   	method: 'POST',
   	headers: {
     		...headers,
@@ -54,8 +71,8 @@ export const postDownvote = post =>
     })
 	}).then(res => res.json())
 
-export const deletePost = post =>
-	fetch(`${api}/posts/${post.id}`, {
+export const deletePost = data =>
+	fetch(`${api}/posts/${data.id}`, {
     method: 'DELETE',
     headers
   }).then(res => res.json())

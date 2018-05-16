@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { cyanA400, white, grey500, fullBlack } from 'material-ui/styles/colors'
+import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import OrderBy from '../SelectField/sort'
 import ListPosts from '../Posts'
@@ -12,8 +12,7 @@ import FlatButton from 'material-ui/FlatButton'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCategories } from './actions'
-import { getPosts } from '../Posts/actions'
-import { addPost } from '../Posts/actions'
+import { getPosts, addPost } from '../Posts/actions'
 import serializeForm from 'form-serialize'
 import uuid from 'uuid'
 
@@ -116,7 +115,7 @@ class ListCategories extends Component {
       <div style={{width: '75%'}}>
         <Tabs>
           {categories.map( (category, index) => (
-            /* TODO: Fix active tab with browser back button */
+            /* TODO: Fix active tab with browser back button and add icons */
             <Tab
               label={category.name}
               key={index}

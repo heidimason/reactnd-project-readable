@@ -1,14 +1,16 @@
-import { fetchPosts } from '../../utils/ReadableAPI'
-import { createPost } from '../../utils/ReadableAPI'
-import { postUpvote } from '../../utils/ReadableAPI'
-import { postDownvote } from '../../utils/ReadableAPI'
-import { deletePost } from '../../utils/ReadableAPI'
+import { fetchPosts,
+  createPost,
+  revisePost,
+  postUpvote,
+  postDownvote,
+  deletePost
+} from '../../utils/ReadableAPI'
 
 export const GET_POSTS = 'GET_POSTS'
 export const ADD_POST = 'ADD_POST'
+export const EDIT_POST = 'EDIT_POST'
 export const UPVOTE_POST = 'UPVOTE_POST'
 export const DOWNVOTE_POST = 'DOWNVOTE_POST'
-// export const EDIT_POST = 'EDIT_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 
 export const getPosts = () => {
@@ -26,13 +28,13 @@ export const getPosts = () => {
 	}
 }
 
-export const addPost = post => {
+export const addPost = d => {
   return dispatch => {
-    createPost(post)
-      .then( data =>
+    createPost(d)
+      .then( post =>
         dispatch({
           type: ADD_POST,
-          data
+          post
         })
       )
       .catch( () =>
@@ -41,9 +43,24 @@ export const addPost = post => {
   }
 }
 
-export const upvotePost = id => {
+export const editPost = d => {
   return dispatch => {
-    postUpvote(id)
+    revisePost(d)
+      .then( post =>
+        dispatch({
+          type: EDIT_POST,
+          post
+        })
+      )
+      .catch( () =>
+        alert('Error editing post!')
+      )
+  }
+}
+
+export const upvotePost = d => {
+  return dispatch => {
+    postUpvote(d)
       .then( post =>
         dispatch({
           type: UPVOTE_POST,
@@ -56,9 +73,9 @@ export const upvotePost = id => {
   }
 }
 
-export const downvotePost = id => {
+export const downvotePost = d => {
   return dispatch => {
-    postDownvote(id)
+    postDownvote(d)
       .then( post =>
         dispatch({
           type: DOWNVOTE_POST,
@@ -71,9 +88,9 @@ export const downvotePost = id => {
   }
 }
 
-export const removePost = id => {
+export const removePost = d => {
   return dispatch => {
-    deletePost(id)
+    deletePost(d)
       .then( post =>
         dispatch({
           type: REMOVE_POST,
