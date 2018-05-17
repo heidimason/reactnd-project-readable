@@ -28,6 +28,13 @@ const styles = {
   list: {
     backgroundColor: white,
     borderRadius: 4
+  },
+  listItem: {
+    color: darkBlack
+  },
+  listItemDetails: {
+    color: darkBlack,
+    cursor: 'initial'
   }
 }
 
@@ -119,64 +126,82 @@ class ListPosts extends Component {
               <Subheader
                 style={{color: fullBlack}}>
                 { new Date(post.timestamp).toLocaleString([], options) }
+
+                <div style={{width: '25%', float: 'right'}}>
+                  <span className="vote-score">{post.voteScore}</span>
+                  <IconMoodGood
+                    className="icon-mood icon-mood-good"
+                    onClick={e => upvote(post)}
+                    />
+                  <IconMoodBad
+                    className="icon-mood"
+                    onClick={e => downvote(post)}
+                  />
+
+                  {`/${post.category}/${post.id}` === window.location.pathname &&
+                    <IconMenu iconButtonElement={iconButtonElement}>
+                      <MenuItem style={{color: fullBlack}}
+                        onClick={ () => {
+                          this.setState({
+                            modalOpen: true,
+                            id: post.id,
+                            title: post.title,
+                            body: post.body,
+                            author: post.author,
+                            category: post.category
+                          })
+                        }}>Edit</MenuItem>
+
+                      { /* TODO: Add confirmation dialog */ }
+                      <MenuItem
+                        style={{color: fullBlack}}
+                        onClick={e => remove(post)}>Delete
+                      </MenuItem>
+                    </IconMenu>
+                  }
+                </div>
               </Subheader>
 
-              <ListItem
-                disabled={false}
-                leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
-                rightIconButton={
-                  <IconMenu iconButtonElement={iconButtonElement}>
-                    <MenuItem style={{color: fullBlack}}
-                      onClick={ () => {
-                        history.push('/edit-post')
+              {`/${post.category}/${post.id}` !== window.location.pathname &&
+                <ListItem
+                  disabled={false}
+                  leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
+                  style={styles.listItem}
+                  primaryText={post.author}
+                  secondaryText={
+                    <p>
+                      <span style={{color: fullBlack}}>{post.title}</span><br />
+                        {post.commentCount} comments
+                    </p>
+                  }
+                  secondaryTextLines={2}
+                  hoverColor={cyanA400}
+                  onClick={ () => {
+                    if (post.category)
+                      history.push(`/${post.category}/${post.id}`)
+                  }}
+                />
+              }
 
-                        this.setState({
-                          modalOpen: true,
-                          id: post.id,
-                          title: post.title,
-                          body: post.body,
-                          author: post.author,
-                          category: post.category
-                        })
-                      }}>Edit</MenuItem>
-                    { /* TODO: Add confirmation dialog */ }
-                    <MenuItem
-                      style={{color: fullBlack}}
-                      onClick={e => remove(post)}>Delete
-                    </MenuItem>
-                    <MenuItem
-                      style={{color: fullBlack}}
-                      onClick={ () => {
-                        history.push(`/${post.category}/${post.id}`)
-                      }}>Details
-                    </MenuItem>
-                  </IconMenu>
-                }
-                rightIcon={
-                  <div style={{width: '25%'}}>
-                    <span className="vote-score">{post.voteScore}</span>
-                    <IconMoodGood
-                      className="icon-mood icon-mood-good"
-                      onClick={e => upvote(post)}
-                      />
-                    <IconMoodBad
-                      className="icon-mood"
-                      onClick={e => downvote(post)}
-                    />
-                  </div>
-                }
-                style={{color: darkBlack}}
-                primaryText={post.author}
-                secondaryText={
-                  <p>
-                    <span style={{color: fullBlack}}>{post.title}</span><br />
-                    {post.commentCount} comments
-                  </p>
-                }
-                secondaryTextLines={2}
-              />
+              {`/${post.category}/${post.id}` === window.location.pathname &&
+                <ListItem
+                  disabled={false}
+                  leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
+                  style={styles.listItemDetails}
+                  primaryText={post.author}
+                  secondaryText={
+                    <p>
+                      <span style={{color: fullBlack}}>{post.title}</span><br />
+                        {post.body}
+                    </p>
+                  }
+                  secondaryTextLines={2}
+                />
+              }
 
-              <Divider inset={true} />
+              {showingPosts.length > 1 &&
+                <Divider inset={false} />
+              }
             </div>
           ))}
         </List>
@@ -213,7 +238,6 @@ class ListPosts extends Component {
                   className="title-input"
                 />
 
-                { /* TODO: Fix value when there is more than one post per category */ }
                 <TextField
                   floatingLabelText="Author"
                   inputStyle={{color: fullBlack}}

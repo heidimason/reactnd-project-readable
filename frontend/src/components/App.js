@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { Switch, Route } from 'react-router-dom'
 import ReadableBar from './AppBar'
+import PostDetails from './Posts/details'
 import PageNotFound from './PageNotFound'
 
 // This replaces the textColor value on the palette
@@ -39,9 +40,8 @@ class ReadableApp extends Component {
 				<Switch>
                     <Route path="/" exact component={ReadableBar} />
                     <Route path="/:category" exact component={ReadableBar} />
-                    <Route path="/:category/:post_id" exact component={ReadableBar} />
+                    <Route path="/:category/:post_id" exact component={PostDetails} />
                     <Route path="/new-post" exact component={ReadableBar} />
-                    <Route path="/edit-post" exact component={ReadableBar} />
                     { /* TODO: Make this route work when random URL is manually typed into address bar! */ }
                     <Route component={PageNotFound} />
                 </Switch>

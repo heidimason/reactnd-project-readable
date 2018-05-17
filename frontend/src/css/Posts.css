@@ -1,5 +1,10 @@
+.post-heading {
+    padding-top: 15px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
 .vote-score {
-	cursor: initial;
 	margin-right: 15px;
 }
 

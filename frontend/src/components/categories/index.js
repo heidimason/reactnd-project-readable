@@ -16,16 +16,6 @@ import { getPosts, addPost } from '../Posts/actions'
 import serializeForm from 'form-serialize'
 import uuid from 'uuid'
 
-const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 25,
-    marginBottom: 25,
-    fontWeight: 400,
-    textTransform: 'capitalize'
-  }
-}
-
 class ListCategories extends Component {
   // Get all categories and posts immediately after component is inserted into DOM
   componentDidMount() {
@@ -126,7 +116,7 @@ class ListCategories extends Component {
               <div style={{height: '85vh', overflowY: 'auto'}}>
                 <OrderBy />
 
-                <h2 style={styles.headline}>{category.name}</h2>
+                <h2 className="post-heading">{category.name}</h2>
 
                 { /* TODO: Show all posts at '/' and do not show post padding when there is no post! */ }
                 {category.path === 'all' &&
