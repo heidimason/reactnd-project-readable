@@ -1,13 +1,49 @@
 import React, { Component } from 'react'
+import {
+  cyanA400,
+  grey400, grey500,
+  darkBlack, fullBlack
+} from 'material-ui/styles/colors'
 import AppBar from 'material-ui/AppBar'
 import { Link, withRouter } from 'react-router-dom'
 import IconButton from 'material-ui/IconButton'
 import ActionHome from 'material-ui/svg-icons/action/home'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import ListPosts from '../Posts'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import { List, ListItem } from 'material-ui/List'
+import Subheader from 'material-ui/Subheader'
+import Avatar from 'material-ui/Avatar'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
+import IconMoodGood from 'material-ui/svg-icons/social/mood'
+import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
+import Divider from 'material-ui/Divider'
+import ScrollableDialog from 'material-ui/Dialog'
+import SelectField from 'material-ui/SelectField'
+import TextField from 'material-ui/TextField'
+import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
+import { editPost, upvotePost, downvotePost, removePost } from './actions'
+import serializeForm from 'form-serialize'
 import { getCategories } from '../Categories/actions'
 import { getPosts } from './actions'
+
+const styles = {
+  listItem: {
+    color: darkBlack,
+    cursor: 'initial'
+  }
+}
+
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="more"
+    tooltipPosition="bottom-left"
+  >
+    <MoreVertIcon color={grey400} />
+  </IconButton>
+)
 
 class PostDetails extends Component {
   // Get all categories and posts immediately after component is inserted into DOM
@@ -16,10 +52,54 @@ class PostDetails extends Component {
     this.props.getAllPosts()
   }
 
-  render() {
-    const { categories, history, posts } = this.props,
+  state = {
+    modalOpen: false
+  }
 
-            showingPosts = posts.filter( post => `/${post.category}/${post.id}` === window.location.pathname )
+  closeModal = () => {
+    this.setState({modalOpen: false})
+  }
+
+  changeTitle = e => {
+    this.setState({title: e.target.value})
+  }
+
+  changeBody = e => {
+    this.setState({body: e.target.value})
+  }
+
+  editPost = e => {
+    e.preventDefault()
+
+    const values = serializeForm(e.target, { hash: true })
+
+    const post = Object.assign(values, {
+      id: this.state.id,
+      title: this.state.title,
+      body: this.state.body
+    })
+
+    // Dispatch action
+    this.props.edit(post)
+
+    // Close modal upon submitting form
+    this.closeModal()
+  }
+
+  render() {
+    const { categories, history, posts, upvote, downvote, remove } = this.props,
+
+            showingPosts = posts.filter( post => `/${post.category}/${post.id}` === window.location.pathname ),
+
+            options = {
+              weekday: 'short',
+              year: '2-digit',
+              month: 'numeric',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit'
+            }
 
     return (
       <AppBar
@@ -45,7 +125,143 @@ class PostDetails extends Component {
                   }}>
                   <h2 className="post-heading">Post Details</h2>
 
-                  <ListPosts showingPosts={showingPosts} />
+                  <List className="post-list">
+                    {showingPosts.map( (post, index) => (
+                      <div key={index}>
+                        <Subheader
+                          style={{color: fullBlack}}>
+                          { new Date(post.timestamp).toLocaleString([], options) }
+
+                          <div style={{width: '25%', float: 'right'}}>
+                            <span className="vote-score">{post.voteScore}</span>
+                            <IconMoodGood
+                              className="icon-mood icon-mood-good"
+                              onClick={e => upvote(post)}
+                              />
+                            <IconMoodBad
+                              className="icon-mood"
+                              onClick={e => downvote(post)}
+                            />
+
+                            <IconMenu iconButtonElement={iconButtonElement}>
+                              <MenuItem style={{color: fullBlack}}
+                                onClick={ () => {
+                                  this.setState({
+                                    modalOpen: true,
+                                    id: post.id,
+                                    title: post.title,
+                                    body: post.body,
+                                    author: post.author,
+                                    category: post.category
+                                  })
+                                }}>Edit</MenuItem>
+
+                              { /* TODO: Add confirmation dialog */ }
+                              <MenuItem
+                                style={{color: fullBlack}}
+                                onClick={e => remove(post)}>Delete
+                              </MenuItem>
+                            </IconMenu>
+                          </div>
+                        </Subheader>
+
+                        <ListItem
+                          disabled={false}
+                          leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
+                          style={styles.listItem}
+                          primaryText={post.author}
+                          secondaryText={
+                            <p>
+                              <span style={{color: fullBlack}}>{post.title}</span><br />
+                                {post.body}
+                            </p>
+                          }
+                          secondaryTextLines={2}
+                        />
+
+                        {showingPosts.length > 1 &&
+                          <Divider inset={false} />
+                        }
+                      </div>
+                    ))}
+                  </List>
+
+                  {showingPosts.map( (post, index) => (
+                    <ScrollableDialog
+                        title="Edit Post"
+                        actions={
+                          <div>
+                            <Link to={`/${post.category}/${post.id}`}>
+                              <FlatButton
+                                label="Cancel"
+                                primary={true}
+                                onClick={this.closeModal}
+                                style={{marginRight: 15}}
+                              />
+                            </Link>
+
+                            <Link to={`/${post.category}/${post.id}`}>
+                              <FlatButton
+                                label="Submit"
+                                primary={true}
+                                keyboardFocused={true}
+                                onClick={this.editPost}
+                                backgroundColor={cyanA400}
+                                hoverColor={cyanA400}
+                              />
+                            </Link>
+                          </div>
+                        }
+                        modal={false}
+                        open={this.state.modalOpen}
+                        onRequestClose={this.closeModal}
+                        autoScrollBodyContent={true}
+                        titleStyle={{color: fullBlack}}
+                        key={index}>
+                        <form>
+                          <SelectField
+                            floatingLabelText="Category"
+                            value={this.state.category}
+                            autoWidth={true}
+                            menuItemStyle={{color: fullBlack}}
+                            className="select-category"
+                            disabled={true}>
+                            <MenuItem value="react" primaryText="React" />
+                            <MenuItem value="redux" primaryText="Redux" />
+                            <MenuItem value="udacity" primaryText="Udacity" />
+                          </SelectField>
+
+                          <TextField
+                            floatingLabelText="Title"
+                            floatingLabelStyle={{color: grey500}}
+                            inputStyle={{color: fullBlack}}
+                            value={this.state.title}
+                            onChange={this.changeTitle}
+                            className="title-input"
+                          />
+
+                          <TextField
+                            floatingLabelText="Author"
+                            inputStyle={{color: fullBlack}}
+                            style={{marginLeft: 15}}
+                            value={this.state.author}
+                            disabled={true}
+                          />
+
+                          <TextField
+                            floatingLabelText="Message"
+                            floatingLabelStyle={{color: grey500}}
+                            textareaStyle={{color: fullBlack}}
+                            multiLine={true}
+                            rows={2}
+                            rowsMax={4}
+                            fullWidth={true}
+                            value={this.state.body}
+                            onChange={this.changeBody}
+                          />
+                        </form>
+                      </ScrollableDialog>
+                    ))}
                 </Tab>
               ))}
             </Tabs>
@@ -66,7 +282,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllCategories: () => dispatch( getCategories() ),
-    getAllPosts: () => dispatch( getPosts() )
+    getAllPosts: () => dispatch( getPosts() ),
+    edit: p => dispatch( editPost(p) ),
+    upvote: p => dispatch( upvotePost(p) ),
+    downvote: p => dispatch( downvotePost(p) ),
+    remove: p => dispatch( removePost(p) )
   }
 }
 
