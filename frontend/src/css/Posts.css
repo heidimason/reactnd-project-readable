@@ -9,6 +9,19 @@
     text-transform: capitalize;
 }
 
+.post-icons,
+.comment-icons {
+	float: right;
+}
+
+.post-icons {
+	width: 30%;
+}
+
+.comment-icons {
+	width: 25%;
+}
+
 .vote-score {
 	margin-right: 15px;
 }
@@ -24,10 +37,18 @@
 	fill: #888 !important;
 }
 
-.icon-mood-good {
+.icon-mood-good,
+.icon-mood-bad {
 	margin-right: 15px;
 }
 
 .title-input {
 	width: 50% !important;
 }
+
+.comment-subheader {
+	border-top: 1px solid #eee;
+	color: black !important;
+	padding-left: 36px;
+}
+

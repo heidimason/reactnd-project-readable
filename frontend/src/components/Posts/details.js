@@ -9,34 +9,33 @@ import { Link, withRouter } from 'react-router-dom'
 import IconButton from 'material-ui/IconButton'
 import ActionHome from 'material-ui/svg-icons/action/home'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
+import IconArrow from 'material-ui/svg-icons/navigation/arrow-back'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import { List, ListItem } from 'material-ui/List'
+import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import IconMoodGood from 'material-ui/svg-icons/social/mood'
 import IconMoodBad from 'material-ui/svg-icons/social/mood-bad'
+import IconComment from 'material-ui/svg-icons/communication/comment'
 import Divider from 'material-ui/Divider'
 import ScrollableDialog from 'material-ui/Dialog'
 import SelectField from 'material-ui/SelectField'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
-import { editPost, upvotePost, downvotePost, removePost } from './actions'
-import serializeForm from 'form-serialize'
 import { getCategories } from '../Categories/actions'
-import { getPosts } from './actions'
+import { getPosts, editPost, upvotePost, downvotePost, removePost } from './actions'
+import serializeForm from 'form-serialize'
 
 const styles = {
-  arrowBack: {
+  iconArrow: {
     cursor: 'pointer',
     verticalAlign: 'middle'
   },
   listItem: {
-    color: darkBlack,
-    cursor: 'initial'
+    color: darkBlack
   }
 }
 
@@ -49,6 +48,8 @@ const iconButtonElement = (
     <MoreVertIcon color={grey400} />
   </IconButton>
 )
+
+let PostsContainer = makeSelectable(List)
 
 class PostDetails extends Component {
   // Get all categories and posts immediately after component is inserted into DOM
@@ -129,37 +130,42 @@ class PostDetails extends Component {
                     history.push(`/${category.path}`)
                   }}>
                   <h2 className="post-heading">
-                    <ArrowBack
+                    <IconArrow
                       hoverColor={cyanA400}
-                      style={styles.arrowBack}
+                      style={styles.iconArrow}
                       onClick={ () => {
-                        history.push(`/${category.path}`)
+                        history.goBack()
                       }}/>&nbsp;&nbsp;Post Details
                   </h2>
 
                   <List className="post-list">
                     {showingPosts.map( (post, index) => (
-                      <div key={index}>
+                      <PostsContainer key={index}>
                         <Subheader
                           style={{color: fullBlack}}>
                           { new Date(post.timestamp).toLocaleString([], options) }
 
-                          <div style={{width: '25%', float: 'right'}}>
+                          <div className="post-icons">
                             <span className="vote-score">{post.voteScore}</span>
 
                             <IconMoodGood
                               className="icon-mood icon-mood-good"
                               onClick={e => upvote(post)}
-                              />
+                            />
 
                             <IconMoodBad
-                              className="icon-mood"
+                              className="icon-mood icon-mood-bad"
                               onClick={e => downvote(post)}
+                            />
+
+                            <IconComment
+                              className="icon-mood"
+
                             />
 
                             <IconMenu
                               iconButtonElement={iconButtonElement}
-                              style={{verticalAlign: 'top'}}>
+                              style={{float: 'right'}}>
                               <MenuItem style={{color: fullBlack}}
                                 onClick={ () => {
                                   this.setState({
@@ -173,11 +179,6 @@ class PostDetails extends Component {
                                 }}>Edit
                               </MenuItem>
 
-                              <MenuItem
-                                style={{color: fullBlack}}
-                                onClick={e => remove(post)}>Comment
-                              </MenuItem>
-
                               { /* TODO: Add confirmation dialog */ }
                               <MenuItem
                                 style={{color: fullBlack}}
@@ -188,7 +189,8 @@ class PostDetails extends Component {
                         </Subheader>
 
                         <ListItem
-                          disabled={false}
+                          value={1}
+                          disabled={true}
                           leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
                           style={styles.listItem}
                           primaryText={post.author}
@@ -199,12 +201,81 @@ class PostDetails extends Component {
                             </p>
                           }
                           secondaryTextLines={2}
+                          initiallyOpen={true}
+                          autoGenerateNestedIndicator={false}
+                          nestedItems={[
+                            <ListItem
+                              value={2}
+                              disabled={true}
+                              primaryText={post.body}
+                              style={{color: fullBlack}}
+                              initiallyOpen={true}
+                              autoGenerateNestedIndicator={false}
+                              nestedItems={[
+                                <Subheader className="comment-subheader">
+                                  { new Date(post.timestamp).toLocaleString([], options) }
+
+                                  <div className="comment-icons">
+                                    <span className="vote-score">{post.voteScore}</span>
+
+                                    <IconMoodGood
+                                      className="icon-mood icon-mood-good"
+                                      onClick={e => upvote(post)}
+                                      />
+
+                                    <IconMoodBad
+                                      className="icon-mood"
+                                      onClick={e => downvote(post)}
+                                    />
+
+                                    <IconMenu
+                                      iconButtonElement={iconButtonElement}
+                                      style={{float: 'right'}}>
+                                      <MenuItem style={{color: fullBlack}}
+                                        onClick={ () => {
+                                          this.setState({
+                                            modalOpen: true,
+                                            id: post.id,
+                                            title: post.title,
+                                            body: post.body,
+                                            author: post.author,
+                                            category: post.category
+                                          })
+                                        }}>Edit
+                                      </MenuItem>
+
+                                      { /* TODO: Add confirmation dialog */ }
+                                      <MenuItem
+                                        style={{color: fullBlack}}
+                                        onClick={e => remove(post)}>Delete
+                                      </MenuItem>
+                                    </IconMenu>
+                                  </div>
+                                </Subheader>,
+
+                                <ListItem
+                                  value={3}
+                                  disabled={true}
+                                  primaryText={post.author}
+                                  secondaryText={
+                                    <p>
+                                      <span style={{color: fullBlack}}>{post.title}</span><br />
+                                        {post.body}
+                                    </p>
+                                  }
+                                  secondaryTextLines={2}
+                                  leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
+                                  style={{color: fullBlack}}
+                                />
+                              ]}
+                            />
+                          ]}
                         />
 
                         {showingPosts.length > 1 &&
                           <Divider inset={false} />
                         }
-                      </div>
+                      </PostsContainer>
                     ))}
                   </List>
 
