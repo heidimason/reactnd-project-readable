@@ -9,6 +9,7 @@ import { Link, withRouter } from 'react-router-dom'
 import IconButton from 'material-ui/IconButton'
 import ActionHome from 'material-ui/svg-icons/action/home'
 import { Tabs, Tab } from 'material-ui/Tabs'
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -29,6 +30,10 @@ import { getCategories } from '../Categories/actions'
 import { getPosts } from './actions'
 
 const styles = {
+  arrowBack: {
+    cursor: 'pointer',
+    verticalAlign: 'middle'
+  },
   listItem: {
     color: darkBlack,
     cursor: 'initial'
@@ -123,7 +128,14 @@ class PostDetails extends Component {
                   onActive={ () => {
                     history.push(`/${category.path}`)
                   }}>
-                  <h2 className="post-heading">Post Details</h2>
+                  <h2 className="post-heading">
+                    <ArrowBack
+                      hoverColor={cyanA400}
+                      style={styles.arrowBack}
+                      onClick={ () => {
+                        history.push(`/${category.path}`)
+                      }}/>&nbsp;&nbsp;Post Details
+                  </h2>
 
                   <List className="post-list">
                     {showingPosts.map( (post, index) => (
@@ -134,16 +146,20 @@ class PostDetails extends Component {
 
                           <div style={{width: '25%', float: 'right'}}>
                             <span className="vote-score">{post.voteScore}</span>
+
                             <IconMoodGood
                               className="icon-mood icon-mood-good"
                               onClick={e => upvote(post)}
                               />
+
                             <IconMoodBad
                               className="icon-mood"
                               onClick={e => downvote(post)}
                             />
 
-                            <IconMenu iconButtonElement={iconButtonElement}>
+                            <IconMenu
+                              iconButtonElement={iconButtonElement}
+                              style={{verticalAlign: 'top'}}>
                               <MenuItem style={{color: fullBlack}}
                                 onClick={ () => {
                                   this.setState({
@@ -154,7 +170,13 @@ class PostDetails extends Component {
                                     author: post.author,
                                     category: post.category
                                   })
-                                }}>Edit</MenuItem>
+                                }}>Edit
+                              </MenuItem>
+
+                              <MenuItem
+                                style={{color: fullBlack}}
+                                onClick={e => remove(post)}>Comment
+                              </MenuItem>
 
                               { /* TODO: Add confirmation dialog */ }
                               <MenuItem
@@ -173,7 +195,7 @@ class PostDetails extends Component {
                           secondaryText={
                             <p>
                               <span style={{color: fullBlack}}>{post.title}</span><br />
-                                {post.body}
+                                {post.commentCount} comments
                             </p>
                           }
                           secondaryTextLines={2}
