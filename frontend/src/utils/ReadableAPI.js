@@ -20,8 +20,8 @@ export const fetchPosts = () =>
 	fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-// export const createPost = post =>
-//   fetch(`${api}/posts/${post.id}`, { headers })
+// export const fetchPost = data =>
+//   fetch(`${api}/posts/${data.id}`, { headers })
 //     .then(res => res.json())
 
 export const createPost = data =>
@@ -77,3 +77,59 @@ export const deletePost = data =>
     headers
   }).then(res => res.json())
 
+export const fetchComments = data =>
+  fetch(`${api}/posts/${data}/comments`, { headers })
+    .then(res => res.json())
+
+export const createComment = data =>
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+
+export const reviseComment = data =>
+  fetch(`${api}/comments/${data.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: data.title,
+      body: data.body
+    })
+  }).then(res => res.json())
+
+export const commentUpvote = data =>
+  fetch(`${api}/comments/${data.id}`, {
+    method: 'POST',
+    headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      option: 'upVote'
+    })
+  }).then(res => res.json())
+
+export const commentDownvote = data =>
+  fetch(`${api}/comments/${data.id}`, {
+    method: 'POST',
+    headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      option: 'downVote'
+    })
+  }).then(res => res.json())
+
+export const deleteComment = data =>
+  fetch(`${api}/comments/${data.id}`, {
+    method: 'DELETE',
+    headers
+  }).then(res => res.json())

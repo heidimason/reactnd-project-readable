@@ -1,4 +1,5 @@
 import { fetchPosts,
+  // fetchPost,
   createPost,
   revisePost,
   postUpvote,
@@ -7,6 +8,7 @@ import { fetchPosts,
 } from '../../utils/ReadableAPI'
 
 export const GET_POSTS = 'GET_POSTS'
+// export const GET_POST = 'GET_POST'
 export const ADD_POST = 'ADD_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const UPVOTE_POST = 'UPVOTE_POST'
@@ -27,6 +29,21 @@ export const getPosts = () => {
   	  )
 	}
 }
+
+// export const getPost = d => {
+//   return dispatch => {
+//     fetchPost(d)
+//       .then( post =>
+//         dispatch({
+//           type: GET_POST,
+//           post
+//         })
+//       )
+//       .catch( () =>
+//         alert('Error getting post!')
+//       )
+//   }
+// }
 
 export const addPost = d => {
   return dispatch => {

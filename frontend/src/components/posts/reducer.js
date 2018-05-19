@@ -1,4 +1,5 @@
-import { GET_POSTS,
+import {
+    GET_POSTS,
     ADD_POST,
     EDIT_POST,
     UPVOTE_POST,

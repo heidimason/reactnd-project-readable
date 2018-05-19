@@ -27,6 +27,7 @@ import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
 import { getCategories } from '../Categories/actions'
 import { getPosts, editPost, upvotePost, downvotePost, removePost } from './actions'
+import { getComments, editComment, upvoteComment, downvoteComment, removeComment } from '../Comments/actions'
 import serializeForm from 'form-serialize'
 
 const styles = {
@@ -54,8 +55,11 @@ let PostsContainer = makeSelectable(List)
 class PostDetails extends Component {
   // Get all categories and posts immediately after component is inserted into DOM
   componentDidMount() {
+    const c = window.location.pathname.split("/").pop()
+
     this.props.getAllCategories()
     this.props.getAllPosts()
+    this.props.getAllComments(c)
   }
 
   state = {
@@ -86,14 +90,34 @@ class PostDetails extends Component {
     })
 
     // Dispatch action
-    this.props.edit(post)
+    this.props.postEdit(post)
+
+    // Close modal upon submitting form
+    this.closeModal()
+  }
+
+  editComment = e => {
+    e.preventDefault()
+
+    const values = serializeForm(e.target, { hash: true })
+
+    const comment = Object.assign(values, {
+      id: this.state.id,
+      title: this.state.title,
+      body: this.state.body
+    })
+
+    // Dispatch action
+    this.props.commentEdit(comment)
 
     // Close modal upon submitting form
     this.closeModal()
   }
 
   render() {
-    const { categories, history, posts, upvote, downvote, remove } = this.props,
+    const { categories, history,
+            posts, postUpvote, postDownvote, postRemove,
+            comments, commentUpvote, commentDownvote, commentRemove } = this.props,
 
             showingPosts = posts.filter( post => `/${post.category}/${post.id}` === window.location.pathname ),
 
@@ -150,12 +174,12 @@ class PostDetails extends Component {
 
                             <IconMoodGood
                               className="icon-mood icon-mood-good"
-                              onClick={e => upvote(post)}
+                              onClick={e => postUpvote(post)}
                             />
 
                             <IconMoodBad
                               className="icon-mood icon-mood-bad"
-                              onClick={e => downvote(post)}
+                              onClick={e => postDownvote(post)}
                             />
 
                             <IconComment
@@ -182,7 +206,7 @@ class PostDetails extends Component {
                               { /* TODO: Add confirmation dialog */ }
                               <MenuItem
                                 style={{color: fullBlack}}
-                                onClick={e => remove(post)}>Delete
+                                onClick={e => postRemove(post)}>Delete
                               </MenuItem>
                             </IconMenu>
                           </div>
@@ -203,73 +227,7 @@ class PostDetails extends Component {
                           secondaryTextLines={2}
                           initiallyOpen={true}
                           autoGenerateNestedIndicator={false}
-                          nestedItems={[
-                            <ListItem
-                              value={2}
-                              disabled={true}
-                              primaryText={post.body}
-                              style={{color: fullBlack}}
-                              initiallyOpen={true}
-                              autoGenerateNestedIndicator={false}
-                              nestedItems={[
-                                <Subheader className="comment-subheader">
-                                  { new Date(post.timestamp).toLocaleString([], options) }
 
-                                  <div className="comment-icons">
-                                    <span className="vote-score">{post.voteScore}</span>
-
-                                    <IconMoodGood
-                                      className="icon-mood icon-mood-good"
-                                      onClick={e => upvote(post)}
-                                      />
-
-                                    <IconMoodBad
-                                      className="icon-mood"
-                                      onClick={e => downvote(post)}
-                                    />
-
-                                    <IconMenu
-                                      iconButtonElement={iconButtonElement}
-                                      style={{float: 'right'}}>
-                                      <MenuItem style={{color: fullBlack}}
-                                        onClick={ () => {
-                                          this.setState({
-                                            modalOpen: true,
-                                            id: post.id,
-                                            title: post.title,
-                                            body: post.body,
-                                            author: post.author,
-                                            category: post.category
-                                          })
-                                        }}>Edit
-                                      </MenuItem>
-
-                                      { /* TODO: Add confirmation dialog */ }
-                                      <MenuItem
-                                        style={{color: fullBlack}}
-                                        onClick={e => remove(post)}>Delete
-                                      </MenuItem>
-                                    </IconMenu>
-                                  </div>
-                                </Subheader>,
-
-                                <ListItem
-                                  value={3}
-                                  disabled={true}
-                                  primaryText={post.author}
-                                  secondaryText={
-                                    <p>
-                                      <span style={{color: fullBlack}}>{post.title}</span><br />
-                                        {post.body}
-                                    </p>
-                                  }
-                                  secondaryTextLines={2}
-                                  leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
-                                  style={{color: fullBlack}}
-                                />
-                              ]}
-                            />
-                          ]}
                         />
 
                         {showingPosts.length > 1 &&
@@ -355,6 +313,8 @@ class PostDetails extends Component {
                         </form>
                       </ScrollableDialog>
                     ))}
+
+
                 </Tab>
               ))}
             </Tabs>
@@ -368,7 +328,8 @@ class PostDetails extends Component {
 const mapStateToProps = state => {
   return {
     categories: state.categories,
-    posts: state.posts
+    posts: state.posts,
+    comments: state.comments
   }
 }
 
@@ -376,10 +337,15 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllCategories: () => dispatch( getCategories() ),
     getAllPosts: () => dispatch( getPosts() ),
-    edit: p => dispatch( editPost(p) ),
-    upvote: p => dispatch( upvotePost(p) ),
-    downvote: p => dispatch( downvotePost(p) ),
-    remove: p => dispatch( removePost(p) )
+    postEdit: p => dispatch( editPost(p) ),
+    postUpvote: p => dispatch( upvotePost(p) ),
+    postDownvote: p => dispatch( downvotePost(p) ),
+    postRemove: p => dispatch( removePost(p) ),
+    getAllComments: c => dispatch( getComments(c) ),
+    commentEdit: c => dispatch( editComment(c) ),
+    commentUpvote: c => dispatch( upvoteComment(c) ),
+    commentDownvote: c => dispatch( downvoteComment(c) ),
+    commentRemove: c => dispatch( removeComment(c) )
   }
 }
 
