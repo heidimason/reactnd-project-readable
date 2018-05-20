@@ -140,8 +140,7 @@ class CommentDetails extends Component {
               primaryText={comment.author}
               secondaryText={
                 <p>
-                  <span style={{color: fullBlack}}>{comment.title}</span><br />
-                    {comment.body}
+                  <span style={{color: fullBlack}}>{comment.body}</span><br />
                 </p>
               }
               secondaryTextLines={2}

@@ -212,7 +212,7 @@ class PostDetails extends Component {
                                 initiallyOpen={true}
                                 autoGenerateNestedIndicator={false}
                                 nestedItems={[
-                                  <ListItem>
+                                  <ListItem disabled={true}>
                                     <CommentDetails />
                                   </ListItem>
                                 ]}>
@@ -221,7 +221,7 @@ class PostDetails extends Component {
                           />
 
                           {showingPosts.length > 1 &&
-                            <Divider inset={false} />
+                            <Divider />
                           }
                         </PostsContainer>
                       ))}
