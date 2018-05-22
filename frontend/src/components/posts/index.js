@@ -42,7 +42,7 @@ class ListPosts extends Component {
               second: '2-digit'
             }
 
-    return (
+    return (showingPosts.length > 0 &&
       <List className="post-list">
         {showingPosts.map( (post, index) => (
           <div key={index}>

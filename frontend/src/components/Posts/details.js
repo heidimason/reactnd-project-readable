@@ -116,7 +116,7 @@ class PostDetails extends Component {
 
     const comment = Object.assign(values, {
       id: uuid(),
-      parentId: window.location.pathname.split('/').pop(),
+      parentId: this.props.location.pathname.split('/').pop(),
       timestamp: Date.now(),
       body: this.state.body,
       author: this.state.author
@@ -130,9 +130,9 @@ class PostDetails extends Component {
   }
 
   render() {
-    const { categories, history, posts, postUpvote, postDownvote, postRemove } = this.props,
+    const { categories, history, location, posts, postUpvote, postDownvote, postRemove } = this.props,
 
-            showingPosts = posts.filter( post => `/${post.category}/${post.id}` === window.location.pathname ),
+            showingPosts = posts.filter( post => `/${post.category}/${post.id}` === location.pathname ),
 
             options = {
               weekday: 'short',
@@ -145,7 +145,7 @@ class PostDetails extends Component {
             },
 
             commentActions = [
-              <Link to={window.location.pathname}>
+              <Link to={location.pathname}>
                 <FlatButton
                   label="Cancel"
                   primary={true}
@@ -154,7 +154,7 @@ class PostDetails extends Component {
                 />
               </Link>,
 
-              <Link to={window.location.pathname}>
+              <Link to={location.pathname}>
                 <FlatButton
                   label="Submit"
                   primary={true}
@@ -198,93 +198,99 @@ class PostDetails extends Component {
                         }}/>&nbsp;&nbsp;Post Details
                     </h2>
 
-                    <List className="post-list">
-                      {showingPosts.map( (post, index) => (
-                        <PostsContainer key={index}>
-                          <Subheader
-                            style={{color: fullBlack}}>
-                            { new Date(post.timestamp).toLocaleString([], options) }
+                    {showingPosts.length !== 0 &&
+                      <List className="post-list">
+                        {showingPosts.map( (post, index) => (
+                          <PostsContainer key={index}>
+                            <Subheader
+                              style={{color: fullBlack}}>
+                              { new Date(post.timestamp).toLocaleString([], options) }
 
-                            <div className="post-icons">
-                              <span className="vote-score">{post.voteScore}</span>
+                              <div className="post-icons">
+                                <span className="vote-score">{post.voteScore}</span>
 
-                              <IconMoodGood
-                                className="icon-mood icon-mood-good"
-                                onClick={e => postUpvote(post)}
-                              />
+                                <IconMoodGood
+                                  className="icon-mood icon-mood-good"
+                                  onClick={e => postUpvote(post)}
+                                />
 
-                              <IconMoodBad
-                                className="icon-mood icon-mood-bad"
-                                onClick={e => postDownvote(post)}
-                              />
+                                <IconMoodBad
+                                  className="icon-mood icon-mood-bad"
+                                  onClick={e => postDownvote(post)}
+                                />
 
-                              <IconComment
-                                className="icon-mood"
-                                onClick={this.openCommentModal}
-                              />
+                                <IconComment
+                                  className="icon-mood"
+                                  onClick={this.openCommentModal}
+                                />
 
-                              <IconMenu
-                                iconButtonElement={iconButtonElement}
-                                style={{float: 'right'}}>
-                                <MenuItem style={{color: fullBlack}}
-                                  onClick={ () => {
-                                    this.setState({
-                                      postModalOpen: true,
-                                      id: post.id,
-                                      title: post.title,
-                                      body: post.body,
-                                      author: post.author,
-                                      category: post.category
-                                    })
-                                  }}>Edit
-                                </MenuItem>
+                                <IconMenu
+                                  iconButtonElement={iconButtonElement}
+                                  style={{float: 'right'}}>
+                                  <MenuItem style={{color: fullBlack}}
+                                    onClick={ () => {
+                                      this.setState({
+                                        postModalOpen: true,
+                                        id: post.id,
+                                        title: post.title,
+                                        body: post.body,
+                                        author: post.author,
+                                        category: post.category
+                                      })
+                                    }}>Edit
+                                  </MenuItem>
 
-                                { /* TODO: Add confirmation dialog */ }
-                                <MenuItem
+                                  { /* TODO: Add confirmation dialog */ }
+                                  <MenuItem
+                                    style={{color: fullBlack}}
+                                    onClick={e => postRemove(post)}>Delete
+                                  </MenuItem>
+                                </IconMenu>
+                              </div>
+                            </Subheader>
+
+                            <ListItem
+                              value={1}
+                              disabled={true}
+                              leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
+                              style={styles.listItem}
+                              primaryText={post.author}
+                              secondaryText={
+                                <p>
+                                  <span style={{color: fullBlack}}>{post.title}</span><br />
+                                    {post.commentCount} comments
+                                </p>
+                              }
+                              secondaryTextLines={2}
+                              initiallyOpen={true}
+                              autoGenerateNestedIndicator={false}
+                              nestedItems={[
+                                <ListItem value={2}
+                                  disabled={true}
+                                  primaryText={post.body}
                                   style={{color: fullBlack}}
-                                  onClick={e => postRemove(post)}>Delete
-                                </MenuItem>
-                              </IconMenu>
-                            </div>
-                          </Subheader>
+                                  initiallyOpen={true}
+                                  autoGenerateNestedIndicator={false}
+                                  nestedItems={[
+                                    <ListItem disabled={true}>
+                                      <CommentDetails />
+                                    </ListItem>
+                                  ]}>
+                                </ListItem>
+                              ]}
+                            />
 
-                          <ListItem
-                            value={1}
-                            disabled={true}
-                            leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
-                            style={styles.listItem}
-                            primaryText={post.author}
-                            secondaryText={
-                              <p>
-                                <span style={{color: fullBlack}}>{post.title}</span><br />
-                                  {post.commentCount} comments
-                              </p>
+                            {showingPosts.length > 1 &&
+                              <Divider />
                             }
-                            secondaryTextLines={2}
-                            initiallyOpen={true}
-                            autoGenerateNestedIndicator={false}
-                            nestedItems={[
-                              <ListItem value={2}
-                                disabled={true}
-                                primaryText={post.body}
-                                style={{color: fullBlack}}
-                                initiallyOpen={true}
-                                autoGenerateNestedIndicator={false}
-                                nestedItems={[
-                                  <ListItem disabled={true}>
-                                    <CommentDetails />
-                                  </ListItem>
-                                ]}>
-                              </ListItem>
-                            ]}
-                          />
+                          </PostsContainer>
+                        ))}
+                      </List>
+                    }
 
-                          {showingPosts.length > 1 &&
-                            <Divider />
-                          }
-                        </PostsContainer>
-                      ))}
-                    </List>
+                    {!showingPosts.length &&
+                      <p>This post has been deleted!</p>
+                    }
                   </div>
 
                   {showingPosts.map( (post, index) => (

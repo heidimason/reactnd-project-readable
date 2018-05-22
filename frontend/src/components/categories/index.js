@@ -118,7 +118,7 @@ class ListCategories extends Component {
 
                 <h2 className="post-heading">{category.name}</h2>
 
-                { /* TODO: Show all posts at '/' and do not show post padding when there is no post! */ }
+                { /* TODO: Show all posts when home icon is clicked */ }
                 {category.path === 'all' &&
                   <ListPosts showingPosts={posts} />
                 }

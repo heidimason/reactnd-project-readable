@@ -33,7 +33,7 @@ const iconButtonElement = (
 
 class CommentDetails extends Component {
   componentDidMount() {
-    const postId = window.location.pathname.split('/').pop()
+    const postId = this.props.location.pathname.split('/').pop()
 
     this.props.getAllComments(postId)
   }
@@ -68,7 +68,7 @@ class CommentDetails extends Component {
   }
 
   render() {
-    const { comments, commentUpvote, commentDownvote, commentRemove } = this.props,
+    const { comments, commentUpvote, commentDownvote, commentRemove, location } = this.props,
 
             options = {
               weekday: 'short',
@@ -146,7 +146,7 @@ class CommentDetails extends Component {
             title="Edit Comment"
             actions={
               <div>
-                <Link to={window.location.pathname}>
+                <Link to={location.pathname}>
                   <FlatButton
                     label="Cancel"
                     primary={true}
@@ -155,7 +155,7 @@ class CommentDetails extends Component {
                   />
                 </Link>
 
-                <Link to={window.location.pathname}>
+                <Link to={location.pathname}>
                   <FlatButton
                     label="Submit"
                     primary={true}
