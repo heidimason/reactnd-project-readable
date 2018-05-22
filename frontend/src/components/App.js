@@ -10,7 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { Switch, Route } from 'react-router-dom'
 import ReadableBar from './AppBar'
 import PostDetails from './Posts/details'
-import PageNotFound from './PageNotFound'
+import NotFound from './NotFound'
 
 // This replaces the textColor value on the palette
 // and then update the keys for each component that depends on it.
@@ -38,12 +38,12 @@ class ReadableApp extends Component {
             <MuiThemeProvider
                 muiTheme={customMuiTheme}>
 				<Switch>
-                    <Route path="/" exact component={ReadableBar} />
-                    <Route path="/:category" exact component={ReadableBar} />
-                    <Route path="/:category/:post_id" exact component={PostDetails} />
-                    <Route path="/new-post" exact component={ReadableBar} />
-                    { /* TODO: Make this route work when random URL is manually typed into address bar! */ }
-                    <Route component={PageNotFound} />
+                    <Route exact path="/" component={ReadableBar} />
+                    <Route exact path="/not-found" component={NotFound} />
+                    <Route exact path="/:category" component={ReadableBar} />
+                    <Route exact path="/:category/:post_id" component={PostDetails} />
+                    <Route exact path="/new-post" component={ReadableBar} />
+                    <Route component={NotFound} />
                 </Switch>
             </MuiThemeProvider>
         )
