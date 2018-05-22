@@ -24,12 +24,14 @@
 
 
 /* Create/Edit Post */
-.select-category {
+.select-category,
+.input-author {
 	position: absolute !important;
 	top: 0;
 	right: 24px;
 }
 
-.select-category div div div { /* i.e. React/Redux/Udacity */
+.select-category div div div, /* i.e. React/Redux/Udacity */
+.input-author div div div {
 	color: black !important;
 }

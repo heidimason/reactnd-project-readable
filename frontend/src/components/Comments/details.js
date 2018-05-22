@@ -33,7 +33,7 @@ const iconButtonElement = (
 
 class CommentDetails extends Component {
   componentDidMount() {
-    const postId = window.location.pathname.split("/").pop()
+    const postId = window.location.pathname.split('/').pop()
 
     this.props.getAllComments(postId)
   }
@@ -178,7 +178,7 @@ class CommentDetails extends Component {
                 floatingLabelText="Author"
                 inputStyle={{color: fullBlack}}
                 value={this.state.author}
-                fullWidth={true}
+                className="input-author"
                 disabled={true}
               />
 

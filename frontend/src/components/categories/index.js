@@ -24,19 +24,19 @@ class ListCategories extends Component {
   }
 
   state = {
-    modalOpen: false,
+    postModalOpen: false,
     category: '',
     title: '',
     author: '',
     body: ''
   }
 
-  openModal = () => {
-    this.setState({modalOpen: true})
+  openPostModal = () => {
+    this.setState({postModalOpen: true})
   }
 
-  closeModal = () => {
-    this.setState({modalOpen: false})
+  closePostModal = () => {
+    this.setState({postModalOpen: false})
   }
 
   changeCategory = (event, index, category) => {
@@ -73,7 +73,7 @@ class ListCategories extends Component {
     this.props.add(post)
 
     // Close modal upon submitting form
-    this.closeModal()
+    this.closePostModal()
   }
 
   render() {
@@ -84,7 +84,7 @@ class ListCategories extends Component {
                 <FlatButton
                   label="Cancel"
                   primary={true}
-                  onClick={this.closeModal}
+                  onClick={this.closePostModal}
                   style={{marginRight: 15}}
                 />
               </Link>,
@@ -132,7 +132,7 @@ class ListCategories extends Component {
 
         <Link to="new-post">
           <AddPostBtn
-            onClick={this.openModal}
+            onClick={this.openPostModal}
           />
         </Link>
 
@@ -140,8 +140,8 @@ class ListCategories extends Component {
           title="Create Post"
           actions={actions}
           modal={false}
-          open={this.state.modalOpen}
-          onRequestClose={this.closeModal}
+          open={this.state.postModalOpen}
+          onRequestClose={this.closePostModal}
           autoScrollBodyContent={true}
           titleStyle={{color: fullBlack}}>
           <form>

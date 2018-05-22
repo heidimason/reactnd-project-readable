@@ -20,10 +20,6 @@ export const fetchPosts = () =>
 	fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-// export const fetchPost = data =>
-//   fetch(`${api}/posts/${data.id}`, { headers })
-//     .then(res => res.json())
-
 export const createPost = data =>
   fetch(`${api}/posts`, {
     method: 'POST',

@@ -28,7 +28,9 @@ import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
 import { getCategories } from '../Categories/actions'
 import { getPosts, editPost, upvotePost, downvotePost, removePost } from './actions'
+import { addComment } from '../Comments/actions'
 import serializeForm from 'form-serialize'
+import uuid from 'uuid'
 
 const styles = {
   iconArrow: {
@@ -59,15 +61,30 @@ class PostDetails extends Component {
   }
 
   state = {
-    modalOpen: false
+    postModalOpen: false,
+    commentModalOpen: false,
+    author: '',
+    body: ''
   }
 
-  closeModal = () => {
-    this.setState({modalOpen: false})
+  closePostModal = () => {
+    this.setState({postModalOpen: false})
+  }
+
+  openCommentModal = () => {
+    this.setState({commentModalOpen: true})
+  }
+
+  closeCommentModal = () => {
+    this.setState({commentModalOpen: false})
   }
 
   changeTitle = e => {
     this.setState({title: e.target.value})
+  }
+
+  changeAuthor = e => {
+    this.setState({author: e.target.value})
   }
 
   changeBody = e => {
@@ -89,7 +106,27 @@ class PostDetails extends Component {
     this.props.postEdit(post)
 
     // Close modal upon submitting form
-    this.closeModal()
+    this.closePostModal()
+  }
+
+  submitComment = e => {
+    e.preventDefault()
+
+    const values = serializeForm(e.target, { hash: true })
+
+    const comment = Object.assign(values, {
+      id: uuid(),
+      parentId: window.location.pathname.split('/').pop(),
+      timestamp: Date.now(),
+      body: this.state.body,
+      author: this.state.author
+    })
+
+    // Dispatch action
+    this.props.add(comment)
+
+    // Close modal upon submitting form
+    this.closeCommentModal()
   }
 
   render() {
@@ -105,7 +142,29 @@ class PostDetails extends Component {
               hour: '2-digit',
               minute: '2-digit',
               second: '2-digit'
-            }
+            },
+
+            commentActions = [
+              <Link to={window.location.pathname}>
+                <FlatButton
+                  label="Cancel"
+                  primary={true}
+                  onClick={this.closeCommentModal}
+                  style={{marginRight: 15}}
+                />
+              </Link>,
+
+              <Link to={window.location.pathname}>
+                <FlatButton
+                  label="Submit"
+                  primary={true}
+                  keyboardFocused={true}
+                  onClick={this.submitComment}
+                  backgroundColor={cyanA400}
+                  hoverColor={cyanA400}
+                />
+              </Link>
+            ]
 
     return (
       <AppBar
@@ -161,7 +220,7 @@ class PostDetails extends Component {
 
                               <IconComment
                                 className="icon-mood"
-
+                                onClick={this.openCommentModal}
                               />
 
                               <IconMenu
@@ -170,7 +229,7 @@ class PostDetails extends Component {
                                 <MenuItem style={{color: fullBlack}}
                                   onClick={ () => {
                                     this.setState({
-                                      modalOpen: true,
+                                      postModalOpen: true,
                                       id: post.id,
                                       title: post.title,
                                       body: post.body,
@@ -230,36 +289,36 @@ class PostDetails extends Component {
 
                   {showingPosts.map( (post, index) => (
                     <ScrollableDialog
-                        title="Edit Post"
-                        actions={
-                          <div>
-                            <Link to={`/${post.category}/${post.id}`}>
-                              <FlatButton
-                                label="Cancel"
-                                primary={true}
-                                onClick={this.closeModal}
-                                style={{marginRight: 15}}
-                              />
-                            </Link>
+                      title="Edit Post"
+                      actions={
+                        <div>
+                          <Link to={`/${post.category}/${post.id}`}>
+                            <FlatButton
+                              label="Cancel"
+                              primary={true}
+                              onClick={this.closePostModal}
+                              style={{marginRight: 15}}
+                            />
+                          </Link>
 
-                            <Link to={`/${post.category}/${post.id}`}>
-                              <FlatButton
-                                label="Submit"
-                                primary={true}
-                                keyboardFocused={true}
-                                onClick={this.editPost}
-                                backgroundColor={cyanA400}
-                                hoverColor={cyanA400}
-                              />
-                            </Link>
-                          </div>
-                        }
-                        modal={false}
-                        open={this.state.modalOpen}
-                        onRequestClose={this.closeModal}
-                        autoScrollBodyContent={true}
-                        titleStyle={{color: fullBlack}}
-                        key={index}>
+                          <Link to={`/${post.category}/${post.id}`}>
+                            <FlatButton
+                              label="Submit"
+                              primary={true}
+                              keyboardFocused={true}
+                              onClick={this.editPost}
+                              backgroundColor={cyanA400}
+                              hoverColor={cyanA400}
+                            />
+                          </Link>
+                        </div>
+                      }
+                      modal={false}
+                      open={this.state.postModalOpen}
+                      onRequestClose={this.closePostModal}
+                      autoScrollBodyContent={true}
+                      titleStyle={{color: fullBlack}}
+                      key={index}>
                         <form>
                           <SelectField
                             floatingLabelText="Category"
@@ -304,6 +363,39 @@ class PostDetails extends Component {
                         </form>
                       </ScrollableDialog>
                     ))}
+
+                    <ScrollableDialog
+                      title="Add Comment"
+                      actions={commentActions}
+                      modal={false}
+                      open={this.state.commentModalOpen}
+                      onRequestClose={this.closePostModal}
+                      autoScrollBodyContent={true}
+                      titleStyle={{color: fullBlack}}>
+                      <form>
+                        <TextField
+                          hintText="Your Name"
+                          floatingLabelText="Author"
+                          floatingLabelStyle={{color: grey500}}
+                          inputStyle={{color: fullBlack}}
+                          value={this.state.author}
+                          className="input-author"
+                          onChange={this.changeAuthor}
+                        />
+
+                        <TextField
+                          floatingLabelText="Message"
+                          floatingLabelStyle={{color: grey500}}
+                          textareaStyle={{color: fullBlack}}
+                          multiLine={true}
+                          rows={2}
+                          rowsMax={4}
+                          fullWidth={true}
+                          value={this.state.body}
+                          onChange={this.changeBody}
+                        />
+                      </form>
+                    </ScrollableDialog>
                 </Tab>
               ))}
             </Tabs>
@@ -328,7 +420,8 @@ const mapDispatchToProps = dispatch => {
     postEdit: p => dispatch( editPost(p) ),
     postUpvote: p => dispatch( upvotePost(p) ),
     postDownvote: p => dispatch( downvotePost(p) ),
-    postRemove: p => dispatch( removePost(p) )
+    postRemove: p => dispatch( removePost(p) ),
+    add: c => dispatch ( addComment(c) )
   }
 }
 
