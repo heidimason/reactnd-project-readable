@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { cyanA400, grey500, fullBlack } from 'material-ui/styles/colors'
+import { cyanA400, white, grey500, fullBlack } from 'material-ui/styles/colors'
+import sortBy from 'sort-by'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import OrderBy from '../SelectField/sort'
 import ListPosts from '../Posts'
 import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
@@ -25,6 +25,7 @@ class ListCategories extends Component {
 
   state = {
     tabValue: this.props.location.pathname.split('/')[1], // Category name/path
+    orderValue: '-timestamp',
     postModalOpen: false,
     category: '',
     title: '',
@@ -35,6 +36,12 @@ class ListCategories extends Component {
   changeTab = tabValue => {
     this.setState({tabValue})
   }
+
+  orderPosts = (event, index, orderValue) => {
+      this.setState({orderValue})
+
+      this.props.getAllPosts()
+    }
 
   openPostModal = () => {
     this.setState({postModalOpen: true})
@@ -106,6 +113,8 @@ class ListCategories extends Component {
               </Link>
             ]
 
+    posts.sort(sortBy(this.state.orderValue))
+
     return (
       <div style={{width: '75%'}}>
         <Tabs
@@ -121,7 +130,18 @@ class ListCategories extends Component {
                 history.push(`/${category.path}`)
               }}>
               <div style={{height: '85vh', overflowY: 'auto'}}>
-                <OrderBy />
+                <SelectField
+                  floatingLabelText="Order By"
+                  value={this.state.orderValue}
+                  onChange={this.orderPosts}
+                  floatingLabelStyle={{color: white}}
+                  menuItemStyle={{color: fullBlack}}
+                  style={{float: 'right'}}>
+                  <MenuItem value="-timestamp" primaryText="Timestamp (most recent)" />
+                  <MenuItem value="timestamp" primaryText="Timestamp (least recent)" />
+                  <MenuItem value="-voteScore" primaryText="Vote Score (highest)" />
+                  <MenuItem value="voteScore" primaryText="Vote Score (lowest)" />
+                </SelectField>
 
                 <h2 className="post-heading">{category.name}</h2>
 

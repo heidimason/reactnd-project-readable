@@ -50,6 +50,7 @@ const iconButtonElement = (
 let PostsContainer = makeSelectable(List)
 
 class PostDetails extends Component {
+  // Get all categories and posts immediately after component is inserted into DOM
   componentDidMount() {
     this.props.getAllCategories()
     this.props.getAllPosts()
