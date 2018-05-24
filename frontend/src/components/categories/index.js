@@ -9,7 +9,7 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCategories } from './actions'
 import { getPosts, addPost } from '../Posts/actions'
@@ -91,26 +91,23 @@ class ListCategories extends Component {
   render() {
     const { categories, history, posts } = this.props,
 
+            // Submit post
             actions = [
-              <Link to="/">
-                <FlatButton
-                  label="Cancel"
-                  primary={true}
-                  onClick={this.closePostModal}
-                  style={{marginRight: 15}}
-                />
-              </Link>,
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.closePostModal}
+                style={{marginRight: 15}}
+              />,
 
-              <Link to="/">
-                <FlatButton
-                  label="Submit"
-                  primary={true}
-                  keyboardFocused={true}
-                  onClick={this.submitPost}
-                  backgroundColor={cyanA400}
-                  hoverColor={cyanA400}
-                />
-              </Link>
+              <FlatButton
+                label="Submit"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.submitPost}
+                backgroundColor={cyanA400}
+                hoverColor={cyanA400}
+              />
             ]
 
     posts.sort(sortBy(this.state.orderValue))

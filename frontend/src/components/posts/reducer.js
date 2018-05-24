@@ -24,7 +24,6 @@ function posts(state = [], action) {
 
                 return post
               })
-            // return [state.filter(post => post.id !== action.data.id), action.data]
         case UPVOTE_POST:
             return state.map(post => {
                 if (post.id === action.post.id) {

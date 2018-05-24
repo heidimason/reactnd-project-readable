@@ -20,7 +20,7 @@ import ScrollableDialog from 'material-ui/Dialog'
 import SelectField from 'material-ui/SelectField'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { editPost, upvotePost, downvotePost, removePost } from './actions'
 import serializeForm from 'form-serialize'
@@ -87,7 +87,26 @@ class ListPosts extends Component {
               hour: '2-digit',
               minute: '2-digit',
               second: '2-digit'
-            }
+            },
+
+            // Edit post
+            actions = [
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.closePostModal}
+                style={{marginRight: 15}}
+              />,
+
+              <FlatButton
+                label="Submit"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.editPost}
+                backgroundColor={cyanA400}
+                hoverColor={cyanA400}
+              />
+            ]
 
     return (showingPosts.length > 0 &&
       <List className="post-list">
@@ -143,7 +162,8 @@ class ListPosts extends Component {
               secondaryText={
                 <p>
                   <span style={{color: fullBlack}}>{post.title}</span><br />
-                    {post.commentCount} comments
+                    {post.commentCount}
+                    {post.commentCount === 1 ? ' comment' : ' comments'}
                 </p>
               }
               secondaryTextLines={2}
@@ -161,29 +181,7 @@ class ListPosts extends Component {
             {showingPosts.map( (post, index) => (
               <ScrollableDialog
                 title="Edit Post"
-                actions={
-                  <div>
-                    <Link to={`/${post.category}`}>
-                      <FlatButton
-                        label="Cancel"
-                        primary={true}
-                        onClick={this.closePostModal}
-                        style={{marginRight: 15}}
-                      />
-                    </Link>
-
-                    <Link to={`/${post.category}`}>
-                      <FlatButton
-                        label="Submit"
-                        primary={true}
-                        keyboardFocused={true}
-                        onClick={this.editPost}
-                        backgroundColor={cyanA400}
-                        hoverColor={cyanA400}
-                      />
-                    </Link>
-                  </div>
-                }
+                actions={actions}
                 modal={false}
                 open={this.state.postModalOpen}
                 onRequestClose={this.closePostModal}

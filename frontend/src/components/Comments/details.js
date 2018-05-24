@@ -4,7 +4,7 @@ import {
   grey400, grey500,
   fullBlack
 } from 'material-ui/styles/colors'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import { List, ListItem } from 'material-ui/List'
@@ -68,7 +68,7 @@ class CommentDetails extends Component {
   }
 
   render() {
-    const { comments, commentUpvote, commentDownvote, commentRemove, location } = this.props,
+    const { comments, commentUpvote, commentDownvote, commentRemove } = this.props,
 
             options = {
               weekday: 'short',
@@ -78,7 +78,26 @@ class CommentDetails extends Component {
               hour: '2-digit',
               minute: '2-digit',
               second: '2-digit'
-            }
+            },
+
+            // Edit comment
+            actions = [
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.closeModal}
+                style={{marginRight: 15}}
+              />,
+
+              <FlatButton
+                label="Submit"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.editComment}
+                backgroundColor={cyanA400}
+                hoverColor={cyanA400}
+              />
+            ]
 
     return (
       <div>
@@ -144,29 +163,7 @@ class CommentDetails extends Component {
         {comments.map( (comment, index) => (
           <ScrollableDialog
             title="Edit Comment"
-            actions={
-              <div>
-                <Link to={location.pathname}>
-                  <FlatButton
-                    label="Cancel"
-                    primary={true}
-                    onClick={this.closeModal}
-                    style={{marginRight: 15}}
-                  />
-                </Link>
-
-                <Link to={location.pathname}>
-                  <FlatButton
-                    label="Submit"
-                    primary={true}
-                    keyboardFocused={true}
-                    onClick={this.editComment}
-                    backgroundColor={cyanA400}
-                    hoverColor={cyanA400}
-                  />
-                </Link>
-              </div>
-            }
+            actions={actions}
             modal={false}
             open={this.state.modalOpen}
             onRequestClose={this.closeModal}

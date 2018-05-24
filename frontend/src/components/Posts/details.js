@@ -141,26 +141,42 @@ class PostDetails extends Component {
               second: '2-digit'
             },
 
-            commentActions = [
-              <Link to={location.pathname}>
-                <FlatButton
-                  label="Cancel"
-                  primary={true}
-                  onClick={this.closeCommentModal}
-                  style={{marginRight: 15}}
-                />
-              </Link>,
+            // Edit post
+            postActions = [
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.closePostModal}
+                style={{marginRight: 15}}
+              />,
 
-              <Link to={location.pathname}>
-                <FlatButton
-                  label="Submit"
-                  primary={true}
-                  keyboardFocused={true}
-                  onClick={this.submitComment}
-                  backgroundColor={cyanA400}
-                  hoverColor={cyanA400}
-                />
-              </Link>
+              <FlatButton
+                label="Submit"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.editPost}
+                backgroundColor={cyanA400}
+                hoverColor={cyanA400}
+              />
+            ],
+
+            // Submit comment
+            commentActions = [
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.closeCommentModal}
+                style={{marginRight: 15}}
+              />,
+
+              <FlatButton
+                label="Submit"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.submitComment}
+                backgroundColor={cyanA400}
+                hoverColor={cyanA400}
+              />
             ]
 
     return (
@@ -286,29 +302,7 @@ class PostDetails extends Component {
                   {showingPosts.map( (post, index) => (
                     <ScrollableDialog
                       title="Edit Post"
-                      actions={
-                        <div>
-                          <Link to={`/${post.category}/${post.id}`}>
-                            <FlatButton
-                              label="Cancel"
-                              primary={true}
-                              onClick={this.closePostModal}
-                              style={{marginRight: 15}}
-                            />
-                          </Link>
-
-                          <Link to={`/${post.category}/${post.id}`}>
-                            <FlatButton
-                              label="Submit"
-                              primary={true}
-                              keyboardFocused={true}
-                              onClick={this.editPost}
-                              backgroundColor={cyanA400}
-                              hoverColor={cyanA400}
-                            />
-                          </Link>
-                        </div>
-                      }
+                      actions={postActions}
                       modal={false}
                       open={this.state.postModalOpen}
                       onRequestClose={this.closePostModal}
