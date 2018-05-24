@@ -1,7 +1,5 @@
 # Readable Project
 
-## Start
-
 To get started right away:
 
 * Install and start the API server
@@ -15,7 +13,7 @@ To get started right away:
 
 ## Description
 
-* The final assessment project for Udacity's Redux course, this is a Reddit-like content and comment web app. Users are able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users are also able to edit and delete posts and comments.
+The final assessment project for Udacity's Redux course, this is a Reddit-like content and comment web app. Users are able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users are also able to edit and delete posts and comments.
 
 This repository includes the code for the backend API Server that was used to develop and interact with the front-end portion of the project.
 
