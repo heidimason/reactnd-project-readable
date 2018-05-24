@@ -9,7 +9,6 @@ import { Link, withRouter } from 'react-router-dom'
 import IconButton from 'material-ui/IconButton'
 import ActionHome from 'material-ui/svg-icons/action/home'
 import { Tabs, Tab } from 'material-ui/Tabs'
-import IconArrow from 'material-ui/svg-icons/navigation/arrow-back'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -33,10 +32,6 @@ import serializeForm from 'form-serialize'
 import uuid from 'uuid'
 
 const styles = {
-  iconArrow: {
-    cursor: 'pointer',
-    verticalAlign: 'middle'
-  },
   listItem: {
     color: darkBlack
   }
@@ -61,6 +56,7 @@ class PostDetails extends Component {
   }
 
   state = {
+    tabValue: this.props.location.pathname.split('/')[1], // Category name/path
     postModalOpen: false,
     commentModalOpen: false,
     author: '',
@@ -178,25 +174,18 @@ class PostDetails extends Component {
         }
         children={
         	<div style={{width: '75%'}}>
-              <Tabs>
+              <Tabs value={this.state.tabValue}>
                 {categories.map( (category, index) => (
                   /* TODO: Fix active tab with browser back button and add icons */
                 <Tab
                   label={category.name}
                   key={index}
-                  data-route={category.path}
+                  value={category.name}
                   onActive={ () => {
                     history.push(`/${category.path}`)
                   }}>
                   <div style={{height: '85vh', overflowY: 'auto'}}>
-                    <h2 className="post-heading">
-                      <IconArrow
-                        hoverColor={cyanA400}
-                        style={styles.iconArrow}
-                        onClick={ () => {
-                          history.goBack()
-                        }}/>&nbsp;&nbsp;Post Details
-                    </h2>
+                    <h2 className="post-heading">Post Details</h2>
 
                     {showingPosts.length !== 0 &&
                       <List className="post-list">
@@ -289,7 +278,7 @@ class PostDetails extends Component {
                     }
 
                     {!showingPosts.length &&
-                      <p>This post has been deleted!</p>
+                      <p>Nothing to see here!</p>
                     }
                   </div>
 

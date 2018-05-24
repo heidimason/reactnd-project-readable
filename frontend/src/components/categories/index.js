@@ -24,11 +24,16 @@ class ListCategories extends Component {
   }
 
   state = {
+    tabValue: this.props.location.pathname.split('/')[1], // Category name/path
     postModalOpen: false,
     category: '',
     title: '',
     author: '',
     body: ''
+  }
+
+  changeTab = tabValue => {
+    this.setState({tabValue})
   }
 
   openPostModal = () => {
@@ -103,13 +108,15 @@ class ListCategories extends Component {
 
     return (
       <div style={{width: '75%'}}>
-        <Tabs>
+        <Tabs
+          value={this.state.tabValue}
+          onChange={this.changeTab}>
           {categories.map( (category, index) => (
             /* TODO: Fix active tab with browser back button and add icons */
             <Tab
               label={category.name}
               key={index}
-              data-route={category.path}
+              value={category.name}
               onActive={ () => {
                 history.push(`/${category.path}`)
               }}>
@@ -118,7 +125,6 @@ class ListCategories extends Component {
 
                 <h2 className="post-heading">{category.name}</h2>
 
-                { /* TODO: Show all posts when home icon is clicked */ }
                 {category.path === 'all' &&
                   <ListPosts showingPosts={posts} />
                 }
@@ -130,11 +136,9 @@ class ListCategories extends Component {
           ))}
         </Tabs>
 
-        <Link to="new-post">
-          <AddPostBtn
-            onClick={this.openPostModal}
-          />
-        </Link>
+        <AddPostBtn
+          onClick={this.openPostModal}
+        />
 
         <ScrollableDialog
           title="Create Post"

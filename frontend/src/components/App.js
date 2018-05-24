@@ -7,7 +7,7 @@ import {
 } from 'material-ui/styles/colors'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import ReadableBar from './AppBar'
 import PostDetails from './Posts/details'
 import NotFound from './NotFound'
@@ -38,11 +38,12 @@ class ReadableApp extends Component {
             <MuiThemeProvider
                 muiTheme={customMuiTheme}>
 				<Switch>
-                    <Route exact path="/" component={ReadableBar} />
+                    <Route exact path="/" render={() => (
+                        <Redirect to="/all" />
+                    )}/>
                     <Route exact path="/not-found" component={NotFound} />
                     <Route exact path="/:category" component={ReadableBar} />
                     <Route exact path="/:category/:post_id" component={PostDetails} />
-                    <Route exact path="/new-post" component={ReadableBar} />
                     <Route component={NotFound} />
                 </Switch>
             </MuiThemeProvider>
