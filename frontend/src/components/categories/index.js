@@ -38,10 +38,10 @@ class ListCategories extends Component {
   }
 
   orderPosts = (event, index, orderValue) => {
-      this.setState({orderValue})
+    this.setState({orderValue})
 
-      this.props.getAllPosts()
-    }
+    this.props.getAllPosts()
+  }
 
   openPostModal = () => {
     this.setState({postModalOpen: true})
