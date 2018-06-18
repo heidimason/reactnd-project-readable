@@ -1,4 +1,4 @@
-const api = "http://localhost:3001"
+const api = process.env.READABLE_API_URL || "http://localhost:3001"
 
 
 // Generate a unique token for storing your data on the backend server.
