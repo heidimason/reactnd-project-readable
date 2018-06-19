@@ -1,5 +1,5 @@
-const api = process.env.READABLE_API_URL || "http://localhost:3001"
-
+// const api = "http://localhost:3001"
+const api = "https://reddit-clone-server-mhgcgxesfg.now.sh"
 
 // Generate a unique token for storing your data on the backend server.
 let token = localStorage.token
