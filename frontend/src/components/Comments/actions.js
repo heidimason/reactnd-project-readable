@@ -14,8 +14,8 @@ export const UPVOTE_COMMENT = 'UPVOTE_COMMENT'
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 
-export const getComments = d => {
-  return dispatch => {
+export const getComments = d =>
+  dispatch =>
     fetchComments(d)
       .then( comments =>
         dispatch({
@@ -26,11 +26,9 @@ export const getComments = d => {
       .catch( () =>
         alert('Error getting comments!')
       )
-  }
-}
 
-export const addComment = d => {
-  return dispatch => {
+export const addComment = d =>
+  dispatch =>
     createComment(d)
       .then( comment =>
         dispatch({
@@ -41,11 +39,9 @@ export const addComment = d => {
       .catch( () =>
         alert('Error adding comment!')
       )
-  }
-}
 
-export const editComment = d => {
-  return dispatch => {
+export const editComment = d =>
+  dispatch =>
     reviseComment(d)
       .then( comment =>
         dispatch({
@@ -56,11 +52,9 @@ export const editComment = d => {
       .catch( () =>
         alert('Error editing comment!')
       )
-  }
-}
 
-export const upvoteComment = d => {
-  return dispatch => {
+export const upvoteComment = d =>
+  dispatch =>
     commentUpvote(d)
       .then( comment =>
         dispatch({
@@ -71,11 +65,9 @@ export const upvoteComment = d => {
       .catch( () =>
         alert('Error upvoting comment!')
       )
-  }
-}
 
-export const downvoteComment = d => {
-  return dispatch => {
+export const downvoteComment = d =>
+  dispatch =>
     commentDownvote(d)
       .then( comment =>
         dispatch({
@@ -86,11 +78,9 @@ export const downvoteComment = d => {
       .catch( () =>
         alert('Error downvoting comment!')
       )
-  }
-}
 
-export const removeComment = d => {
-  return dispatch => {
+export const removeComment = d =>
+  dispatch =>
     deleteComment(d)
       .then( comment =>
         dispatch({
@@ -101,5 +91,3 @@ export const removeComment = d => {
       .catch( () =>
         alert('Error removing comment!')
       )
-  }
-}

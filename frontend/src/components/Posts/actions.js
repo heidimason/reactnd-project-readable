@@ -1,4 +1,5 @@
-import { fetchPosts,
+import {
+  fetchPosts,
   createPost,
   revisePost,
   postUpvote,
@@ -13,8 +14,8 @@ export const UPVOTE_POST = 'UPVOTE_POST'
 export const DOWNVOTE_POST = 'DOWNVOTE_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 
-export const getPosts = () => {
-  return dispatch => {
+export const getPosts = () =>
+  dispatch =>
   	fetchPosts()
       .then( posts =>
     		dispatch({
@@ -25,11 +26,9 @@ export const getPosts = () => {
     	.catch( () =>
       	alert('Error getting posts!')
   	  )
-	}
-}
 
-export const addPost = d => {
-  return dispatch => {
+export const addPost = d =>
+  dispatch =>
     createPost(d)
       .then( post =>
         dispatch({
@@ -40,11 +39,9 @@ export const addPost = d => {
       .catch( () =>
         alert('Error adding post!')
       )
-  }
-}
 
-export const editPost = d => {
-  return dispatch => {
+export const editPost = d =>
+  dispatch =>
     revisePost(d)
       .then( post =>
         dispatch({
@@ -55,11 +52,9 @@ export const editPost = d => {
       .catch( () =>
         alert('Error editing post!')
       )
-  }
-}
 
-export const upvotePost = d => {
-  return dispatch => {
+export const upvotePost = d =>
+  dispatch =>
     postUpvote(d)
       .then( post =>
         dispatch({
@@ -70,11 +65,9 @@ export const upvotePost = d => {
       .catch( () =>
         alert('Error upvoting post!')
       )
-  }
-}
 
-export const downvotePost = d => {
-  return dispatch => {
+export const downvotePost = d =>
+  dispatch =>
     postDownvote(d)
       .then( post =>
         dispatch({
@@ -85,11 +78,9 @@ export const downvotePost = d => {
       .catch( () =>
         alert('Error downvoting post!')
       )
-  }
-}
 
-export const removePost = d => {
-  return dispatch => {
+export const removePost = d =>
+  dispatch =>
     deletePost(d)
       .then( post =>
         dispatch({
@@ -100,5 +91,3 @@ export const removePost = d => {
       .catch( () =>
         alert('Error removing post!')
       )
-  }
-}

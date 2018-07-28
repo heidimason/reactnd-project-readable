@@ -2,8 +2,8 @@ import { fetchCategories } from '../../utils/ReadableAPI'
 
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 
-export const getCategories = () => {
-  return dispatch => {
+export const getCategories = () =>
+  dispatch =>
   	fetchCategories()
       .then( categories =>
     		dispatch({
@@ -14,5 +14,3 @@ export const getCategories = () => {
       .catch( () =>
         alert('Error getting categories!')
       )
-	}
-}
