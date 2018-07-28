@@ -118,7 +118,7 @@ class ListCategories extends Component {
           value={this.state.tabValue}
           onChange={this.changeTab}>
           {categories.map( (category, index) => (
-            /* TODO: Fix active tab with browser back button and add icons */
+            /* TODO: Fix active tab with browser back button */
             <Tab
               label={category.name}
               key={index}

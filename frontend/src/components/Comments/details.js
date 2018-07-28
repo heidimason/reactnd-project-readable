@@ -153,7 +153,10 @@ class CommentDetails extends Component {
                   </p>
                 }
                 secondaryTextLines={2}
-                leftAvatar={<Avatar>{ comment.author ? comment.author.charAt(0) : null }</Avatar>}
+                leftAvatar={
+                  <Avatar className="avatar">
+                    { comment.author ? comment.author.charAt(0) : null }
+                  </Avatar>}
                 style={{color: fullBlack}}
               />
             </div>

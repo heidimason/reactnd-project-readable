@@ -156,7 +156,13 @@ class ListPosts extends Component {
 
             <ListItem
               disabled={false}
-              leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
+              leftAvatar={
+                <Avatar
+                  src={`/logos/${post.category}.svg`}
+                  className="avatar"
+                  alt={`${post.category} logo`}
+                />
+              }
               style={styles.listItem}
               primaryText={post.author}
               secondaryText={

@@ -106,6 +106,7 @@ class PostDetails extends Component {
     this.closePostModal()
   }
 
+  // TODO: Add form validations
   submitComment = e => {
     e.preventDefault()
 
@@ -258,7 +259,13 @@ class PostDetails extends Component {
                             <ListItem
                               value={1}
                               disabled={true}
-                              leftAvatar={<Avatar>{ post.author ? post.author.charAt(0) : null }</Avatar>}
+                              leftAvatar={
+                                <Avatar
+                                  src={`/logos/${post.category}.svg`}
+                                  className="avatar"
+                                  alt={`${post.category} logo`}
+                                />
+                              }
                               style={styles.listItem}
                               primaryText={post.author}
                               secondaryText={
@@ -294,6 +301,7 @@ class PostDetails extends Component {
                       </List>
                     }
 
+                    { /* TODO: Refactor to ternary statement */ }
                     {!showingPosts.length &&
                       <p>Nothing to see here!</p>
                     }
