@@ -142,10 +142,9 @@ class ListCategories extends Component {
 
                 <h2 className="post-heading">{category.name}</h2>
 
-                {category.path === 'all' &&
+                {category.path === 'all' ?
                   <ListPosts showingPosts={posts} />
-                }
-                {category.path !== 'all' &&
+                  :
                   <ListPosts showingPosts={posts.filter( post => post.category === category.name )} />
                 }
               </div>

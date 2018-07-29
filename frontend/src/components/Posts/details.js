@@ -205,7 +205,7 @@ class PostDetails extends Component {
                   <div style={{height: '85vh', overflowY: 'auto'}}>
                     <h2 className="post-heading">Post Details</h2>
 
-                    {showingPosts.length !== 0 &&
+                    {showingPosts.length !== 0 ?
                       <List className="post-list">
                         {showingPosts.map( (post, index) => (
                           <PostsContainer key={index}>
@@ -299,10 +299,7 @@ class PostDetails extends Component {
                           </PostsContainer>
                         ))}
                       </List>
-                    }
-
-                    { /* TODO: Refactor to ternary statement */ }
-                    {!showingPosts.length &&
+                      :
                       <p>Nothing to see here!</p>
                     }
                   </div>
