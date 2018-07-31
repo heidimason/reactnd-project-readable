@@ -183,7 +183,7 @@ class ListCategories extends Component {
               inputStyle={{color: fullBlack}}
               value={this.state.title}
               onChange={this.changeTitle}
-              className="title-input"
+              style={{marginRight: '2%', width: '48%'}}
             />
 
             <TextField
@@ -191,7 +191,7 @@ class ListCategories extends Component {
               floatingLabelText="Author"
               floatingLabelStyle={{color: grey500}}
               inputStyle={{color: fullBlack}}
-              style={{marginLeft: 15}}
+              style={{marginLeft: '2%', width: '48%'}}
               value={this.state.author}
               onChange={this.changeAuthor}
             />

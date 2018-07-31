@@ -31,12 +31,6 @@ import { addComment } from '../Comments/actions'
 import serializeForm from 'form-serialize'
 import uuid from 'uuid'
 
-const styles = {
-  listItem: {
-    color: darkBlack
-  }
-}
-
 const iconButtonElement = (
   <IconButton
     touch={true}
@@ -209,8 +203,7 @@ class PostDetails extends Component {
                       <List className="post-list">
                         {showingPosts.map( (post, index) => (
                           <PostsContainer key={index}>
-                            <Subheader
-                              style={{color: fullBlack}}>
+                            <Subheader style={{color: fullBlack}}>
                               { new Date(post.timestamp).toLocaleString([], options) }
 
                               <div className="post-icons">
@@ -266,12 +259,13 @@ class PostDetails extends Component {
                                   alt={`${post.category} logo`}
                                 />
                               }
-                              style={styles.listItem}
+                              innerDivStyle={{color: darkBlack}}
                               primaryText={post.author}
                               secondaryText={
                                 <p>
                                   <span style={{color: fullBlack}}>{post.title}</span><br />
-                                    {post.commentCount} comments
+                                    {post.commentCount}
+                                    {post.commentCount === 1 ? ' comment' : ' comments'}
                                 </p>
                               }
                               secondaryTextLines={2}
@@ -281,7 +275,7 @@ class PostDetails extends Component {
                                 <ListItem value={2}
                                   disabled={true}
                                   primaryText={post.body}
-                                  style={{color: fullBlack}}
+                                  innerDivStyle={{color: fullBlack}}
                                   initiallyOpen={true}
                                   autoGenerateNestedIndicator={false}
                                   nestedItems={[
@@ -333,13 +327,13 @@ class PostDetails extends Component {
                             inputStyle={{color: fullBlack}}
                             value={this.state.title}
                             onChange={this.changeTitle}
-                            className="title-input"
+                            style={{marginRight: '2%', width: '48%'}}
                           />
 
                           <TextField
                             floatingLabelText="Author"
                             inputStyle={{color: fullBlack}}
-                            style={{marginLeft: 15}}
+                            style={{marginLeft: '2%', width: '48%'}}
                             value={this.state.author}
                             disabled={true}
                           />

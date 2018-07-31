@@ -25,12 +25,6 @@ import { connect } from 'react-redux'
 import { editPost, upvotePost, downvotePost, removePost } from './actions'
 import serializeForm from 'form-serialize'
 
-const styles = {
-  listItem: {
-    color: darkBlack
-  }
-}
-
 const iconButtonElement = (
   <IconButton
     touch={true}
@@ -112,11 +106,10 @@ class ListPosts extends Component {
       <List className="post-list">
         {showingPosts.map( (post, index) => (
           <div key={index}>
-            <Subheader
-              style={{color: fullBlack}}>
+            <Subheader style={{color: fullBlack}}>
               { new Date(post.timestamp).toLocaleString([], options) }
 
-              <div style={{width: '25%', float: 'right'}}>
+              <div className="post-icons">
                 <span className="vote-score">{post.voteScore}</span>
 
                 <IconMoodGood
@@ -163,7 +156,7 @@ class ListPosts extends Component {
                   alt={`${post.category} logo`}
                 />
               }
-              style={styles.listItem}
+              innerDivStyle={{color: darkBlack}}
               primaryText={post.author}
               secondaryText={
                 <p>
@@ -213,13 +206,13 @@ class ListPosts extends Component {
                       inputStyle={{color: fullBlack}}
                       value={this.state.title}
                       onChange={this.changeTitle}
-                      className="title-input"
+                      style={{marginRight: '2%', width: '48%'}}
                     />
 
                     <TextField
                       floatingLabelText="Author"
                       inputStyle={{color: fullBlack}}
-                      style={{marginLeft: 15}}
+                      style={{marginLeft: '2%', width: '48%'}}
                       value={this.state.author}
                       disabled={true}
                     />

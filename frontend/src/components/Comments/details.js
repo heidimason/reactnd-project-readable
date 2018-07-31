@@ -21,6 +21,13 @@ import { connect } from 'react-redux'
 import { getComments, editComment, upvoteComment, downvoteComment, removeComment } from './actions'
 import serializeForm from 'form-serialize'
 
+const styles = {
+  subheader: {
+    borderTop: '1px solid #eee',
+    color: fullBlack
+  }
+}
+
 const iconButtonElement = (
   <IconButton
     touch={true}
@@ -104,7 +111,7 @@ class CommentDetails extends Component {
         <List>
           {comments.map( (comment, index) => (
             <div key={index}>
-              <Subheader className="comment-subheader">
+              <Subheader style={styles.subheader}>
                 { new Date(comment.timestamp).toLocaleString([], options) }
 
                 <div className="comment-icons">
