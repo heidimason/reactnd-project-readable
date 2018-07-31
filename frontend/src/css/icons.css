@@ -1,0 +1,15 @@
+.icon-mood {
+	fill: #555 !important;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+.icon-mood:hover,
+.icon-mood:focus {
+	fill: #888 !important;
+}
+
+.icon-mood-good,
+.icon-mood-bad {
+	margin-right: 15px;
+}

@@ -1,5 +1,14 @@
 import React, { Component } from 'react'
 import {
+  CategoriesDiv,
+  PostsDiv,
+  PostHeading,
+  PostIconsDiv,
+  VoteScoreSpan,
+  PostTitleSpan,
+  postList
+} from '../../utils/styles'
+import {
   cyanA400,
   grey400, grey500,
   darkBlack, fullBlack
@@ -119,6 +128,12 @@ class PostDetails extends Component {
 
     // Close modal upon submitting form
     this.closeCommentModal()
+
+    // Reset fields
+    this.setState({
+      body: '',
+      author: ''
+    })
   }
 
   render() {
@@ -185,7 +200,7 @@ class PostDetails extends Component {
           </Link>
         }
         children={
-        	<div style={{width: '75%'}}>
+        	<CategoriesDiv>
               <Tabs value={this.state.tabValue}>
                 {categories.map( (category, index) => (
                   /* TODO: Fix active tab with browser back button and add icons */
@@ -196,18 +211,18 @@ class PostDetails extends Component {
                   onActive={ () => {
                     history.push(`/${category.path}`)
                   }}>
-                  <div style={{height: '85vh', overflowY: 'auto'}}>
-                    <h2 className="post-heading">Post Details</h2>
+                  <PostsDiv>
+                    <PostHeading>Post Details</PostHeading>
 
                     {showingPosts.length !== 0 ?
-                      <List className="post-list">
+                      <List style={postList}>
                         {showingPosts.map( (post, index) => (
                           <PostsContainer key={index}>
                             <Subheader style={{color: fullBlack}}>
                               { new Date(post.timestamp).toLocaleString([], options) }
 
-                              <div className="post-icons">
-                                <span className="vote-score">{post.voteScore}</span>
+                              <PostIconsDiv>
+                                <VoteScoreSpan>{post.voteScore}</VoteScoreSpan>
 
                                 <IconMoodGood
                                   className="icon-mood icon-mood-good"
@@ -246,7 +261,7 @@ class PostDetails extends Component {
                                     onClick={e => postRemove(post)}>Delete
                                   </MenuItem>
                                 </IconMenu>
-                              </div>
+                              </PostIconsDiv>
                             </Subheader>
 
                             <ListItem
@@ -255,7 +270,7 @@ class PostDetails extends Component {
                               leftAvatar={
                                 <Avatar
                                   src={`/logos/${post.category}.svg`}
-                                  className="avatar"
+                                  style={{backgroundColor: grey500}}
                                   alt={`${post.category} logo`}
                                 />
                               }
@@ -263,7 +278,7 @@ class PostDetails extends Component {
                               primaryText={post.author}
                               secondaryText={
                                 <p>
-                                  <span style={{color: fullBlack}}>{post.title}</span><br />
+                                  <PostTitleSpan style={{color: fullBlack}}>{post.title}</PostTitleSpan>
                                     {post.commentCount}
                                     {post.commentCount === 1 ? ' comment' : ' comments'}
                                 </p>
@@ -296,7 +311,7 @@ class PostDetails extends Component {
                       :
                       <p>Nothing to see here!</p>
                     }
-                  </div>
+                  </PostsDiv>
 
                   {showingPosts.map( (post, index) => (
                     <ScrollableDialog
@@ -388,7 +403,7 @@ class PostDetails extends Component {
                 </Tab>
               ))}
             </Tabs>
-          </div>
+          </CategoriesDiv>
         }
       />
     )

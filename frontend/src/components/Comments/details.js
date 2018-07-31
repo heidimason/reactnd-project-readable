@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { CommentIconsDiv, VoteScoreSpan } from '../../utils/styles'
 import {
   cyanA400,
   grey400, grey500,
@@ -114,8 +115,8 @@ class CommentDetails extends Component {
               <Subheader style={styles.subheader}>
                 { new Date(comment.timestamp).toLocaleString([], options) }
 
-                <div className="comment-icons">
-                  <span className="vote-score">{comment.voteScore}</span>
+                <CommentIconsDiv>
+                  <VoteScoreSpan>{comment.voteScore}</VoteScoreSpan>
 
                   <IconMoodGood
                     className="icon-mood icon-mood-good"
@@ -147,7 +148,7 @@ class CommentDetails extends Component {
                       onClick={e => commentRemove(comment)}>Delete
                     </MenuItem>
                   </IconMenu>
-                </div>
+                </CommentIconsDiv>
               </Subheader>
 
               <ListItem
@@ -161,7 +162,7 @@ class CommentDetails extends Component {
                 }
                 secondaryTextLines={2}
                 leftAvatar={
-                  <Avatar className="avatar">
+                  <Avatar style={{backgroundColor: grey500}}>
                     { comment.author ? comment.author.charAt(0) : null }
                   </Avatar>}
                 style={{color: fullBlack}}

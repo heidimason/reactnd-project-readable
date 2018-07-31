@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import '../../css/Posts.css'
+import {
+  PostIconsDiv,
+  VoteScoreSpan,
+  PostTitleSpan,
+  postList
+} from '../../utils/styles'
 import {
   cyanA400,
   blueGrey100,
@@ -103,14 +108,14 @@ class ListPosts extends Component {
             ]
 
     return (showingPosts.length > 0 &&
-      <List className="post-list">
+      <List style={postList}>
         {showingPosts.map( (post, index) => (
           <div key={index}>
             <Subheader style={{color: fullBlack}}>
               { new Date(post.timestamp).toLocaleString([], options) }
 
-              <div className="post-icons">
-                <span className="vote-score">{post.voteScore}</span>
+              <PostIconsDiv>
+                <VoteScoreSpan>{post.voteScore}</VoteScoreSpan>
 
                 <IconMoodGood
                   className="icon-mood icon-mood-good"
@@ -144,7 +149,7 @@ class ListPosts extends Component {
                     onClick={e => postRemove(post)}>Delete
                   </MenuItem>
                 </IconMenu>
-              </div>
+              </PostIconsDiv>
             </Subheader>
 
             <ListItem
@@ -152,7 +157,7 @@ class ListPosts extends Component {
               leftAvatar={
                 <Avatar
                   src={`/logos/${post.category}.svg`}
-                  className="avatar"
+                  style={{backgroundColor: grey500}}
                   alt={`${post.category} logo`}
                 />
               }
@@ -160,7 +165,7 @@ class ListPosts extends Component {
               primaryText={post.author}
               secondaryText={
                 <p>
-                  <span style={{color: fullBlack}}>{post.title}</span><br />
+                  <PostTitleSpan style={{color: fullBlack}}>{post.title}</PostTitleSpan>
                     {post.commentCount}
                     {post.commentCount === 1 ? ' comment' : ' comments'}
                 </p>

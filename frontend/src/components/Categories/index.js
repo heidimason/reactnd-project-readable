@@ -1,4 +1,9 @@
 import React, { Component } from 'react'
+import {
+  CategoriesDiv,
+  PostsDiv,
+  PostHeading
+} from '../../utils/styles'
 import { cyanA400, white, grey500, fullBlack } from 'material-ui/styles/colors'
 import sortBy from 'sort-by'
 import { Tabs, Tab } from 'material-ui/Tabs'
@@ -86,6 +91,14 @@ class ListCategories extends Component {
 
     // Close modal upon submitting form
     this.closePostModal()
+
+    // Reset fields
+    this.setState({
+      category: '',
+      title: '',
+      author: '',
+      body: ''
+    })
   }
 
   render() {
@@ -113,7 +126,7 @@ class ListCategories extends Component {
     posts.sort(sortBy(this.state.orderValue))
 
     return (
-      <div style={{width: '75%'}}>
+      <CategoriesDiv>
         <Tabs
           value={this.state.tabValue}
           onChange={this.changeTab}>
@@ -126,7 +139,7 @@ class ListCategories extends Component {
               onActive={ () => {
                 history.push(`/${category.path}`)
               }}>
-              <div style={{height: '85vh', overflowY: 'auto'}}>
+              <PostsDiv>
                 <SelectField
                   floatingLabelText="Order By"
                   value={this.state.orderValue}
@@ -140,14 +153,14 @@ class ListCategories extends Component {
                   <MenuItem value="voteScore" primaryText="Vote Score (lowest)" />
                 </SelectField>
 
-                <h2 className="post-heading">{category.name}</h2>
+                <PostHeading>{category.name}</PostHeading>
 
                 {category.path === 'all' ?
                   <ListPosts showingPosts={posts} />
                   :
                   <ListPosts showingPosts={posts.filter( post => post.category === category.name )} />
                 }
-              </div>
+              </PostsDiv>
             </Tab>
           ))}
         </Tabs>
@@ -209,7 +222,7 @@ class ListCategories extends Component {
             />
           </form>
         </ScrollableDialog>
-      </div>
+      </CategoriesDiv>
     )
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../css/App.css'
+import '../css/icons.css'
 import {
     blueGrey900, blueGrey700,
     cyanA400,
