@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { CommentIconsDiv, VoteScoreSpan } from '../../utils/styles'
+import styled from 'styled-components'
+import { VoteScoreSpan } from '../../utils/styles'
 import {
   cyanA400,
   grey400, grey500,
@@ -21,13 +22,6 @@ import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
 import { getComments, editComment, upvoteComment, downvoteComment, removeComment } from './actions'
 import serializeForm from 'form-serialize'
-
-const styles = {
-  subheader: {
-    borderTop: '1px solid #eee',
-    color: fullBlack
-  }
-}
 
 const iconButtonElement = (
   <IconButton
@@ -186,7 +180,7 @@ class CommentDetails extends Component {
                 floatingLabelText="Author"
                 inputStyle={{color: fullBlack}}
                 value={this.state.author}
-                className="input-author"
+                className="input-author-comment"
                 disabled={true}
               />
 
@@ -206,6 +200,26 @@ class CommentDetails extends Component {
         ))}
       </div>
     )
+  }
+}
+
+const CommentIconsDiv = styled.div`
+    float: right;
+    width: 25%;
+
+    @media (max-width: 890px) {
+      width: initial;
+    }
+
+    @media (max-width: 632px) {
+      float: none;
+    }
+  `
+
+const styles = {
+  subheader: {
+    borderTop: '1px solid #eee',
+    color: fullBlack
   }
 }
 

@@ -1,14 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const styles = {
-	layout: {
-		paddingRight: 30,
-  		paddingLeft: 30,
-  		textAlign: 'center'
-	}
-}
-
 function PageNotFound (props) {
 	return (
 		<div style={styles.layout}>
@@ -17,6 +9,14 @@ function PageNotFound (props) {
 			<Link to="/">Take me home!</Link>
 		</div>
 	)
+}
+
+const styles = {
+	layout: {
+		paddingRight: 30,
+  		paddingLeft: 30,
+  		textAlign: 'center'
+	}
 }
 
 export default PageNotFound

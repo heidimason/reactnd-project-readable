@@ -211,15 +211,15 @@ class ListPosts extends Component {
                       inputStyle={{color: fullBlack}}
                       value={this.state.title}
                       onChange={this.changeTitle}
-                      style={{marginRight: '2%', width: '48%'}}
+                      className="input-title-post"
                     />
 
                     <TextField
                       floatingLabelText="Author"
                       inputStyle={{color: fullBlack}}
-                      style={{marginLeft: '2%', width: '48%'}}
                       value={this.state.author}
                       disabled={true}
+                      className="input-author-post"
                     />
 
                     <TextField

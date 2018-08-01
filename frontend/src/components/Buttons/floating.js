@@ -2,14 +2,6 @@ import React from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 
-const styles = {
-	btnAddPost: {
-		position: 'absolute',
-		right: '15px',
-		bottom: '15px'
-	}
-}
-
 function AddPostBtn (props) {
  	const { onClick } = props
 
@@ -21,6 +13,14 @@ function AddPostBtn (props) {
 	    	<ContentAdd />
 	  	</FloatingActionButton>
   	)
+}
+
+const styles = {
+	btnAddPost: {
+		position: 'absolute',
+		right: '15px',
+		bottom: '15px'
+	}
 }
 
 export default AddPostBtn

@@ -146,7 +146,7 @@ class ListCategories extends Component {
                   onChange={this.orderPosts}
                   floatingLabelStyle={{color: white}}
                   menuItemStyle={{color: fullBlack}}
-                  style={{float: 'right'}}>
+                  className="order-by">
                   <MenuItem value="-timestamp" primaryText="Timestamp (most recent)" />
                   <MenuItem value="timestamp" primaryText="Timestamp (least recent)" />
                   <MenuItem value="-voteScore" primaryText="Vote Score (highest)" />
@@ -196,7 +196,7 @@ class ListCategories extends Component {
               inputStyle={{color: fullBlack}}
               value={this.state.title}
               onChange={this.changeTitle}
-              style={{marginRight: '2%', width: '48%'}}
+              className="input-title-post"
             />
 
             <TextField
@@ -204,9 +204,9 @@ class ListCategories extends Component {
               floatingLabelText="Author"
               floatingLabelStyle={{color: grey500}}
               inputStyle={{color: fullBlack}}
-              style={{marginLeft: '2%', width: '48%'}}
               value={this.state.author}
               onChange={this.changeAuthor}
+              className="input-author-post"
             />
 
             <TextField

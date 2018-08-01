@@ -6,7 +6,7 @@ import ActionHome from 'material-ui/svg-icons/action/home'
 import ListCategories from '../Categories'
 
 function ReadableBar (props) {
-    return (
+    return (window.innerWidth > 767 ?
         <AppBar
             title="Readable"
             iconElementLeft={
@@ -18,6 +18,19 @@ function ReadableBar (props) {
             }
             children={
             	<ListCategories />
+            }
+        />
+        :
+        <AppBar
+            iconElementLeft={
+                <Link to="/">
+                    <IconButton>
+                        <ActionHome />
+                    </IconButton>
+                </Link>
+            }
+            children={
+                <ListCategories />
             }
         />
     )

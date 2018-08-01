@@ -9,28 +9,24 @@ export const CategoriesDiv = styled.div`
     overflow-y: auto;
   `,
   PostHeading = styled.h2`
-    padding-top: 15px;
     font-weight: 400;
     text-transform: capitalize;
+
+    @media (min-width: 651px) {
+      padding-top: 15px;
+    }
   `,
   PostTitleSpan = styled.span`
     display: block;
   `,
   PostIconsDiv = styled.div`
-    float: right;
-    width: 30%;
-
-    @media (max-width: 838px) {
-      width: initial !important;
+    @media (min-width: 839px) {
+      width: 30%;
     }
 
-    @media (max-width: 604px) {
-      width: 100% !important;
+    @media (min-width: 581px) {
+      float: right;
     }
-  `,
-  CommentIconsDiv = styled.div`
-    float: right;
-    width: 25%;
   `,
   VoteScoreSpan = styled.span`
     margin-right: 15px;

@@ -18,14 +18,42 @@
 
 
 /* Create/Edit Post/Comment */
-.select-category,
-.input-author {
-	position: absolute !important;
-	top: 0;
-	right: 24px;
-}
-
-.select-category div div div, /* i.e. React/Redux/Udacity */
-.input-author div div div {
+.select-category div div div { /* i.e. React/Redux/Udacity */
 	color: black !important;
 }
+
+@media screen and (min-width: 651px) {
+	.select-category,
+	.input-author-comment {
+		position: absolute !important;
+		top: 0;
+		right: 24px;
+	}
+
+	.input-title-post,
+	.input-author-post {
+		width: 48% !important;
+	}
+
+	.input-title-post {
+		margin-right: 2%;
+	}
+
+	.input-author-post {
+		margin-left: 2%;
+	}
+
+	.order-by {
+		float: right;
+	}
+}
+
+@media screen and (max-width: 650px) {
+	.select-category,
+	.input-title-post,
+	.input-author-post,
+	.input-author-comment {
+		width: 100% !important;
+	}
+}
+
