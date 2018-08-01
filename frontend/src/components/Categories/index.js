@@ -7,6 +7,7 @@ import {
 import { cyanA400, white, grey500, fullBlack } from 'material-ui/styles/colors'
 import sortBy from 'sort-by'
 import { Tabs, Tab } from 'material-ui/Tabs'
+import LoadingAnimation from '../Progress/circular'
 import ListPosts from '../Posts'
 import AddPostBtn from '../Buttons/floating'
 import ScrollableDialog from 'material-ui/Dialog'
@@ -26,9 +27,15 @@ class ListCategories extends Component {
   componentDidMount() {
     this.props.getAllCategories()
     this.props.getAllPosts()
+
+    // Stop showing loading animation
+    this.setState({
+      loading: false
+    })
   }
 
   state = {
+    loading: true,
     tabValue: this.props.location.pathname.split('/')[1], // Category name/path
     orderValue: '-timestamp',
     postModalOpen: false,
@@ -103,6 +110,7 @@ class ListCategories extends Component {
 
   render() {
     const { categories, history, posts } = this.props,
+                             { loading } = this.state,
 
             // Submit post
             actions = [
@@ -154,6 +162,10 @@ class ListCategories extends Component {
                 </SelectField>
 
                 <PostHeading>{category.name}</PostHeading>
+
+                { loading &&
+                  <LoadingAnimation></LoadingAnimation>
+                }
 
                 {category.path === 'all' ?
                   <ListPosts showingPosts={posts} />

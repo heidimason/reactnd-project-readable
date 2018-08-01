@@ -115,7 +115,7 @@ class PostDetails extends Component {
     this.closePostModal()
   }
 
-  // TODO: Add form validations
+  // TODO: Add form validations and update post.commentCount
   submitComment = e => {
     e.preventDefault()
 

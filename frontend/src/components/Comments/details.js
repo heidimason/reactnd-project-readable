@@ -136,7 +136,7 @@ class CommentDetails extends Component {
                       }}>Edit
                     </MenuItem>
 
-                    { /* TODO: Add confirmation dialog */ }
+                    { /* TODO: Add confirmation dialog and update post.commentCount */ }
                     <MenuItem
                       style={{color: fullBlack}}
                       onClick={e => commentRemove(comment)}>Delete
