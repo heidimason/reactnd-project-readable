@@ -4,12 +4,12 @@ To get started right away:
 
 * Install and start the API server
     - `cd api-server`
-    - `npm install`
+    - `yarn install` or `npm install`
     - `node server`
 * In another terminal window, install the front-end dependencies and development server
     - `cd frontend`
-    - `npm install`
-    - `npm start`
+    - `yarn install` or `npm install`
+    - `yarn start` or `npm start`
 
 ## Description
 
