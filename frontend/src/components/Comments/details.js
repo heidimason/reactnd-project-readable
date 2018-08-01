@@ -161,43 +161,40 @@ class CommentDetails extends Component {
                   </Avatar>}
                 style={{color: fullBlack}}
               />
+
+              <ScrollableDialog
+                title="Edit Comment"
+                actions={actions}
+                modal={false}
+                open={this.state.modalOpen}
+                onRequestClose={this.closeModal}
+                autoScrollBodyContent={true}
+                titleStyle={{color: fullBlack}}>
+                <form>
+                  <TextField
+                    floatingLabelText="Author"
+                    inputStyle={{color: fullBlack}}
+                    value={this.state.author}
+                    className="input-author-comment"
+                    disabled={true}
+                  />
+
+                  <TextField
+                    floatingLabelText="Message"
+                    floatingLabelStyle={{color: grey500}}
+                    textareaStyle={{color: fullBlack}}
+                    multiLine={true}
+                    rows={2}
+                    rowsMax={4}
+                    fullWidth={true}
+                    value={this.state.body}
+                    onChange={this.changeBody}
+                  />
+                </form>
+              </ScrollableDialog>
             </div>
           ))}
         </List>
-
-        {comments.map( (comment, index) => (
-          <ScrollableDialog
-            title="Edit Comment"
-            actions={actions}
-            modal={false}
-            open={this.state.modalOpen}
-            onRequestClose={this.closeModal}
-            autoScrollBodyContent={true}
-            titleStyle={{color: fullBlack}}
-            key={index}>
-            <form>
-              <TextField
-                floatingLabelText="Author"
-                inputStyle={{color: fullBlack}}
-                value={this.state.author}
-                className="input-author-comment"
-                disabled={true}
-              />
-
-              <TextField
-                floatingLabelText="Message"
-                floatingLabelStyle={{color: grey500}}
-                textareaStyle={{color: fullBlack}}
-                multiLine={true}
-                rows={2}
-                rowsMax={4}
-                fullWidth={true}
-                value={this.state.body}
-                onChange={this.changeBody}
-              />
-            </form>
-          </ScrollableDialog>
-        ))}
       </div>
     )
   }
