@@ -72,6 +72,12 @@ class PostDetails extends Component {
   }
 
   openCommentModal = () => {
+    // So "Add Comment" fields are not filled with "Edit Post" values
+    this.setState({
+      author: '',
+      body: ''
+    })
+
     this.setState({commentModalOpen: true})
   }
 
