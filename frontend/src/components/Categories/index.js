@@ -25,13 +25,14 @@ import uuid from 'uuid'
 class ListCategories extends Component {
   // Get all categories and posts immediately after component is inserted into DOM
   componentDidMount() {
-    this.props.getAllCategories()
-    this.props.getAllPosts()
-
-    // Stop showing loading animation
-    this.setState({
-      loading: false
-    })
+    this.props.getAllCategories().then( () =>
+      this.props.getAllPosts().then( () =>
+        // Stop showing loading animation
+        this.setState({
+          loading: false
+        })
+      )
+    )
   }
 
   state = {
