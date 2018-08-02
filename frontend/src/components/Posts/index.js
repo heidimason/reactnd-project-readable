@@ -77,6 +77,7 @@ class ListPosts extends Component {
 
   render() {
     const { showingPosts, history, upvote, downvote, postRemove } = this.props,
+                                                { postModalOpen } = this.state,
 
             options = {
               weekday: 'short',
@@ -187,7 +188,7 @@ class ListPosts extends Component {
                 title="Edit Post"
                 actions={actions}
                 modal={false}
-                open={this.state.postModalOpen}
+                open={postModalOpen}
                 onRequestClose={this.closePostModal}
                 autoScrollBodyContent={true}
                 titleStyle={{color: fullBlack}}

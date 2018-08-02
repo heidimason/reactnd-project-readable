@@ -25,8 +25,10 @@ import uuid from 'uuid'
 class ListCategories extends Component {
   // Get all categories and posts immediately after component is inserted into DOM
   componentDidMount() {
-    this.props.getAllCategories().then( () =>
-      this.props.getAllPosts().then( () =>
+    const { getAllCategories, getAllPosts } = this.props
+
+    getAllCategories().then( () =>
+      getAllPosts().then( () =>
         // Stop showing loading animation
         this.setState({
           loading: false
@@ -110,8 +112,8 @@ class ListCategories extends Component {
   }
 
   render() {
-    const { categories, history, posts } = this.props,
-                             { loading } = this.state,
+      const { loading, orderValue, postModalOpen } = this.state,
+                    { categories, history, posts } = this.props,
 
             // Submit post
             actions = [
@@ -132,7 +134,7 @@ class ListCategories extends Component {
               />
             ]
 
-    posts.sort(sortBy(this.state.orderValue))
+    posts.sort(sortBy(orderValue))
 
     return (
       <CategoriesDiv>
@@ -151,7 +153,7 @@ class ListCategories extends Component {
               <PostsDiv>
                 <SelectField
                   floatingLabelText="Order By"
-                  value={this.state.orderValue}
+                  value={orderValue}
                   onChange={this.orderPosts}
                   floatingLabelStyle={{color: white}}
                   menuItemStyle={{color: fullBlack}}
@@ -186,7 +188,7 @@ class ListCategories extends Component {
           title="Create Post"
           actions={actions}
           modal={false}
-          open={this.state.postModalOpen}
+          open={postModalOpen}
           onRequestClose={this.closePostModal}
           autoScrollBodyContent={true}
           titleStyle={{color: fullBlack}}>

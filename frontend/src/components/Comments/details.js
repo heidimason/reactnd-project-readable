@@ -35,9 +35,11 @@ const iconButtonElement = (
 
 class CommentDetails extends Component {
   componentDidMount() {
-    const postId = this.props.location.pathname.split('/').pop()
+    const { location, getAllComments } = this.props
 
-    this.props.getAllComments(postId)
+    const postId = location.pathname.split('/').pop()
+
+    getAllComments(postId)
   }
 
   state = {
@@ -71,6 +73,7 @@ class CommentDetails extends Component {
 
   render() {
     const { comments, commentUpvote, commentDownvote, commentRemove } = this.props,
+                                                        { modalOpen } = this.state,
 
             options = {
               weekday: 'short',
@@ -166,7 +169,7 @@ class CommentDetails extends Component {
                 title="Edit Comment"
                 actions={actions}
                 modal={false}
-                open={this.state.modalOpen}
+                open={modalOpen}
                 onRequestClose={this.closeModal}
                 autoScrollBodyContent={true}
                 titleStyle={{color: fullBlack}}>

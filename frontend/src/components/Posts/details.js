@@ -55,8 +55,10 @@ let PostsContainer = makeSelectable(List)
 class PostDetails extends Component {
   // Get all categories and posts immediately after component is inserted into DOM
   componentDidMount() {
-    this.props.getAllCategories()
-    this.props.getAllPosts()
+    const { getAllCategories, getAllPosts } = this.props
+
+    getAllCategories()
+    getAllPosts()
   }
 
   state = {
@@ -119,18 +121,20 @@ class PostDetails extends Component {
   submitComment = e => {
     e.preventDefault()
 
+    const { location, add } = this.props
+
     const values = serializeForm(e.target, { hash: true })
 
     const comment = Object.assign(values, {
       id: uuid(),
-      parentId: this.props.location.pathname.split('/').pop(),
+      parentId: location.pathname.split('/').pop(),
       timestamp: Date.now(),
       body: this.state.body,
       author: this.state.author
     })
 
     // Dispatch action
-    this.props.add(comment)
+    add(comment)
 
     // Close modal upon submitting form
     this.closeCommentModal()
@@ -144,6 +148,7 @@ class PostDetails extends Component {
 
   render() {
     const { categories, history, location, posts, postUpvote, postDownvote, postRemove } = this.props,
+                                                     { postModalOpen, commentModalOpen } = this.state,
 
             showingPosts = posts.filter( post => `/${post.category}/${post.id}` === location.pathname ),
 
@@ -324,7 +329,7 @@ class PostDetails extends Component {
                       title="Edit Post"
                       actions={postActions}
                       modal={false}
-                      open={this.state.postModalOpen}
+                      open={postModalOpen}
                       onRequestClose={this.closePostModal}
                       autoScrollBodyContent={true}
                       titleStyle={{color: fullBlack}}
@@ -378,7 +383,7 @@ class PostDetails extends Component {
                       title="Add Comment"
                       actions={commentActions}
                       modal={false}
-                      open={this.state.commentModalOpen}
+                      open={commentModalOpen}
                       onRequestClose={this.closePostModal}
                       autoScrollBodyContent={true}
                       titleStyle={{color: fullBlack}}>
