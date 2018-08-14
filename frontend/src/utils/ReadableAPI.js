@@ -13,12 +13,12 @@ const headers = {
 
 export const fetchCategories = () =>
 	fetch(`${api}/categories`, { headers })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => data.categories)
 
 export const fetchPosts = () =>
 	fetch(`${api}/posts`, { headers })
-    .then(res => res.json())
+    .then(response => response.json())
 
 export const createPost = data =>
   fetch(`${api}/posts`, {
@@ -28,7 +28,7 @@ export const createPost = data =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
-  }).then(res => res.json())
+  }).then(response => response.json())
 
 export const revisePost = data =>
   fetch(`${api}/posts/${data.id}`, {
@@ -41,7 +41,7 @@ export const revisePost = data =>
       title: data.title,
       body: data.body
     })
-  }).then(res => res.json())
+  }).then(response => response.json())
 
 export const postUpvote = data =>
 	fetch(`${api}/posts/${data.id}`, {
@@ -53,7 +53,7 @@ export const postUpvote = data =>
     body: JSON.stringify({
       option: 'upVote'
     })
-	}).then(res => res.json())
+	}).then(response => response.json())
 
 export const postDownvote = data =>
 	fetch(`${api}/posts/${data.id}`, {
@@ -65,17 +65,17 @@ export const postDownvote = data =>
     body: JSON.stringify({
       option: 'downVote'
     })
-	}).then(res => res.json())
+	}).then(response => response.json())
 
 export const deletePost = data =>
 	fetch(`${api}/posts/${data.id}`, {
     method: 'DELETE',
     headers
-  }).then(res => res.json())
+  }).then(response => response.json())
 
 export const fetchComments = data =>
   fetch(`${api}/posts/${data}/comments`, { headers })
-    .then(res => res.json())
+    .then(response => response.json())
 
 export const createComment = data =>
   fetch(`${api}/comments`, {
@@ -85,7 +85,7 @@ export const createComment = data =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
-  }).then(res => res.json())
+  }).then(response => response.json())
 
 export const reviseComment = data =>
   fetch(`${api}/comments/${data.id}`, {
@@ -98,7 +98,7 @@ export const reviseComment = data =>
       title: data.title,
       body: data.body
     })
-  }).then(res => res.json())
+  }).then(response => response.json())
 
 export const commentUpvote = data =>
   fetch(`${api}/comments/${data.id}`, {
@@ -110,7 +110,7 @@ export const commentUpvote = data =>
     body: JSON.stringify({
       option: 'upVote'
     })
-  }).then(res => res.json())
+  }).then(response => response.json())
 
 export const commentDownvote = data =>
   fetch(`${api}/comments/${data.id}`, {
@@ -122,10 +122,10 @@ export const commentDownvote = data =>
     body: JSON.stringify({
       option: 'downVote'
     })
-  }).then(res => res.json())
+  }).then(response => response.json())
 
 export const deleteComment = data =>
   fetch(`${api}/comments/${data.id}`, {
     method: 'DELETE',
     headers
-  }).then(res => res.json())
+  }).then(response => response.json())
