@@ -137,107 +137,109 @@ class ListCategories extends Component {
     posts.sort(sortBy(orderValue))
 
     return (
-      <CategoriesDiv>
-        <Tabs
-          value={this.state.tabValue}
-          onChange={this.changeTab}>
-          {categories.map( (category, index) => (
-            /* TODO: Fix active tab with browser back button */
-            <Tab
-              label={category.name}
-              key={index}
-              value={category.name}
-              onActive={ () => {
-                history.push(`/${category.path}`)
-              }}>
-              <PostsDiv>
-                <SelectField
-                  floatingLabelText="Order By"
-                  value={orderValue}
-                  onChange={this.orderPosts}
-                  floatingLabelStyle={{color: white}}
-                  menuItemStyle={{color: fullBlack}}
-                  className="order-by">
-                  <MenuItem value="-timestamp" primaryText="Timestamp (most recent)" />
-                  <MenuItem value="timestamp" primaryText="Timestamp (least recent)" />
-                  <MenuItem value="-voteScore" primaryText="Vote Score (highest)" />
-                  <MenuItem value="voteScore" primaryText="Vote Score (lowest)" />
-                </SelectField>
+      <div style={{width: '100%'}}>
+        <CategoriesDiv>
+          <Tabs
+            value={this.state.tabValue}
+            onChange={this.changeTab}>
+            {categories.map( (category, index) => (
+              /* TODO: Fix active tab with browser back button */
+              <Tab
+                label={category.name}
+                key={index}
+                value={category.name}
+                onActive={ () => {
+                  history.push(`/${category.path}`)
+                }}>
+                <PostsDiv>
+                  <SelectField
+                    floatingLabelText="Order By"
+                    value={orderValue}
+                    onChange={this.orderPosts}
+                    floatingLabelStyle={{color: white}}
+                    menuItemStyle={{color: fullBlack}}
+                    className="order-by">
+                    <MenuItem value="-timestamp" primaryText="Timestamp (most recent)" />
+                    <MenuItem value="timestamp" primaryText="Timestamp (least recent)" />
+                    <MenuItem value="-voteScore" primaryText="Vote Score (highest)" />
+                    <MenuItem value="voteScore" primaryText="Vote Score (lowest)" />
+                  </SelectField>
 
-                <PostHeading>{category.name}</PostHeading>
+                  <PostHeading>{category.name}</PostHeading>
 
-                { loading &&
-                  <LoadingAnimation></LoadingAnimation>
-                }
+                  { loading &&
+                    <LoadingAnimation />
+                  }
 
-                {category.path === 'all' ?
-                  <ListPosts showingPosts={posts} />
-                  :
-                  <ListPosts showingPosts={posts.filter( post => post.category === category.name )} />
-                }
-              </PostsDiv>
-            </Tab>
-          ))}
-        </Tabs>
+                  {category.path === 'all' ?
+                    <ListPosts showingPosts={posts} />
+                    :
+                    <ListPosts showingPosts={posts.filter( post => post.category === category.name )} />
+                  }
+                </PostsDiv>
+              </Tab>
+            ))}
+          </Tabs>
 
-        <AddPostBtn
-          onClick={this.openPostModal}
-        />
+          <AddPostBtn
+            onClick={this.openPostModal}
+          />
 
-        <ScrollableDialog
-          title="Create Post"
-          actions={actions}
-          modal={false}
-          open={postModalOpen}
-          onRequestClose={this.closePostModal}
-          autoScrollBodyContent={true}
-          titleStyle={{color: fullBlack}}>
-          <form>
-            <SelectField
-              floatingLabelText="Category"
-              value={this.state.category}
-              onChange={this.changeCategory}
-              autoWidth={true}
-              menuItemStyle={{color: fullBlack}}
-              className="select-category">
-              <MenuItem value="react" primaryText="React" />
-              <MenuItem value="redux" primaryText="Redux" />
-              <MenuItem value="udacity" primaryText="Udacity" />
-            </SelectField>
+          <ScrollableDialog
+            title="Create Post"
+            actions={actions}
+            modal={false}
+            open={postModalOpen}
+            onRequestClose={this.closePostModal}
+            autoScrollBodyContent={true}
+            titleStyle={{color: fullBlack}}>
+            <form>
+              <SelectField
+                floatingLabelText="Category"
+                value={this.state.category}
+                onChange={this.changeCategory}
+                autoWidth={true}
+                menuItemStyle={{color: fullBlack}}
+                className="select-category">
+                <MenuItem value="freshwater" primaryText="Freshwater" />
+                <MenuItem value="planted" primaryText="Planted" />
+                <MenuItem value="discussion" primaryText="Discussion" />
+              </SelectField>
 
-            <TextField
-              floatingLabelText="Title"
-              floatingLabelStyle={{color: grey500}}
-              inputStyle={{color: fullBlack}}
-              value={this.state.title}
-              onChange={this.changeTitle}
-              className="input-title-post"
-            />
+              <TextField
+                floatingLabelText="Title"
+                floatingLabelStyle={{color: grey500}}
+                inputStyle={{color: fullBlack}}
+                value={this.state.title}
+                onChange={this.changeTitle}
+                className="input-title-post"
+              />
 
-            <TextField
-              hintText="Your Name"
-              floatingLabelText="Author"
-              floatingLabelStyle={{color: grey500}}
-              inputStyle={{color: fullBlack}}
-              value={this.state.author}
-              onChange={this.changeAuthor}
-              className="input-author-post"
-            />
+              <TextField
+                hintText="Your Name"
+                floatingLabelText="Author"
+                floatingLabelStyle={{color: grey500}}
+                inputStyle={{color: fullBlack}}
+                value={this.state.author}
+                onChange={this.changeAuthor}
+                className="input-author-post"
+              />
 
-            <TextField
-              floatingLabelText="Message"
-              floatingLabelStyle={{color: grey500}}
-              textareaStyle={{color: fullBlack}}
-              multiLine={true}
-              rows={2}
-              rowsMax={4}
-              fullWidth={true}
-              value={this.state.body}
-              onChange={this.changeBody}
-            />
-          </form>
-        </ScrollableDialog>
-      </CategoriesDiv>
+              <TextField
+                floatingLabelText="Message"
+                floatingLabelStyle={{color: grey500}}
+                textareaStyle={{color: fullBlack}}
+                multiLine={true}
+                rows={2}
+                rowsMax={4}
+                fullWidth={true}
+                value={this.state.body}
+                onChange={this.changeBody}
+              />
+            </form>
+          </ScrollableDialog>
+        </CategoriesDiv>
+      </div>
     )
   }
 }

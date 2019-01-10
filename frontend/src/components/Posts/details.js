@@ -211,157 +211,192 @@ class PostDetails extends Component {
           </Link>
         }
         children={
-        	<CategoriesDiv>
-              <Tabs value={this.state.tabValue}>
-                {categories.map( (category, index) => (
-                  /* TODO: Fix active tab with browser back button and add icons */
-                <Tab
-                  label={category.name}
-                  key={index}
-                  value={category.name}
-                  onActive={ () => {
-                    history.push(`/${category.path}`)
-                  }}>
-                  <PostsDiv>
-                    <PostHeading>Post Details</PostHeading>
+          <div style={{width: '100%'}}>
+          	<CategoriesDiv>
+                <Tabs value={this.state.tabValue}>
+                  {categories.map( (category, index) => (
+                    /* TODO: Fix active tab with browser back button and add icons */
+                  <Tab
+                    label={category.name}
+                    key={index}
+                    value={category.name}
+                    onActive={ () => {
+                      history.push(`/${category.path}`)
+                    }}>
+                    <PostsDiv>
+                      <PostHeading>Post Details</PostHeading>
 
-                    {showingPosts.length !== 0 ?
-                      <List style={postList}>
-                        {showingPosts.map( (post, index) => (
-                          <PostsContainer key={index}>
-                            <Subheader style={{color: fullBlack}}>
-                              { new Date(post.timestamp).toLocaleString([], options) }
+                      {showingPosts.length !== 0 ?
+                        <List style={postList}>
+                          {showingPosts.map( (post, index) => (
+                            <PostsContainer key={index}>
+                              <Subheader style={{color: fullBlack}}>
+                                { new Date(post.timestamp).toLocaleString([], options) }
 
-                              <PostIconsDiv>
-                                <VoteScoreSpan>{post.voteScore}</VoteScoreSpan>
+                                <PostIconsDiv>
+                                  <VoteScoreSpan>{post.voteScore}</VoteScoreSpan>
 
-                                <IconMoodGood
-                                  className="icon-mood icon-mood-good"
-                                  onClick={e => postUpvote(post)}
-                                />
+                                  <IconMoodGood
+                                    className="icon-mood icon-mood-good"
+                                    onClick={e => postUpvote(post)}
+                                  />
 
-                                <IconMoodBad
-                                  className="icon-mood icon-mood-bad"
-                                  onClick={e => postDownvote(post)}
-                                />
+                                  <IconMoodBad
+                                    className="icon-mood icon-mood-bad"
+                                    onClick={e => postDownvote(post)}
+                                  />
 
-                                <IconComment
-                                  className="icon-mood"
-                                  onClick={this.openCommentModal}
-                                />
+                                  <IconComment
+                                    className="icon-mood"
+                                    onClick={this.openCommentModal}
+                                  />
 
-                                <IconMenu
-                                  iconButtonElement={iconButtonElement}
-                                  style={{float: 'right'}}>
-                                  <MenuItem style={{color: fullBlack}}
-                                    onClick={ () => {
-                                      this.setState({
-                                        postModalOpen: true,
-                                        id: post.id,
-                                        title: post.title,
-                                        body: post.body,
-                                        author: post.author,
-                                        category: post.category
-                                      })
-                                    }}>Edit
-                                  </MenuItem>
+                                  <IconMenu
+                                    iconButtonElement={iconButtonElement}
+                                    style={{float: 'right'}}>
+                                    <MenuItem style={{color: fullBlack}}
+                                      onClick={ () => {
+                                        this.setState({
+                                          postModalOpen: true,
+                                          id: post.id,
+                                          title: post.title,
+                                          body: post.body,
+                                          author: post.author,
+                                          category: post.category
+                                        })
+                                      }}>Edit
+                                    </MenuItem>
 
-                                  { /* TODO: Add confirmation dialog */ }
-                                  <MenuItem
-                                    style={{color: fullBlack}}
-                                    onClick={e => postRemove(post)}>Delete
-                                  </MenuItem>
-                                </IconMenu>
-                              </PostIconsDiv>
-                            </Subheader>
+                                    { /* TODO: Add confirmation dialog */ }
+                                    <MenuItem
+                                      style={{color: fullBlack}}
+                                      onClick={e => postRemove(post)}>Delete
+                                    </MenuItem>
+                                  </IconMenu>
+                                </PostIconsDiv>
+                              </Subheader>
 
-                            <ListItem
-                              value={1}
-                              disabled={true}
-                              leftAvatar={
-                                <Avatar
-                                  src={`/logos/${post.category}.svg`}
-                                  style={{backgroundColor: grey500}}
-                                  alt={`${post.category} logo`}
-                                />
+                              <ListItem
+                                value={1}
+                                disabled={true}
+                                leftAvatar={
+                                  <Avatar
+                                    src={`/aquariums/${post.category}.jpg`}
+                                    style={{backgroundColor: grey500}}
+                                    alt={`${post.category} logo`}
+                                  />
+                                }
+                                innerDivStyle={{color: darkBlack}}
+                                primaryText={post.author}
+                                secondaryText={
+                                  <p>
+                                    <PostTitleSpan style={{color: fullBlack}}>{post.title}</PostTitleSpan>
+                                      {post.commentCount}
+                                      {post.commentCount === 1 ? ' comment' : ' comments'}
+                                  </p>
+                                }
+                                secondaryTextLines={2}
+                                initiallyOpen={true}
+                                autoGenerateNestedIndicator={false}
+                                nestedItems={[
+                                  <ListItem value={2}
+                                    disabled={true}
+                                    primaryText={post.body}
+                                    innerDivStyle={{color: fullBlack}}
+                                    initiallyOpen={true}
+                                    autoGenerateNestedIndicator={false}
+                                    nestedItems={[
+                                      <ListItem disabled={true}>
+                                        <CommentDetails />
+                                      </ListItem>
+                                    ]}>
+                                  </ListItem>
+                                ]}
+                              />
+
+                              {showingPosts.length > 1 &&
+                                <Divider />
                               }
-                              innerDivStyle={{color: darkBlack}}
-                              primaryText={post.author}
-                              secondaryText={
-                                <p>
-                                  <PostTitleSpan style={{color: fullBlack}}>{post.title}</PostTitleSpan>
-                                    {post.commentCount}
-                                    {post.commentCount === 1 ? ' comment' : ' comments'}
-                                </p>
-                              }
-                              secondaryTextLines={2}
-                              initiallyOpen={true}
-                              autoGenerateNestedIndicator={false}
-                              nestedItems={[
-                                <ListItem value={2}
-                                  disabled={true}
-                                  primaryText={post.body}
-                                  innerDivStyle={{color: fullBlack}}
-                                  initiallyOpen={true}
-                                  autoGenerateNestedIndicator={false}
-                                  nestedItems={[
-                                    <ListItem disabled={true}>
-                                      <CommentDetails />
-                                    </ListItem>
-                                  ]}>
-                                </ListItem>
-                              ]}
+                            </PostsContainer>
+                          ))}
+                        </List>
+                        :
+                        <p>Nothing to see here!</p>
+                      }
+                    </PostsDiv>
+
+                    {showingPosts.map( (post, index) => (
+                      <ScrollableDialog
+                        title="Edit Post"
+                        actions={postActions}
+                        modal={false}
+                        open={postModalOpen}
+                        onRequestClose={this.closePostModal}
+                        autoScrollBodyContent={true}
+                        titleStyle={{color: fullBlack}}
+                        key={index}>
+                          <form>
+                            <SelectField
+                              floatingLabelText="Category"
+                              value={this.state.category}
+                              autoWidth={true}
+                              menuItemStyle={{color: fullBlack}}
+                              className="select-category"
+                              disabled={true}>
+                              <MenuItem value="freshwater" primaryText="Freshwater" />
+                              <MenuItem value="planted" primaryText="Planted" />
+                              <MenuItem value="discussion" primaryText="Discussion" />
+                            </SelectField>
+
+                            <TextField
+                              floatingLabelText="Title"
+                              floatingLabelStyle={{color: grey500}}
+                              inputStyle={{color: fullBlack}}
+                              value={this.state.title}
+                              onChange={this.changeTitle}
+                              className="input-title-post"
                             />
 
-                            {showingPosts.length > 1 &&
-                              <Divider />
-                            }
-                          </PostsContainer>
-                        ))}
-                      </List>
-                      :
-                      <p>Nothing to see here!</p>
-                    }
-                  </PostsDiv>
+                            <TextField
+                              floatingLabelText="Author"
+                              inputStyle={{color: fullBlack}}
+                              value={this.state.author}
+                              disabled={true}
+                              className="input-author-post"
+                            />
 
-                  {showingPosts.map( (post, index) => (
-                    <ScrollableDialog
-                      title="Edit Post"
-                      actions={postActions}
-                      modal={false}
-                      open={postModalOpen}
-                      onRequestClose={this.closePostModal}
-                      autoScrollBodyContent={true}
-                      titleStyle={{color: fullBlack}}
-                      key={index}>
+                            <TextField
+                              floatingLabelText="Message"
+                              floatingLabelStyle={{color: grey500}}
+                              textareaStyle={{color: fullBlack}}
+                              multiLine={true}
+                              rows={2}
+                              rowsMax={4}
+                              fullWidth={true}
+                              value={this.state.body}
+                              onChange={this.changeBody}
+                            />
+                          </form>
+                        </ScrollableDialog>
+                      ))}
+
+                      <ScrollableDialog
+                        title="Add Comment"
+                        actions={commentActions}
+                        modal={false}
+                        open={commentModalOpen}
+                        onRequestClose={this.closePostModal}
+                        autoScrollBodyContent={true}
+                        titleStyle={{color: fullBlack}}>
                         <form>
-                          <SelectField
-                            floatingLabelText="Category"
-                            value={this.state.category}
-                            autoWidth={true}
-                            menuItemStyle={{color: fullBlack}}
-                            className="select-category"
-                            disabled={true}>
-                            <MenuItem value="react" primaryText="React" />
-                            <MenuItem value="redux" primaryText="Redux" />
-                            <MenuItem value="udacity" primaryText="Udacity" />
-                          </SelectField>
-
                           <TextField
-                            floatingLabelText="Title"
+                            hintText="Your Name"
+                            floatingLabelText="Author"
                             floatingLabelStyle={{color: grey500}}
                             inputStyle={{color: fullBlack}}
-                            value={this.state.title}
-                            onChange={this.changeTitle}
-                            className="input-title-post"
-                          />
-
-                          <TextField
-                            floatingLabelText="Author"
-                            inputStyle={{color: fullBlack}}
                             value={this.state.author}
-                            disabled={true}
-                            className="input-author-post"
+                            className="input-author-comment"
+                            onChange={this.changeAuthor}
                           />
 
                           <TextField
@@ -377,44 +412,11 @@ class PostDetails extends Component {
                           />
                         </form>
                       </ScrollableDialog>
-                    ))}
-
-                    <ScrollableDialog
-                      title="Add Comment"
-                      actions={commentActions}
-                      modal={false}
-                      open={commentModalOpen}
-                      onRequestClose={this.closePostModal}
-                      autoScrollBodyContent={true}
-                      titleStyle={{color: fullBlack}}>
-                      <form>
-                        <TextField
-                          hintText="Your Name"
-                          floatingLabelText="Author"
-                          floatingLabelStyle={{color: grey500}}
-                          inputStyle={{color: fullBlack}}
-                          value={this.state.author}
-                          className="input-author-comment"
-                          onChange={this.changeAuthor}
-                        />
-
-                        <TextField
-                          floatingLabelText="Message"
-                          floatingLabelStyle={{color: grey500}}
-                          textareaStyle={{color: fullBlack}}
-                          multiLine={true}
-                          rows={2}
-                          rowsMax={4}
-                          fullWidth={true}
-                          value={this.state.body}
-                          onChange={this.changeBody}
-                        />
-                      </form>
-                    </ScrollableDialog>
-                </Tab>
-              ))}
-            </Tabs>
-          </CategoriesDiv>
+                  </Tab>
+                ))}
+              </Tabs>
+            </CategoriesDiv>
+          </div>
         }
       />
       :
@@ -559,9 +561,9 @@ class PostDetails extends Component {
                             menuItemStyle={{color: fullBlack}}
                             className="select-category"
                             disabled={true}>
-                            <MenuItem value="react" primaryText="React" />
-                            <MenuItem value="redux" primaryText="Redux" />
-                            <MenuItem value="udacity" primaryText="Udacity" />
+                            <MenuItem value="freshwater" primaryText="Freshwater" />
+                            <MenuItem value="planted" primaryText="Planted" />
+                            <MenuItem value="discussion" primaryText="Discussion" />
                           </SelectField>
 
                           <TextField

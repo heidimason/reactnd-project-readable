@@ -10,16 +10,16 @@ const defaultData = {
         path: 'all'
       },
       {
-        name: 'react',
-        path: 'react'
+        name: 'freshwater',
+        path: 'freshwater'
       },
       {
-        name: 'redux',
-        path: 'redux'
+        name: 'planted',
+        path: 'planted'
       },
       {
-        name: 'udacity',
-        path: 'udacity'
+        name: 'discussion',
+        path: 'discussion'
       }
   ]
 }

@@ -157,8 +157,7 @@ class ListPosts extends Component {
               disabled={false}
               leftAvatar={
                 <Avatar
-                  src={`/logos/${post.category}.svg`}
-                  style={{backgroundColor: grey500}}
+                  src={`/aquariums/${post.category}.jpg`}
                   alt={`${post.category} logo`}
                 />
               }
@@ -201,9 +200,9 @@ class ListPosts extends Component {
                       menuItemStyle={{color: fullBlack}}
                       className="select-category"
                       disabled={true}>
-                      <MenuItem value="react" primaryText="React" />
-                      <MenuItem value="redux" primaryText="Redux" />
-                      <MenuItem value="udacity" primaryText="Udacity" />
+                      <MenuItem value="freshwater" primaryText="Freshwater" />
+                      <MenuItem value="planted" primaryText="Planted" />
+                      <MenuItem value="discussion" primaryText="Discussion" />
                     </SelectField>
 
                     <TextField

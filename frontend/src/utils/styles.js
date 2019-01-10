@@ -2,7 +2,11 @@ import styled from 'styled-components'
 import { white } from 'material-ui/styles/colors'
 
 export const CategoriesDiv = styled.div`
-    width: 75%;
+    @media (min-width: 768px) {
+      margin-right: auto;
+      margin-left: auto;
+      width: 75%;
+    }
   `,
   PostsDiv = styled.div`
     height: 85vh;
