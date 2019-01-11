@@ -8,7 +8,6 @@ import ListCategories from '../Categories'
 function ReadableBar (props) {
     return (window.innerWidth > 767 ?
         <AppBar
-            title="Readable"
             iconElementLeft={
                 <Link to="/">
                 	<IconButton>
@@ -23,11 +22,9 @@ function ReadableBar (props) {
         :
         <AppBar
             iconElementLeft={
-                <Link to="/">
-                    <IconButton>
-                        <ActionHome />
-                    </IconButton>
-                </Link>
+                <Link to="/"
+                    style={{display: 'none'}}
+                />
             }
             children={
                 <ListCategories />

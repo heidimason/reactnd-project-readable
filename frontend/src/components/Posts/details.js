@@ -420,14 +420,11 @@ class PostDetails extends Component {
         }
       />
       :
-      /* No title */
       <AppBar
         iconElementLeft={
-          <Link to="/">
-            <IconButton>
-              <ActionHome />
-            </IconButton>
-          </Link>
+          <Link to="/"
+            style={{display: 'none'}}
+          />
         }
         children={
           <CategoriesDiv>
@@ -499,7 +496,7 @@ class PostDetails extends Component {
                               disabled={true}
                               leftAvatar={
                                 <Avatar
-                                  src={`/logos/${post.category}.svg`}
+                                  src={`/aquariums/${post.category}.jpg`}
                                   style={{backgroundColor: grey500}}
                                   alt={`${post.category} logo`}
                                 />
