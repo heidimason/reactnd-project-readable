@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../css/App.css'
 import '../css/icons.css'
 import {
@@ -33,23 +33,19 @@ const customMuiTheme = getMuiTheme({
   }
 })
 
-class ReadableApp extends Component {
-    render() {
-        return (
-            <MuiThemeProvider
-                muiTheme={customMuiTheme}>
-				<Switch>
-                    <Route exact path="/" render={() => (
-                        <Redirect to="/all" />
-                    )}/>
-                    <Route exact path="/not-found" component={NotFound} />
-                    <Route exact path="/:category" component={ReadableBar} />
-                    <Route exact path="/:category/:post_id" component={PostDetails} />
-                    <Route component={NotFound} />
-                </Switch>
-            </MuiThemeProvider>
-        )
-    }
-}
+const ReadableApp = () => (
+    <MuiThemeProvider
+        muiTheme={customMuiTheme}>
+		<Switch>
+            <Route exact path="/" render={() => (
+                <Redirect to="/all" />
+            )}/>
+            <Route exact path="/not-found" component={NotFound} />
+            <Route exact path="/:category" component={ReadableBar} />
+            <Route exact path="/:category/:post_id" component={PostDetails} />
+            <Route component={NotFound} />
+        </Switch>
+    </MuiThemeProvider>
+)
 
 export default ReadableApp

@@ -4,13 +4,13 @@ import CircularProgress from 'material-ui/CircularProgress'
 import { cyanA400 } from 'material-ui/styles/colors'
 
 const LoadingAnimation = () => (
-  	<ProgressDiv>
-    	<CircularProgress
-      		size={80}
-      		thickness={5}
-      		color={cyanA400}
-    	/>
-  	</ProgressDiv>
+	<ProgressDiv>
+	  	<CircularProgress
+    		size={80}
+    		thickness={5}
+    		color={cyanA400}
+	  	/>
+	</ProgressDiv>
 )
 
 const ProgressDiv = styled.div`
