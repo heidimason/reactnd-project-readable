@@ -6,7 +6,7 @@ const PageNotFound = () => (
 	<NotFoundDiv>
 		<h1>Looks like you took a wrong turn!</h1>
 
-		<Link to="/">Take me home!</Link>
+		<Link to="/readable">Take me home!</Link>
 	</NotFoundDiv>
 )
 
