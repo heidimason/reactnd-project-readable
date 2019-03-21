@@ -8,7 +8,7 @@ import ListCategories from '../Categories'
 const ReadableBar = () => (window.innerWidth > 767 ?
     <AppBar
         iconElementLeft={
-            <Link to="/readable">
+            <Link to="/">
             	<IconButton>
             		<ActionHome />
             	</IconButton>
@@ -21,7 +21,7 @@ const ReadableBar = () => (window.innerWidth > 767 ?
     :
     <AppBar
         iconElementLeft={
-            <Link to="/readable"
+            <Link to="/"
                 style={{display: 'none'}}
             />
         }

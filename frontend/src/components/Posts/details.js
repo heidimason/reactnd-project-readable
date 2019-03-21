@@ -204,7 +204,7 @@ class PostDetails extends Component {
       <AppBar
         title="Readable"
         iconElementLeft={
-          <Link to="/readable">
+          <Link to="/">
           	<IconButton>
           		<ActionHome />
           	</IconButton>
@@ -422,7 +422,7 @@ class PostDetails extends Component {
       :
       <AppBar
         iconElementLeft={
-          <Link to="/readable"
+          <Link to="/"
             style={{display: 'none'}}
           />
         }
