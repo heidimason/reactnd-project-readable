@@ -37,12 +37,12 @@ const ReadableApp = () => (
     <MuiThemeProvider
         muiTheme={customMuiTheme}>
 		<Switch>
-            <Route exact path="/" render={() => (
-                <Redirect to="/all" />
+            <Route exact path="/reactnd-project-readable" render={() => (
+                <Redirect to="/reactnd-project-readable/all" />
             )}/>
-            <Route exact path="/not-found" component={NotFound} />
-            <Route exact path="/:category" component={ReadableBar} />
-            <Route exact path="/:category/:post_id" component={PostDetails} />
+            <Route exact path="/reactnd-project-readable/not-found" component={NotFound} />
+            <Route exact path="/reactnd-project-readable/:category" component={ReadableBar} />
+            <Route exact path="/reactnd-project-readable/:category/:post_id" component={PostDetails} />
             <Route component={NotFound} />
         </Switch>
     </MuiThemeProvider>
