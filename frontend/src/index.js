@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 
 ReactDOM.render(
 	<Provider store={store}>
-		<BrowserRouter>
+		<BrowserRouter basename="/reactnd-project-readable">
 			<App />
 		</BrowserRouter>
 	</Provider>, document.getElementById('root')
