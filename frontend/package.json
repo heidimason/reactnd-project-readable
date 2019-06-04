@@ -25,7 +25,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://heidimason.github.io/reactnd-project-readable",
+  "homepage": "http://hlmason.com/readable",
   "devDependencies": {
     "gh-pages": "^2.0.1"
   }
