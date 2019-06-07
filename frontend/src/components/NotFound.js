@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const PageNotFound = () => (
+const NotFound = () => (
 	<NotFoundDiv>
 		<h1>Looks like you took a wrong turn!</h1>
 
@@ -16,4 +16,4 @@ const NotFoundDiv = styled.div`
 	text-align: center;
 `
 
-export default PageNotFound
+export default NotFound
