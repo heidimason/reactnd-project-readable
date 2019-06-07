@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "hlmason-readable",
+    "readable": "hlmason-readable"
+  }
+}
