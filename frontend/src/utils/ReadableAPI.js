@@ -1,4 +1,6 @@
-const api = "http://localhost:3001"
+require('dotenv').config()
+
+const api = 'http://localhost:3001' || process.env.REACT_APP_API_URL
 
 // Generate a unique token for storing your data on the backend server.
 let token = localStorage.token
