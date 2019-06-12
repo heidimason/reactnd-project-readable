@@ -25,7 +25,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "http://hlmason.com/readable",
+  "homepage": "https://hlmason-readable.web.app",
   "devDependencies": {
     "gh-pages": "^2.0.1"
   }
