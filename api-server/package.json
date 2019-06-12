@@ -20,5 +20,6 @@
   },
   "engines": {
     "node": "9.5.x"
-  }
+  },
+  "repository": "https://github.com/heidimason/reactnd-project-readable/tree/master/api-server"
 }

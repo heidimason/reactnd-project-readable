@@ -17,6 +17,9 @@
     "sort-by": "^1.2.0",
     "styled-components": "^3.3.3"
   },
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -26,7 +29,5 @@
     "deploy": "gh-pages -d build"
   },
   "homepage": "https://hlmason-readable.web.app",
-  "devDependencies": {
-    "gh-pages": "^2.0.1"
-  }
+  "repository": "https://github.com/heidimason/reactnd-project-readable/tree/master/frontend"
 }
