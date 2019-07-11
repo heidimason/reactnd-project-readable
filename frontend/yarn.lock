@@ -5720,8 +5720,8 @@ lodash.restparam@*:
   integrity sha1-k2pOMJ7zMKdkXtQUWYbIWuWyCAU=
 
 lodash.template@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.4.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.5.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
   integrity sha1-5zoDhcg1VZF0bgILmWecaQ5o+6A=
   dependencies:
     lodash._reinterpolate "~3.0.0"
@@ -9125,7 +9125,7 @@ sw-precache@^5.1.1:
     es6-promise "^4.0.5"
     glob "^7.1.1"
     lodash.defaults "^4.2.0"
-    lodash.template "^4.4.0"
+    lodash.template "^4.5.0"
     meow "^3.7.0"
     mkdirp "^0.5.1"
     pretty-bytes "^4.0.2"
